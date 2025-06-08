@@ -26,5 +26,5 @@ Kevin Castalli - Producer
 Nirbhay Kwatra - Programmer  
 Xin Qi - Programmer  
 Rachel Ptic - Artist  
-Michael Caras - Designer
+Michael Caras - Designer  
 Maxim Osmachko - Designer  
