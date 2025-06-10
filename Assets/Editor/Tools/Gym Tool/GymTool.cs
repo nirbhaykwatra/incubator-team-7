@@ -19,7 +19,8 @@ public class GymTool : EditorWindow
     public static void ShowGymToolWindow()
     {
         GymTool wnd = GetWindow<GymTool>();
-        wnd.titleContent = new GUIContent("GymTool");
+        wnd.minSize = new Vector2(300, 300);
+        wnd.titleContent = new GUIContent("Gym Tool");
     }
 
     public void CreateGUI()
