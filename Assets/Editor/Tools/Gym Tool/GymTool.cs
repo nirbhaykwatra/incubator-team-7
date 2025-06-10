@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEditor.SceneTemplate;
@@ -191,6 +192,7 @@ public class GymTool : EditorWindow
         SceneTemplateAsset neutralLightSetup = (SceneTemplateAsset)AssetDatabase.LoadAssetAtPath("Assets/Settings/SceneTemplates/NeutralLightSetup.scenetemplate", typeof(SceneTemplateAsset));
         Directory.CreateDirectory($"Assets/Internment/Scenes/Gyms/{gymName.value}");
         InstantiationResult newScene = SceneTemplateService.Instantiate(neutralLightSetup, false, $"Assets/Internment/Scenes/Gyms/{gymName.value}/{gymName.value}.unity");
+        AddSceneToEditorBuildSettings($"Assets/Internment/Scenes/Gyms/{gymName.value}/{gymName.value}.unity");
         EditorSceneManager.CloseScene(activeScene, true);
         Debug.Log($"Created Gym: {gymName.value}");
         
@@ -216,6 +218,7 @@ public class GymTool : EditorWindow
             EditorUtility.DisplayDialog("Error", $"The selected scene '{selectedScene}' does not exist.", "OK");
             return;
         }
+        RemoveSceneFromEditorBuildSettings($"Assets/Internment/Scenes/Gyms/{selectedScene}/{selectedScene}.unity");
         Directory.Delete($"Assets/Internment/Scenes/Gyms/{selectedScene}", true);
         File.Delete($"Assets/Internment/Scenes/Gyms/{selectedScene}.meta");
         Debug.Log($"Deleted Gym: {selectedScene}");
@@ -284,5 +287,39 @@ public class GymTool : EditorWindow
         }
         
         return m_GymNames;
+    }
+    
+    private void AddSceneToEditorBuildSettings(string scenePath)
+    {
+        // Find valid Scene paths and make a list of EditorBuildSettingsScene
+        List<EditorBuildSettingsScene> editorBuildSettingsScenes = EditorBuildSettings.scenes.ToList();
+        EditorBuildSettingsScene buildScene = new EditorBuildSettingsScene(scenePath, true);
+        editorBuildSettingsScenes.Add(buildScene);
+
+        // Set the active platform or build profile scene list
+        EditorBuildSettings.scenes = editorBuildSettingsScenes.ToArray();
+        AssetDatabase.SaveAssets();
+        
+        foreach (EditorBuildSettingsScene buildSettingsScene in editorBuildSettingsScenes)
+        {
+            Debug.Log($"Editor build settings scenes: {buildSettingsScene}");
+        }
+    }
+    
+    private void RemoveSceneFromEditorBuildSettings(string scenePath)
+    {
+        // Find valid Scene paths and make a list of EditorBuildSettingsScene
+        List<EditorBuildSettingsScene> editorBuildSettingsScenes = EditorBuildSettings.scenes.ToList();
+        EditorBuildSettingsScene buildScene = new EditorBuildSettingsScene(scenePath, true);
+        editorBuildSettingsScenes.Remove(buildScene);
+        
+        // Set the active platform or build profile scene list
+        EditorBuildSettings.scenes = editorBuildSettingsScenes.ToArray();
+        AssetDatabase.SaveAssets();
+        
+        foreach (EditorBuildSettingsScene buildSettingsScene in editorBuildSettingsScenes)
+        {
+            Debug.Log($"Editor build settings scenes: {buildSettingsScene}");
+        }
     }
 }
