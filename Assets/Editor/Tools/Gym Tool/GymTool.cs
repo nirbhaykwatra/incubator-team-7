@@ -20,7 +20,7 @@ public class GymTool : EditorWindow
     public static void ShowGymToolWindow()
     {
         GymTool wnd = GetWindow<GymTool>();
-        wnd.minSize = new Vector2(300, 300);
+        wnd.minSize = new Vector2(300, 400);
         wnd.titleContent = new GUIContent("Gym Tool");
     }
 
@@ -90,6 +90,18 @@ public class GymTool : EditorWindow
         selectionLabel.style.marginBottom = 10f;
         selectionGroup.Add(removeGymButton);
         
+        Button addGymToBuildButton = new Button();
+        addGymToBuildButton.name = "addGymToBuildButton";
+        addGymToBuildButton.text = "Add Gym To Build";
+        selectionLabel.style.marginBottom = 10f;
+        selectionGroup.Add(addGymToBuildButton);
+        
+        Button removeGymFromBuildButton = new Button();
+        removeGymFromBuildButton.name = "removeGymFromBuildButton";
+        removeGymFromBuildButton.text = "Remove Gym From Build";
+        selectionLabel.style.marginBottom = 10f;
+        selectionGroup.Add(removeGymFromBuildButton);
+        
         GroupBox createGroup = new GroupBox();
         createGroup.name = "createGroup";
         createGroup.text = "Create Gym";
@@ -118,6 +130,27 @@ public class GymTool : EditorWindow
         createGymButton.text = "Create Gym";
         createGroup.Add(createGymButton);
         
+        GroupBox sceneGroup = new GroupBox();
+        sceneGroup.name = "sceneGroup";
+        sceneGroup.text = "Manage Build Scenes";
+        sceneGroup.style.paddingTop = 10f;
+        sceneGroup.style.paddingBottom = 10f;
+        sceneGroup.style.paddingLeft = 10f;
+        sceneGroup.style.paddingRight = 10f;
+        sceneGroup.style.borderTopWidth = 1f;
+        sceneGroup.style.borderBottomWidth = 1f;
+        sceneGroup.style.borderLeftWidth = 1f;
+        sceneGroup.style.borderRightWidth = 1f;
+        sceneGroup.style.borderTopColor = new Color(0f, 0f, 0f, 0.5f);
+        sceneGroup.style.borderBottomColor = new Color(0f, 0f, 0f, 0.5f);
+        sceneGroup.style.borderLeftColor = new Color(0f, 0f, 0f, 0.5f);
+        sceneGroup.style.borderRightColor = new Color(0f, 0f, 0f, 0.5f);
+
+        Button rebuildButton = new Button();
+        rebuildButton.name = "rebuildButton";
+        rebuildButton.text = "Rebuild Scenes";
+        sceneGroup.Add(rebuildButton);
+        
         listView.selectedIndicesChanged += (selectedIndices) =>
         {
             if (listView.selectedItem != null)
@@ -131,13 +164,13 @@ public class GymTool : EditorWindow
                 selectedScene = "";
             }
             
-
             // Note: selectedIndices can also be used to get the selected items from the itemsSource directly or
             // by using listView.viewController.GetItemForIndex(index).
         };
         
         root.Add(createGroup);
         root.Add(selectionGroup);
+        root.Add(sceneGroup);
         
         SetupButtonHandler();
     }
@@ -162,6 +195,15 @@ public class GymTool : EditorWindow
                 break;
             case "openGymButton":
                 button.RegisterCallback<ClickEvent>(OpenGym);
+                break;
+            case "addGymToBuildButton":
+                button.RegisterCallback<ClickEvent>(AddSceneToEditorBuildSettings);
+                break;
+            case "removeGymFromBuildButton":
+                button.RegisterCallback<ClickEvent>(RemoveSceneFromEditorBuildSettings);
+                break;
+            case "rebuildButton":
+                button.RegisterCallback<ClickEvent>(RebuildEditorScenes);
                 break;
         }
     }
@@ -291,6 +333,11 @@ public class GymTool : EditorWindow
         EditorBuildSettings.scenes = editorBuildSettingsScenes.ToArray();
         AssetDatabase.SaveAssets();
     }
+
+    private void AddSceneToEditorBuildSettings(ClickEvent clickEvent)
+    {
+        AddSceneToEditorBuildSettings(selectedScene);
+    }
     
     private void RemoveSceneFromEditorBuildSettings(string scenePath)
     {
@@ -309,4 +356,37 @@ public class GymTool : EditorWindow
         EditorBuildSettings.scenes = editorBuildSettingsScenes.ToArray();
         AssetDatabase.SaveAssets();
     }
+
+    private void RemoveSceneFromEditorBuildSettings(ClickEvent clickEvent)
+    {
+        RemoveSceneFromEditorBuildSettings(selectedScene);
+    }
+    
+    private void RebuildEditorScenes(ClickEvent clickEvent)
+    {
+        List<EditorBuildSettingsScene> editorBuildSettingsScenes = EditorBuildSettings.scenes.ToList();
+        string[] guids = AssetDatabase.FindAssets("t:Scene", new string[] { "Assets/Internment/Scenes/Gyms" });
+
+        foreach (string guid in guids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            
+            EditorBuildSettingsScene buildScene = new EditorBuildSettingsScene(path, true);
+
+            if (editorBuildSettingsScenes.Contains(buildScene))
+            {
+                editorBuildSettingsScenes.Remove(buildScene);
+                editorBuildSettingsScenes.Insert(editorBuildSettingsScenes.Count, buildScene);
+            }
+            else
+            {
+                editorBuildSettingsScenes.Add(buildScene);
+            }
+        }
+        // Find valid Scene paths and make a list of EditorBuildSettingsScene
+
+        // Set the active platform or build profile scene list
+        EditorBuildSettings.scenes = editorBuildSettingsScenes.ToArray();
+        AssetDatabase.SaveAssets();
+    }            
 }
