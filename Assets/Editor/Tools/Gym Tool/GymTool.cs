@@ -157,6 +157,11 @@ public class GymTool : EditorWindow
         removeGymFromBuildButton.text = "Remove Gym From Build";
         sceneGroup.Add(removeGymFromBuildButton);
         
+        Button createGymListButton = new Button();
+        createGymListButton.name = "createGymListButton";
+        createGymListButton.text = "Create Gym List";
+        sceneGroup.Add(createGymListButton);
+        
         listView.selectedIndicesChanged += (selectedIndices) =>
         {
             if (listView.selectedItem != null)
@@ -211,6 +216,9 @@ public class GymTool : EditorWindow
             case "rebuildButton":
                 button.RegisterCallback<ClickEvent>(RebuildEditorScenes);
                 break;
+            case "createGymListButton":
+                button.RegisterCallback<ClickEvent>(CreateGymList);
+                break;
         }
     }
 
@@ -231,9 +239,12 @@ public class GymTool : EditorWindow
         SceneTemplateAsset neutralLightSetup = (SceneTemplateAsset)AssetDatabase.LoadAssetAtPath("Assets/Settings/SceneTemplates/NeutralLightSetup.scenetemplate", typeof(SceneTemplateAsset));
         InstantiationResult newScene = SceneTemplateService.Instantiate(neutralLightSetup, false, $"Assets/Internment/Scenes/Gyms/{gymName.value}.unity");
         //AddSceneToEditorBuildSettings($"Assets/Internment/Scenes/Gyms/{gymName.value}/{gymName.value}.unity");
+        GymList gymList = AssetDatabase.LoadAssetAtPath($"Assets/SharedAssets/Data/Setup/GymList.asset", typeof(GymList)) as GymList;
+        gymList.AddGym(gymName.value);
         EditorSceneManager.CloseScene(activeScene, true);
         Debug.Log($"Created Gym: {gymName.value}");
         
+        AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
         gymName.value = "";
         ListView listView = root.Q<ListView>("gymList");
@@ -261,8 +272,11 @@ public class GymTool : EditorWindow
         File.Delete($"Assets/Internment/Scenes/Gyms/{selectedScene}.meta");
         File.Delete($"Assets/Internment/Scenes/Gyms/{selectedScene}.unity");
         File.Delete($"Assets/Internment/Scenes/Gyms/{selectedScene}.unity.meta");
+        GymList gymList = AssetDatabase.LoadAssetAtPath($"Assets/SharedAssets/Data/Setup/GymList.asset", typeof(GymList)) as GymList;
+        gymList.AddGym(selectedScene);
         Debug.Log($"Deleted Gym: {selectedScene}");
         
+        AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
         ListView listView = root.Q<ListView>("gymList");
         listView.ClearSelection();
@@ -399,10 +413,14 @@ public class GymTool : EditorWindow
     {
         List<EditorBuildSettingsScene> editorBuildSettingsScenes = EditorBuildSettings.scenes.ToList();
         string[] guids = AssetDatabase.FindAssets("t:Scene", new string[] { "Assets/Internment/Scenes/Gyms" });
+        
+        GymList gymList = AssetDatabase.LoadAssetAtPath($"Assets/SharedAssets/Data/Setup/GymList.asset", typeof(GymList)) as GymList;
+        gymList.ClearGymList();
 
         foreach (string guid in guids)
         {
             string path = AssetDatabase.GUIDToAssetPath(guid);
+            string assetName = Path.GetFileNameWithoutExtension(path);
             
             EditorBuildSettingsScene buildScene = new EditorBuildSettingsScene(path, true);
             
@@ -416,6 +434,7 @@ public class GymTool : EditorWindow
             }
             Debug.Log($"Removed scene and replaced'{path}'");
             
+            gymList.AddGym(assetName);
             editorBuildSettingsScenes.Add(buildScene);
             Debug.Log($"Added scene'{path}'");
         }
@@ -424,5 +443,25 @@ public class GymTool : EditorWindow
         // Set the active platform or build profile scene list
         EditorBuildSettings.scenes = editorBuildSettingsScenes.ToArray();
         AssetDatabase.SaveAssets();
-    }            
+        AssetDatabase.Refresh();
+    }
+    
+    private void CreateGymList(ClickEvent clickEvent)
+    {
+        string[] guids = AssetDatabase.FindAssets("t:Scene", new string[] { "Assets/Internment/Scenes/Gyms" });
+        
+        GymList gymListObject = CreateInstance(typeof(GymList)) as GymList;
+        gymListObject.ClearGymList();
+        
+        foreach (string guid in guids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            string assetName = Path.GetFileNameWithoutExtension(path);
+
+            gymListObject.AddGym(assetName);
+        }
+        AssetDatabase.CreateAsset(gymListObject, "Assets/SharedAssets/Data/Setup/GymList.asset");
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+    }
 }
