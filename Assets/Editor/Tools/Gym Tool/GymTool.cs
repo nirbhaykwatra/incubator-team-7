@@ -273,7 +273,7 @@ public class GymTool : EditorWindow
         File.Delete($"Assets/Internment/Scenes/Gyms/{selectedScene}.unity");
         File.Delete($"Assets/Internment/Scenes/Gyms/{selectedScene}.unity.meta");
         GymList gymList = AssetDatabase.LoadAssetAtPath($"Assets/SharedAssets/Data/Setup/GymList.asset", typeof(GymList)) as GymList;
-        gymList.AddGym(selectedScene);
+        gymList.RemoveGym(selectedScene);
         Debug.Log($"Deleted Gym: {selectedScene}");
         
         AssetDatabase.SaveAssets();
