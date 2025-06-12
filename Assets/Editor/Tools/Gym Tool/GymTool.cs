@@ -20,7 +20,7 @@ public class GymTool : EditorWindow
     public static void ShowGymToolWindow()
     {
         GymTool wnd = GetWindow<GymTool>();
-        wnd.minSize = new Vector2(300, 400);
+        wnd.minSize = new Vector2(300, 440);
         wnd.titleContent = new GUIContent("Gym Tool");
     }
 
@@ -74,7 +74,7 @@ public class GymTool : EditorWindow
         selectionLabel.text = "Selected Gym: ";
         selectionLabel.style.marginTop = 10f;
         selectionLabel.style.marginBottom = 10f;
-        selectionLabel.visible = false;
+        selectionLabel.visible = true;
         selectionGroup.Add(selectionLabel);
         
         Button openGymButton = new Button();
@@ -89,18 +89,6 @@ public class GymTool : EditorWindow
         removeGymButton.text = "Remove Gym";
         selectionLabel.style.marginBottom = 10f;
         selectionGroup.Add(removeGymButton);
-        
-        Button addGymToBuildButton = new Button();
-        addGymToBuildButton.name = "addGymToBuildButton";
-        addGymToBuildButton.text = "Add Gym To Build";
-        selectionLabel.style.marginBottom = 10f;
-        selectionGroup.Add(addGymToBuildButton);
-        
-        Button removeGymFromBuildButton = new Button();
-        removeGymFromBuildButton.name = "removeGymFromBuildButton";
-        removeGymFromBuildButton.text = "Remove Gym From Build";
-        selectionLabel.style.marginBottom = 10f;
-        selectionGroup.Add(removeGymFromBuildButton);
         
         GroupBox createGroup = new GroupBox();
         createGroup.name = "createGroup";
@@ -145,11 +133,29 @@ public class GymTool : EditorWindow
         sceneGroup.style.borderBottomColor = new Color(0f, 0f, 0f, 0.5f);
         sceneGroup.style.borderLeftColor = new Color(0f, 0f, 0f, 0.5f);
         sceneGroup.style.borderRightColor = new Color(0f, 0f, 0f, 0.5f);
+        
+        Label warningLabel = new Label();
+        warningLabel.style.whiteSpace = WhiteSpace.Normal;
+        warningLabel.name = "warningLabel";
+        warningLabel.text = "WARNING: THESE ARE DEBUG COMMANDS. DO NOT USE THESE UNDER NORMAL CIRCUMSTANCES.";
+        warningLabel.style.marginBottom = 10f;
+        warningLabel.style.color = Color.red;
+        sceneGroup.Add(warningLabel);
 
         Button rebuildButton = new Button();
         rebuildButton.name = "rebuildButton";
         rebuildButton.text = "Rebuild Scenes";
         sceneGroup.Add(rebuildButton);
+        
+        Button addGymToBuildButton = new Button();
+        addGymToBuildButton.name = "addGymToBuildButton";
+        addGymToBuildButton.text = "Add Gym To Build";
+        sceneGroup.Add(addGymToBuildButton);
+        
+        Button removeGymFromBuildButton = new Button();
+        removeGymFromBuildButton.name = "removeGymFromBuildButton";
+        removeGymFromBuildButton.text = "Remove Gym From Build";
+        sceneGroup.Add(removeGymFromBuildButton);
         
         listView.selectedIndicesChanged += (selectedIndices) =>
         {
@@ -214,7 +220,7 @@ public class GymTool : EditorWindow
         TextField gymName = root.Q<TextField>("gymName");
         if (gymName.value == "") return;
 
-        if (AssetDatabase.AssetPathExists($"Assets/Internment/Scenes/Gyms/{gymName.value}/{gymName.value}.unity"))
+        if (AssetDatabase.AssetPathExists($"Assets/Internment/Scenes/Gyms/{gymName.value}.unity"))
         {
             EditorUtility.DisplayDialog("Error", "Gym already exists!", "OK");
             return;
@@ -223,9 +229,8 @@ public class GymTool : EditorWindow
         Scene activeScene = SceneManager.GetActiveScene();
         
         SceneTemplateAsset neutralLightSetup = (SceneTemplateAsset)AssetDatabase.LoadAssetAtPath("Assets/Settings/SceneTemplates/NeutralLightSetup.scenetemplate", typeof(SceneTemplateAsset));
-        Directory.CreateDirectory($"Assets/Internment/Scenes/Gyms/{gymName.value}");
-        InstantiationResult newScene = SceneTemplateService.Instantiate(neutralLightSetup, false, $"Assets/Internment/Scenes/Gyms/{gymName.value}/{gymName.value}.unity");
-        AddSceneToEditorBuildSettings($"Assets/Internment/Scenes/Gyms/{gymName.value}/{gymName.value}.unity");
+        InstantiationResult newScene = SceneTemplateService.Instantiate(neutralLightSetup, false, $"Assets/Internment/Scenes/Gyms/{gymName.value}.unity");
+        //AddSceneToEditorBuildSettings($"Assets/Internment/Scenes/Gyms/{gymName.value}/{gymName.value}.unity");
         EditorSceneManager.CloseScene(activeScene, true);
         Debug.Log($"Created Gym: {gymName.value}");
         
@@ -246,14 +251,16 @@ public class GymTool : EditorWindow
             EditorUtility.DisplayDialog("Error", "No scene has been selected!", "OK");
             return;
         }
-        if (!Directory.Exists($"Assets/Internment/Scenes/Gyms/{selectedScene}"))
+        if (!File.Exists($"Assets/Internment/Scenes/Gyms/{selectedScene}.unity"))
         {
             EditorUtility.DisplayDialog("Error", $"The selected scene '{selectedScene}' does not exist.", "OK");
             return;
         }
-        RemoveSceneFromEditorBuildSettings($"Assets/Internment/Scenes/Gyms/{selectedScene}/{selectedScene}.unity");
+        //RemoveSceneFromEditorBuildSettings($"Assets/Internment/Scenes/Gyms/{selectedScene}/{selectedScene}.unity");
         Directory.Delete($"Assets/Internment/Scenes/Gyms/{selectedScene}", true);
         File.Delete($"Assets/Internment/Scenes/Gyms/{selectedScene}.meta");
+        File.Delete($"Assets/Internment/Scenes/Gyms/{selectedScene}.unity");
+        File.Delete($"Assets/Internment/Scenes/Gyms/{selectedScene}.unity.meta");
         Debug.Log($"Deleted Gym: {selectedScene}");
         
         AssetDatabase.Refresh();
@@ -267,7 +274,7 @@ public class GymTool : EditorWindow
     private void OpenGym(ClickEvent clickEvent)
     {
         Scene activeScene = SceneManager.GetActiveScene();
-        SceneAsset sceneToOpen = (SceneAsset)AssetDatabase.LoadAssetAtPath($"Assets/Internment/Scenes/Gyms/{selectedScene}/{selectedScene}.unity", typeof(SceneAsset));
+        SceneAsset sceneToOpen = (SceneAsset)AssetDatabase.LoadAssetAtPath($"Assets/Internment/Scenes/Gyms/{selectedScene}.unity", typeof(SceneAsset));
 
         if (activeScene.name == sceneToOpen.name)
         {
@@ -283,7 +290,7 @@ public class GymTool : EditorWindow
             EditorUtility.DisplayDialog("Error", "No gym has been selected!", "OK");
             return;
         }
-        if (!Directory.Exists($"Assets/Internment/Scenes/Gyms/{selectedScene}"))
+        if (!File.Exists($"Assets/Internment/Scenes/Gyms/{selectedScene}.unity"))
         {
             EditorUtility.DisplayDialog("Error", $"The selected scene '{selectedScene}' does not exist.", "OK");
             return;
@@ -296,11 +303,11 @@ public class GymTool : EditorWindow
                 EditorSceneManager.SaveScene(activeScene);
                 Debug.Log($"Saved scene {activeScene.name}");
             }
-            EditorSceneManager.OpenScene($"Assets/Internment/Scenes/Gyms/{selectedScene}/{selectedScene}.unity");
+            EditorSceneManager.OpenScene($"Assets/Internment/Scenes/Gyms/{selectedScene}.unity");
         }
         else
         {
-            EditorSceneManager.OpenScene($"Assets/Internment/Scenes/Gyms/{selectedScene}/{selectedScene}.unity");
+            EditorSceneManager.OpenScene($"Assets/Internment/Scenes/Gyms/{selectedScene}.unity");
             EditorSceneManager.CloseScene(activeScene, true);
         }
     }
@@ -336,7 +343,20 @@ public class GymTool : EditorWindow
 
     private void AddSceneToEditorBuildSettings(ClickEvent clickEvent)
     {
-        AddSceneToEditorBuildSettings(selectedScene);
+        string scenePath = "";
+        string[] guids = AssetDatabase.FindAssets("t:Scene", new string[] { "Assets/Internment/Scenes/Gyms" });
+
+        foreach (string guid in guids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            string assetName = Path.GetFileNameWithoutExtension(path);
+            if (assetName == selectedScene)
+            {
+                scenePath = path;
+            }
+        }
+        
+        AddSceneToEditorBuildSettings(scenePath);
     }
     
     private void RemoveSceneFromEditorBuildSettings(string scenePath)
@@ -359,7 +379,20 @@ public class GymTool : EditorWindow
 
     private void RemoveSceneFromEditorBuildSettings(ClickEvent clickEvent)
     {
-        RemoveSceneFromEditorBuildSettings(selectedScene);
+        string scenePath = "";
+        string[] guids = AssetDatabase.FindAssets("t:Scene", new string[] { "Assets/Internment/Scenes/Gyms" });
+
+        foreach (string guid in guids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            string assetName = Path.GetFileNameWithoutExtension(path);
+            if (assetName == selectedScene)
+            {
+                scenePath = path;
+            }
+        }
+        
+        RemoveSceneFromEditorBuildSettings(scenePath);
     }
     
     private void RebuildEditorScenes(ClickEvent clickEvent)
@@ -372,16 +405,19 @@ public class GymTool : EditorWindow
             string path = AssetDatabase.GUIDToAssetPath(guid);
             
             EditorBuildSettingsScene buildScene = new EditorBuildSettingsScene(path, true);
-
-            if (editorBuildSettingsScenes.Contains(buildScene))
+            
+            for (int i = 0; i < editorBuildSettingsScenes.Count; i++)
             {
-                editorBuildSettingsScenes.Remove(buildScene);
-                editorBuildSettingsScenes.Insert(editorBuildSettingsScenes.Count, buildScene);
+                if (editorBuildSettingsScenes[i].path == path)
+                {
+                    Debug.Log($"Removing scene {editorBuildSettingsScenes[i].path}");
+                    editorBuildSettingsScenes.RemoveAt(i);
+                }
             }
-            else
-            {
-                editorBuildSettingsScenes.Add(buildScene);
-            }
+            Debug.Log($"Removed scene and replaced'{path}'");
+            
+            editorBuildSettingsScenes.Add(buildScene);
+            Debug.Log($"Added scene'{path}'");
         }
         // Find valid Scene paths and make a list of EditorBuildSettingsScene
 
