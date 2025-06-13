@@ -19,4 +19,9 @@ public class GymList : ScriptableObject
     {
         gymList.Clear();
     }
+
+    public string[] GetGymList()
+    {
+        return gymList.ToArray();
+    }
 }
