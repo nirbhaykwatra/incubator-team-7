@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEditor.SceneTemplate;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -448,19 +449,39 @@ public class GymTool : EditorWindow
     
     private void CreateGymList(ClickEvent clickEvent)
     {
+        AssetDatabase.Refresh();
         string[] guids = AssetDatabase.FindAssets("t:Scene", new string[] { "Assets/Internment/Scenes/Gyms" });
         
-        GymList gymListObject = CreateInstance(typeof(GymList)) as GymList;
+        GymList gymListObject;
+
+        if (File.Exists($"Assets/SharedAssets/Data/Setup/GymList.asset"))
+        {
+            gymListObject = AssetDatabase.LoadAssetAtPath("Assets/SharedAssets/Data/Setup/GymList.asset", typeof(GymList)) as GymList;
+        }
+        else
+        {
+            gymListObject = CreateInstance(typeof(GymList)) as GymList;
+        }
         gymListObject.ClearGymList();
         
         foreach (string guid in guids)
         {
             string path = AssetDatabase.GUIDToAssetPath(guid);
             string assetName = Path.GetFileNameWithoutExtension(path);
+            
 
             gymListObject.AddGym(assetName);
         }
-        AssetDatabase.CreateAsset(gymListObject, "Assets/SharedAssets/Data/Setup/GymList.asset");
+        
+        if (File.Exists($"Assets/SharedAssets/Data/Setup/GymList.asset"))
+        {
+            AssetDatabase.SaveAssets();
+        }
+        else
+        {
+            AssetDatabase.CreateAsset(gymListObject, "Assets/SharedAssets/Data/Setup/GymList.asset");
+        }
+        
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }

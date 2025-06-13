@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Demo/Scenes/3DGeneral.unity
     guid: fa65b82cf01e3ac419949ae83b762bdf
   - enabled: 1
+    path: Assets/Internment/Scenes/Gyms/Character Gym.unity
+    guid: 9f717b57407c1f54fbc5ba7defef7f90
+  - enabled: 1
     path: Assets/Internment/Scenes/Gyms/Digging Demo.unity
     guid: 916edb02b67b5b2448f2820dfa54de52
   m_configObjects: {}

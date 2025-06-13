@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: GymList
   m_EditorClassIdentifier: 
   gymList:
+  - Character Gym
   - Digging Demo
