@@ -17,11 +17,11 @@ public class Grid : MonoBehaviour
     private void Awake()
     {
         _cells = new List<Cell>();
-        for (int x = 0; x < _gridSize.x / CellPrefab.transform.localScale.x; x++)
+        for (int x = 0; x < _gridSize.x; x++)
         {
             //for (int y = 0; y < _gridSize.y / CellPrefab.transform.localScale.y; y++)
             //{
-            for (int z = 0; z < _gridSize.z / CellPrefab.transform.localScale.z; z++)
+            for (int z = 0; z < _gridSize.z; z++)
             {
                 Vector3 position = new Vector3(x * CellPrefab.transform.localScale.x, 0, z * CellPrefab.transform.localScale.z);
                 GameObject cellObject = Instantiate(CellPrefab, position, Quaternion.identity);
@@ -69,12 +69,25 @@ public class Grid : MonoBehaviour
 
     public Cell GetRandomCell()
     {
-        return GetCell((int)Random.Range(0, _gridSize.x / CellPrefab.transform.localScale.x), 0, (int)Random.Range(0, _gridSize.z / CellPrefab.transform.localScale.z));
+        return GetCell(Random.Range(0, _gridSize.x), 0, Random.Range(0, _gridSize.z));
     }
 
     public void DestroyCell(Cell cell)
     {
         if (_cells.Contains(cell)) _cells.Remove(cell);
         Destroy(cell.gameObject);
+    }
+
+    public bool AllCellsInfected()
+    {
+        return _cells.TrueForAll(cell => cell.Infected);
+    }
+
+    public void ResetCells()
+    {
+        foreach (Cell cell in _cells)
+        {
+            cell.Infected = false;
+        }
     }
 }

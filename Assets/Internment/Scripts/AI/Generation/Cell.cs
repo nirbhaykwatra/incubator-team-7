@@ -7,9 +7,9 @@ public class Cell : MonoBehaviour
     [ShowInInspector]
     public float Lifespan { get; set; } = 1f;
     [ShowInInspector]
-    public float PropagationRate { get; set; } = 0.5f;
+    public float PropagationRate { get; set; } = 1f;
     [ShowInInspector]
-    public bool InfiniteLife { get; set; } = false;
+    public bool InfiniteLife { get; set; } = true;
     
     [ShowInInspector]
     [ReadOnly]
@@ -23,6 +23,10 @@ public class Cell : MonoBehaviour
     private Grid _grid;
     private float _timer;
     private float _lifeSpanTimer;
+    private Cell _adjacentTop;
+    private Cell _adjacentBottom;
+    private Cell _adjacentLeft;
+    private Cell _adjacentRight;
 
     private void Awake()
     {
@@ -39,9 +43,8 @@ public class Cell : MonoBehaviour
     private void Update()
     {
         _renderer.enabled = Infected;
-
-        Spread();
-        if (Infected)
+        
+        if (Infected && !_grid.AllCellsInfected())
         {
             _timer += Time.deltaTime;
 
@@ -55,6 +58,7 @@ public class Cell : MonoBehaviour
             }
             if (_timer > PropagationRate)
             {
+                Spread();
                 _timer = 0.5f;
             }
         }
@@ -63,15 +67,17 @@ public class Cell : MonoBehaviour
     [Button]
     public void Spread()
     {
-        Cell adjacentTop = _grid.GetCell(Coordinates.x + 1, Coordinates.y, Coordinates.z);
-        Cell adjacentBottom = _grid.GetCell(Coordinates.x - 1, Coordinates.y, Coordinates.z);
-        Cell adjacentLeft = _grid.GetCell(Coordinates.x, Coordinates.y, Coordinates.z - 1);
-        Cell adjacentRight = _grid.GetCell(Coordinates.x, Coordinates.y, Coordinates.z + 1);
+        _adjacentTop = _grid.GetCell(Coordinates.x + 1, Coordinates.y, Coordinates.z);
+        _adjacentBottom = _grid.GetCell(Coordinates.x - 1, Coordinates.y, Coordinates.z);
+        _adjacentLeft = _grid.GetCell(Coordinates.x, Coordinates.y, Coordinates.z - 1);
+        _adjacentRight = _grid.GetCell(Coordinates.x, Coordinates.y, Coordinates.z + 1);
         
-        if(adjacentTop && adjacentTop.Infected) Infected = true;
-        if(adjacentBottom && adjacentBottom.Infected) adjacentBottom.Infected = true;
-        if(adjacentLeft && adjacentLeft.Infected) adjacentLeft.Infected = true;
-        if(adjacentRight && adjacentRight.Infected) adjacentRight.Infected = true;
+        if(_adjacentTop && _adjacentTop.Infected == false) _adjacentTop.Infected = true;
+        if(_adjacentBottom && _adjacentBottom.Infected == false) _adjacentBottom.Infected = true;
+        if(_adjacentLeft && _adjacentLeft.Infected == false) _adjacentLeft.Infected = true;
+        if(_adjacentRight && _adjacentRight.Infected == false) _adjacentRight.Infected = true;
+        
+        Debug.Log($"Spreading infection!");
     }
 
     [Button]
