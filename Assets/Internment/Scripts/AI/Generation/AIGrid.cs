@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Grid : MonoBehaviour
+public class AIGrid : MonoBehaviour
 {
     [FoldoutGroup("Dimensions")]
     [SerializeField] private Vector3Int _gridSize;

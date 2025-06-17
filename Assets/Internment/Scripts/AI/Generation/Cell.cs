@@ -20,7 +20,7 @@ public class Cell : MonoBehaviour
     public bool Infected { get; set; }
     
     private MeshRenderer _renderer;
-    private Grid _grid;
+    private AIGrid aiGrid;
     private float _timer;
     private float _lifeSpanTimer;
     private Cell _adjacentTop;
@@ -37,14 +37,14 @@ public class Cell : MonoBehaviour
 
     private void Start()
     {
-        _grid = GetComponentInParent<Grid>();
+        aiGrid = GetComponentInParent<AIGrid>();
     }
 
     private void Update()
     {
         _renderer.enabled = Infected;
         
-        if (Infected && !_grid.AllCellsInfected())
+        if (Infected && !aiGrid.AllCellsInfected())
         {
             _timer += Time.deltaTime;
 
@@ -53,7 +53,7 @@ public class Cell : MonoBehaviour
                 _lifeSpanTimer += Time.deltaTime;
                 if (_lifeSpanTimer >= Lifespan)
                 {
-                    _grid.DestroyCell(this);
+                    aiGrid.DestroyCell(this);
                 }
             }
             if (_timer > PropagationRate)
@@ -67,10 +67,10 @@ public class Cell : MonoBehaviour
     [Button]
     public void Spread()
     {
-        _adjacentTop = _grid.GetCell(Coordinates.x + 1, Coordinates.y, Coordinates.z);
-        _adjacentBottom = _grid.GetCell(Coordinates.x - 1, Coordinates.y, Coordinates.z);
-        _adjacentLeft = _grid.GetCell(Coordinates.x, Coordinates.y, Coordinates.z - 1);
-        _adjacentRight = _grid.GetCell(Coordinates.x, Coordinates.y, Coordinates.z + 1);
+        _adjacentTop = aiGrid.GetCell(Coordinates.x + 1, Coordinates.y, Coordinates.z);
+        _adjacentBottom = aiGrid.GetCell(Coordinates.x - 1, Coordinates.y, Coordinates.z);
+        _adjacentLeft = aiGrid.GetCell(Coordinates.x, Coordinates.y, Coordinates.z - 1);
+        _adjacentRight = aiGrid.GetCell(Coordinates.x, Coordinates.y, Coordinates.z + 1);
         
         if(_adjacentTop && _adjacentTop.Infected == false) _adjacentTop.Infected = true;
         if(_adjacentBottom && _adjacentBottom.Infected == false) _adjacentBottom.Infected = true;

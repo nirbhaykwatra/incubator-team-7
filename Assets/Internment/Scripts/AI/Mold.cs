@@ -6,11 +6,11 @@ public class Mold : MonoBehaviour
     public float PropagationSpeed = 0.5f;
     public float PropagationArea = 0.5f;
     
-    private Grid _grid;
+    private AIGrid aiGrid;
 
     private void Awake()
     {
-        _grid = FindAnyObjectByType<Grid>();
+        aiGrid = FindAnyObjectByType<AIGrid>();
     }
 
     private void Start()
@@ -21,6 +21,6 @@ public class Mold : MonoBehaviour
     [Button]
     public void SpawnMold()
     {
-        _grid.GetRandomCell().Infected = true;
+        aiGrid.GetRandomCell().Infected = true;
     }
 }
