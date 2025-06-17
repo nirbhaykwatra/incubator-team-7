@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using GameEvents;
 using UnityEngine;
 using UnityEngine.Events;
 using Sirenix.OdinInspector;
@@ -33,11 +34,21 @@ public abstract class CharacterMovementBase : MonoBehaviour
     [field: SerializeField] protected float MaxSlopeAngle { get; set; } = 40f;              // maximum climbable slope, character will slip on anything higher
     [field: SerializeField] protected float CoyoteMaxJumpDistance { get; set; } = 0.5f;     // max distance allowed after leaving ground when doing a coyote jump
     [field: SerializeField] protected LayerMask GroundMask { get; set; } = 1 << 0;          // mask for layers considered the ground
+    
+    [Header("Attributes")]
+    [ProgressBar("MinimumHealth", "MaxHealth", ColorGetter = "GetHealthBarColor")]
+    [MaxValue("MaxHealth")]
+    [SerializeField] protected float Health = 100f;
+    protected float MinimumHealth = 0f;
+    [SerializeField] protected float MaxHealth = 100f;
+    [SerializeField] protected bool Invincible = false;
 
     [field: Header("Events")]
     [field: SerializeField] protected float MinGroundedVelocity { get; set; } = 5f;
     public UnityEvent<GameObject> OnGrounded;
     public UnityEvent<GameObject> OnFootstep;
+    public GameObjectEventAsset OnDeath;
+    public FloatEventAsset OnDamage;
 
     // public properties
     public float MoveSpeedMultiplier { get; set; } = 1f;
@@ -65,6 +76,8 @@ public abstract class CharacterMovementBase : MonoBehaviour
     // methods
     public virtual void TryJump() { }
     public virtual void Jump() { }
+    public virtual void TryApplyDamage(float damage) { }
+    public virtual void ApplyDamage(float damage) { }
     public virtual void SetMoveInput(Vector3 input) { }
     public virtual void SetLookDirection(Vector3 direction) { }
     public virtual void SetLookPosition(Vector3 position) { }
