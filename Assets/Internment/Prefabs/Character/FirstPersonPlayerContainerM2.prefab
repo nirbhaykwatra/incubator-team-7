@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 927425159040389426}
   - component: {fileID: 5495673622810688759}
   - component: {fileID: 1313500025169505124}
+  - component: {fileID: 7983591023603603438}
   - component: {fileID: 2624763119923438232}
   m_Layer: 0
   m_Name: FirstPerson Camera
@@ -62,7 +63,7 @@ Transform:
   m_GameObject: {fileID: 7091753545980010219}
   serializedVersion: 2
   m_LocalRotation: {x: 0.00000021035842, y: 0.0000008311931, z: -1.7484847e-13, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5995549, z: -0.00093746185}
+  m_LocalPosition: {x: 0.00000017881393, y: 17.439554, z: -0.00093746185}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -165,6 +166,29 @@ MonoBehaviour:
       Wait: 1
       Time: 2
     Restrictions: 0
+--- !u!114 &7983591023603603438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7091753545980010219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ApplyAfter: 2
+  ChannelMask: 1
+  Gain: 1
+  Use2DDistance: 0
+  UseCameraSpace: 1
+  ReactionSettings:
+    m_SecondaryNoise: {fileID: 11400000, guid: 3d1fbb909d4fbd64d9bd69c58fc09690, type: 2}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    Duration: 1
+    m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!114 &2624763119923438232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,7 +288,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: a2f8ac7e0ad362c47b51e28357d009a1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 15.84
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a2f8ac7e0ad362c47b51e28357d009a1,
         type: 3}
@@ -391,6 +415,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 7040904683272500711}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a2f8ac7e0ad362c47b51e28357d009a1,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1090454993066555065}
   m_SourcePrefab: {fileID: 100100000, guid: a2f8ac7e0ad362c47b51e28357d009a1, type: 3}
 --- !u!95 &1422544283862268537 stripped
 Animator:
@@ -567,9 +595,6 @@ MonoBehaviour:
   <GroundMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 1
-  Health: 100
-  MaxHealth: 100
-  Invincible: 0
   <MinGroundedVelocity>k__BackingField: 5
   OnGrounded:
     m_PersistentCalls:
@@ -579,12 +604,22 @@ MonoBehaviour:
       m_Calls: []
   OnDeath: {fileID: 11400000, guid: 35d686d63c5ad5e4fabadd8bfc0ff660, type: 2}
   OnDamage: {fileID: 11400000, guid: 8d4b6299ccc573e4886179636faa03d6, type: 2}
+  Health: 100
+  MaxHealth: 100
+  Invincible: 0
+  Dead: 0
+  RegenerateHealth: 0
+  HealthRegenerationRate: 10
   Oxygen: 100
   MaxOxygen: 100
+  OxygenConsumptionRate: 10
+  OxygenRegenerationRate: 10
+  ConsumeOxygen: 0
+  RegenerateOxygen: 1
   FallDamageVelocityThreshold: 10
-  FallDamageVelocityCap: 1
+  FallDamageVelocityCap: 20
   FixedFallDamage: 10
-  FallDamageMultiplier: 1
+  FallDamageMultiplier: 2
   ProportionalFallDamage: 1
   <StepHeight>k__BackingField: 0.3
   <StepHeightAllowance>k__BackingField: 0.1
@@ -655,3 +690,83 @@ MonoBehaviour:
       Data3: -1367347271
       Data4: 113292409
     Path: event:/SFX/Footstep
+--- !u!114 &1090454993066555065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5626711194788362937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ImpulseDefinition:
+    ImpulseChannel: 1
+    ImpulseShape: 0
+    CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.2706641
+        value: -0.44638467
+        inSlope: 3.0031104
+        outSlope: 3.0031104
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.046313837
+      - serializedVersion: 3
+        time: 1
+        value: 0.0009422302
+        inSlope: -0.39256793
+        outSlope: -0.39256793
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.26212442
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    ImpulseDuration: 0.2
+    ImpulseType: 0
+    DissipationRate: 0.25
+    RawSignal: {fileID: 0}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    RepeatMode: 0
+    Randomize: 1
+    TimeEnvelope:
+      AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      AttackTime: 0
+      SustainTime: 0.2
+      DecayTime: 0.7
+      ScaleWithImpact: 1
+      HoldForever: 0
+    ImpactRadius: 100
+    DirectionMode: 0
+    DissipationMode: 2
+    DissipationDistance: 100
+    PropagationSpeed: 343
+  DefaultVelocity: {x: 0, y: -1, z: 0}
