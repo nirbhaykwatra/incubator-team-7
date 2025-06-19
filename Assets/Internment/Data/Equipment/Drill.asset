@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Drill
   m_EditorClassIdentifier: 
   Powered: 0
-  BatteryConsumptionRate: 0
+  BatteryConsumptionRate: 10
   BatteryCapacity: 0
