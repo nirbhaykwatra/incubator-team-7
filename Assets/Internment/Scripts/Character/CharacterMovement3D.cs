@@ -204,6 +204,16 @@ public class CharacterMovement3D : CharacterMovementBase
         Debug.Log($"Dealt {damage} damage to player!");
     }
 
+    public float GetOxygenConsumptionRate()
+    {
+        return OxygenConsumptionRate;
+    }
+
+    public void SetOxygenConsumptionRate(float rate)
+    {
+        OxygenConsumptionRate = rate;
+    }
+
     // path to destination using navmesh
     public virtual void MoveTo(Vector3 destination)
     {
@@ -484,7 +494,7 @@ public class CharacterMovement3D : CharacterMovementBase
 
     protected void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("ChokingHazard"))
+        if (other.TryGetComponent(out OxygenConsumingVolume oxygenConsumingVolume))
         {
             if (Invincible) return;
             ConsumeOxygen = true;
@@ -495,7 +505,7 @@ public class CharacterMovement3D : CharacterMovementBase
 
     protected void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("ChokingHazard"))
+        if (other.TryGetComponent(out OxygenConsumingVolume oxygenConsumingVolume))
         {
             if (Invincible) return;
             ConsumeOxygen = false;
