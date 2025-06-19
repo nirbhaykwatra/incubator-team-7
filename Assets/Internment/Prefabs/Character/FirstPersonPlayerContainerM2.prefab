@@ -577,6 +577,8 @@ MonoBehaviour:
   OnFootstep:
     m_PersistentCalls:
       m_Calls: []
+  OnDeath: {fileID: 11400000, guid: 35d686d63c5ad5e4fabadd8bfc0ff660, type: 2}
+  OnDamage: {fileID: 11400000, guid: 8d4b6299ccc573e4886179636faa03d6, type: 2}
   Oxygen: 100
   MaxOxygen: 100
   FallDamageVelocityThreshold: 10
