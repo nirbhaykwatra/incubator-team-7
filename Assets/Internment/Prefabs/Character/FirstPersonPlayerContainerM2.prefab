@@ -63,7 +63,7 @@ Transform:
   m_GameObject: {fileID: 7091753545980010219}
   serializedVersion: 2
   m_LocalRotation: {x: 0.00000021035842, y: 0.0000008311931, z: -1.7484847e-13, w: 1}
-  m_LocalPosition: {x: 0.00000017881393, y: 17.439554, z: -0.00093746185}
+  m_LocalPosition: {x: 0.00000017881393, y: 83.29955, z: -0.00093746185}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -288,7 +288,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: a2f8ac7e0ad362c47b51e28357d009a1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.84
+      value: 81.7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a2f8ac7e0ad362c47b51e28357d009a1,
         type: 3}
@@ -616,10 +616,10 @@ MonoBehaviour:
   OxygenRegenerationRate: 10
   ConsumeOxygen: 0
   RegenerateOxygen: 1
-  FallDamageVelocityThreshold: 10
-  FallDamageVelocityCap: 20
+  FallDamageVelocityThreshold: 15
+  FallDamageVelocityCap: 25
   FixedFallDamage: 10
-  FallDamageMultiplier: 2
+  FallDamageMultiplier: 5
   ProportionalFallDamage: 1
   <StepHeight>k__BackingField: 0.3
   <StepHeightAllowance>k__BackingField: 0.1

@@ -13,4 +13,16 @@ MonoBehaviour:
   m_Name: NoiseSettings
   m_EditorClassIdentifier: 
   PositionNoise: []
-  OrientationNoise: []
+  OrientationNoise:
+  - X:
+      Frequency: 0.53
+      Amplitude: 0.4
+      Constant: 1
+    Y:
+      Frequency: 1.85
+      Amplitude: 0.16
+      Constant: 1
+    Z:
+      Frequency: 1.65
+      Amplitude: 0.46
+      Constant: 1

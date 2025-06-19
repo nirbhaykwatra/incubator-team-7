@@ -288,6 +288,7 @@ public class CharacterMovement3D : CharacterMovementBase
         Rigidbody.AddForce(acceleration * Rigidbody.mass);
 
         StepCheck();
+        //Debug.Log($"Velocity: {Velocity.y} | Acceleration: {acceleration.y}");
     }
 
     protected virtual void Update()
