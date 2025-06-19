@@ -414,6 +414,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a2f8ac7e0ad362c47b51e28357d009a1,
         type: 3}
       insertIndex: -1
+      addedObject: {fileID: 7860868157163524552}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a2f8ac7e0ad362c47b51e28357d009a1,
+        type: 3}
+      insertIndex: -1
       addedObject: {fileID: 7040904683272500711}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a2f8ac7e0ad362c47b51e28357d009a1,
         type: 3}
@@ -671,6 +675,18 @@ MonoBehaviour:
   OnInteractableClick: {fileID: 11400000, guid: 056576f8d47b61c49ba8ce6acf7960e6,
     type: 2}
   InteractionRange: 5
+--- !u!114 &7860868157163524552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5626711194788362937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f23a9ff9f3982c49a12678e08b06bc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7040904683272500711
 MonoBehaviour:
   m_ObjectHideFlags: 0
