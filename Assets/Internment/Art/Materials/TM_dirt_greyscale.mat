@@ -126,7 +126,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 9064fd7b9f2cff74da4401b68ce51b37, type: 3}
+        m_Texture: {fileID: 2800000, guid: 2064d3f7509340d409756c147d14a116, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Mask:
@@ -227,7 +227,7 @@ Material:
     - _AlphaSrcBlend: 1
     - _Anisotropy: 0
     - _Base_Displacement_Amount: 1
-    - _Base_Normal_Strength: 1
+    - _Base_Normal_Strength: 2
     - _BlendMode: 0
     - _BlendTiling: 1
     - _BlendTiling_1: 1
@@ -343,7 +343,7 @@ Material:
     - _TexWorldScale: 1
     - _TexWorldScaleEmissive: 1
     - _Thickness: 1
-    - _Tiling: 1
+    - _Tiling: 0.5
     - _Top_Down_Projection_Angle: 0.5
     - _TransmissionEnable: 1
     - _TransmissionMask: 1
