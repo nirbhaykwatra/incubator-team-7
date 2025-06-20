@@ -49,7 +49,7 @@ MonoBehaviour:
   moveSpeed: 10
   lookSensitivity: 1
   digRadius: 1
-  maxDigDistance: 1.5
+  maxDigDistance: 2
 --- !u!1001 &5840957596143778334
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -66,17 +66,17 @@ PrefabInstance:
     - target: {fileID: 8289931339598743344, guid: 0ab22e71c4f1bf7439d9d4fc179699ce,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.162928
+      value: 13.164394
       objectReference: {fileID: 0}
     - target: {fileID: 8289931339598743344, guid: 0ab22e71c4f1bf7439d9d4fc179699ce,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 20.476294
+      value: 27.78347
       objectReference: {fileID: 0}
     - target: {fileID: 8289931339598743344, guid: 0ab22e71c4f1bf7439d9d4fc179699ce,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 36.883705
+      value: 34.042797
       objectReference: {fileID: 0}
     - target: {fileID: 8289931339598743344, guid: 0ab22e71c4f1bf7439d9d4fc179699ce,
         type: 3}
