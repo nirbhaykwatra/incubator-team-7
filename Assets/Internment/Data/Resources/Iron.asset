@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4faeaeab1ab460e4a97a49ccec8e6ef5, type: 3}
   m_Name: Iron
   m_EditorClassIdentifier: 
+  Name: Iron
   Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
   ColliderType: 1
   DiggingTime: 5

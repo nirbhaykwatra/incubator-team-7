@@ -414,7 +414,11 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a2f8ac7e0ad362c47b51e28357d009a1,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1651895036979038326}
+      addedObject: {fileID: 2341664194299260442}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a2f8ac7e0ad362c47b51e28357d009a1,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7200580440103511550}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a2f8ac7e0ad362c47b51e28357d009a1,
         type: 3}
       insertIndex: -1
@@ -566,6 +570,8 @@ MonoBehaviour:
   <CursorMode>k__BackingField: 1
   <LookInCameraDirection>k__BackingField: 0
   <Movement>k__BackingField: {fileID: 5910293840121379529}
+  <Interaction>k__BackingField: {fileID: 7073286842016928297}
+  <Equipment>k__BackingField: {fileID: 2341664194299260442}
 --- !u!114 &5910293840121379529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -675,7 +681,7 @@ MonoBehaviour:
   OnInteractableClick: {fileID: 11400000, guid: 056576f8d47b61c49ba8ce6acf7960e6,
     type: 2}
   InteractionRange: 5
---- !u!114 &1651895036979038326
+--- !u!114 &2341664194299260442
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -684,14 +690,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 5626711194788362937}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b71b649ea4199949a230b400e771072, type: 3}
+  m_Script: {fileID: 11500000, guid: 967c0613168a1294aa9dffe021891c8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _batteryLevel: 100
-  _batteryCapacity: 100
-  _rechargeRate: 1
-  _equipment: []
-  _selectedEquipment: {fileID: 0}
+  SelectedEquipment: {fileID: 0}
+  ActiveEquipment: []
+  PassiveEquipment: []
+  _battery: {fileID: 7200580440103511550}
+  _testEquipment: {fileID: 0}
+--- !u!114 &7200580440103511550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5626711194788362937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 201ab18c58c42044a9a2d3c0ee52284a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentLevel: 100
+  Capacity: 100
+  <RechargeRate>k__BackingField: 0
+  <Recharging>k__BackingField: 0
 --- !u!114 &7040904683272500711
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,6 +11,7 @@ public enum ColliderType
 [CreateAssetMenu(fileName = "ResourceData", menuName = "Resources/ResourceData")]
 public class ResourceData : ScriptableObject
 {
+    public string Name;
     public Mesh Mesh;
     public ColliderType ColliderType;
     public float DiggingTime;

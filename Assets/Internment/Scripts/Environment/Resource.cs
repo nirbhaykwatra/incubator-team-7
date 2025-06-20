@@ -22,6 +22,7 @@ public class Resource : MonoBehaviour
 
     private void OnValidate()
     {
+        GetResourceData();
         _hardness = _resourceData.Hardness;
         _rarity = _resourceData.Rarity;
         _resourceHealth = _resourceData.Health;
@@ -64,5 +65,6 @@ public class Resource : MonoBehaviour
     {
         if (_resourceHealth <= 0f) Destroy(gameObject);
         _resourceHealth -= _hardness * Time.deltaTime;
+        Debug.Log($"{_resourceData.Name} health: {_resourceHealth}");
     }
 }

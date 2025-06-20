@@ -45,19 +45,6 @@ public class CharacterInteraction : MonoBehaviour
         }
     }
 
-    public void MineResource()
-    {
-        RaycastHit hit;
-        
-        if (Physics.Raycast(_fpsCamera.gameObject.transform.position, _fpsCamera.gameObject.transform.forward, out hit, InteractionRange))
-        {
-            if (hit.collider.gameObject.TryGetComponent(out Resource resource))
-            {
-                resource.MineResource();
-            }
-        }
-    }
-
     public void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

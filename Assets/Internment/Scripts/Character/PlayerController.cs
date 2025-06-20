@@ -14,17 +14,16 @@ public class PlayerController : MonoBehaviour
 
     [field: Header("Components")]
     [field: SerializeField] protected CharacterMovementBase Movement { get; set; }
-
+    [field: SerializeField] protected CharacterInteraction Interaction { get; set; }
+    [field: SerializeField] protected CharacterEquipment Equipment { get; set; }
+    
     protected Vector2 MoveInput { get; set; }
-    
-    protected CharacterInteraction Interaction { get; set; }
-    
-    protected bool _isMining;
 
     protected virtual void OnValidate()
     {
         if(Movement == null) Movement = GetComponent<CharacterMovementBase>();
         if(Interaction == null) Interaction = GetComponent<CharacterInteraction>();
+        if(Equipment == null) Equipment = GetComponent<CharacterEquipment>();
     }
 
     protected virtual void Awake()
@@ -44,7 +43,7 @@ public class PlayerController : MonoBehaviour
 
     public virtual void OnFire(InputValue value)
     {
-        _isMining = value.isPressed;
+        Equipment?.UseEquipment(value.isPressed);
     }
 
     public virtual void OnInteract(InputValue value)
@@ -66,7 +65,5 @@ public class PlayerController : MonoBehaviour
         Movement.SetMoveInput(moveInput);
         Movement.SetLookDirection(moveInput);
         if (LookInCameraDirection) Movement.SetLookDirection(Camera.main.transform.forward);
-        
-        if(_isMining) Interaction?.MineResource();
     }
 }
