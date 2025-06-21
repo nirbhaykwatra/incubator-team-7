@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Build.Player;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -29,9 +30,22 @@ namespace Internment.Digging.Terrain
         public int width = 32;
         [SerializeField] 
         public int height = 8;
+        [SerializeField]
+        public int length = 8;
+        [SerializeField]
+        public TerrainType terrainType = TerrainType.Dirt;
 
         [Header("Materials")]
         public Material dirtMaterial, rockMaterial;
+        public int dirtHealth = 1;
+        public int rockHealth = 5;
+
+        [Header("Voxel Resolution")]
+        [SerializeField]
+        [Min(1)] public int resolution = 1;
+
+        private float voxelSize;
+        private int W, H, D;
 
         private MeshFilter meshFilter;
         private MeshCollider meshCollider;
@@ -50,11 +64,16 @@ namespace Internment.Digging.Terrain
 
         void OnEnable()
         {
+            voxelSize = 1f / resolution;
+            W = width * resolution + 1;
+            H = height * resolution + 1;
+            D = length * resolution + 1;
+
+            voxels = new Voxel[W, H, D];
+            PopulateVoxels_AsCube();
+
             meshFilter = GetComponent<MeshFilter>();
             meshCollider = GetComponent<MeshCollider>();
-
-            voxels = new Voxel[width + 1, height + 1, width + 1];
-            PopulateVoxels_AsCube();
 
             UpdateBlockyMesh();
 
@@ -63,10 +82,13 @@ namespace Internment.Digging.Terrain
 
         Mesh BuildBlockyMeshFromVoxels()
         {
-            int cx = width + 1, cy = height + 1, cz = width + 1;
+            
             var verts = new List<Vector3>();
-            var tris0 = new List<int>();  // submesh 0: Dirt
-            var tris1 = new List<int>();  // submesh 1: Rock
+            var tris0 = new List<int>();
+            var tris1 = new List<int>();
+            var uvs = new List<Vector2>();
+
+            int cx = W, cy = H, cz = D;
 
             // directions & corner offsets (unchanged)
             Vector3[] norms = { Vector3.up, Vector3.down, Vector3.left,
@@ -79,6 +101,12 @@ namespace Internment.Digging.Terrain
       { new Vector3(0,0,1), new Vector3(0,1,1), new Vector3(1,1,1), new Vector3(1,0,1) }, // forward
       { new Vector3(0,0,0), new Vector3(1,0,0), new Vector3(1,1,0), new Vector3(0,1,0) }, // back
     };
+            Vector2[] faceUVs = {
+                new Vector2(0,0),
+                new Vector2(1,0),
+                new Vector2(1,1),
+                new Vector2(0,1),
+            };
 
             bool IsSolid(int x, int y, int z) =>
               x >= 0 && y >= 0 && z >= 0 && x < cx && y < cy && z < cz && voxels[x, y, z].density <= 0f;
@@ -100,7 +128,10 @@ namespace Internment.Digging.Terrain
                             {
                                 int b = verts.Count;
                                 for (int i = 0; i < 4; i++)
-                                    verts.Add(new Vector3(x, y, z) + corners[f, i]);
+                                {
+                                    verts.Add((new Vector3(x, y, z) + corners[f, i]) * voxelSize);
+                                    uvs.Add(faceUVs[i]);
+                                }
                                 var target = (typeIndex == 1) ? tris1 : tris0;
                                 // add two triangles (wound outward)
                                 target.AddRange(new[] { b, b + 1, b + 2, b, b + 2, b + 3 });
@@ -115,6 +146,7 @@ namespace Internment.Digging.Terrain
 
             // 3) Duplicate vertices so inner faces have their own normals
             verts.AddRange(verts.Take(outerVertCount));
+            uvs.AddRange(uvs.Take(outerVertCount));
 
             // 4) Build the *inner* triangles by reversing each outer triangle
             var inner0 = new List<int>();
@@ -144,13 +176,15 @@ namespace Internment.Digging.Terrain
             {
                 indexFormat = IndexFormat.UInt32,
                 subMeshCount = 2,
-                vertices = verts.ToArray()
+                vertices = verts.ToArray(),
+                uv = uvs.ToArray()
             };
             mesh.SetTriangles(tris0, 0);
             mesh.SetTriangles(tris1, 1);
 
             // 7) Recalculate normals so outer normals point out and inner point in
             mesh.RecalculateNormals();
+            mesh.RecalculateTangents();
             return mesh;
         }
 
@@ -163,69 +197,27 @@ namespace Internment.Digging.Terrain
 
         public void PopulateVoxels_AsCube()
         {
-            // size of your ¡°world¡± in voxels:
-            int W = width + 1;
-            int H = height + 1;
-            int D = width + 1;
 
             for (int x = 0; x < W; x++)
             for (int y = 0; y < H; y++)
             for (int z = 0; z < D; z++)
             {
-                // 1) Decide if (x,y,z) is inside the cube you want
-                //    here we make a full solid block from [0..W)¡Á[0..H)¡Á[0..D)
+                // Decide if (x,y,z) is inside the cube you want
+                // here we make a full solid block from [0..W)¡Á[0..H)¡Á[0..D)
                 bool inside = true;
 
-                // 2) Set density: ¡Ü0 means ¡°solid,¡± so we pick ¨C1f inside
+                // Set density: ¡Ü0 means ¡°solid,¡± so we pick ¨C1f inside
                 float density = inside ? -1f : +1f;
 
-                // 3) Optionally pick a single TerrainType and health:
-                TerrainType t = TerrainType.Dirt;
-                int hp = 1;
 
-                // 4) Store it
-                voxels[x, y, z] = new Voxel
-                {
-                    density = density,
-                    type = t,
-                    health = hp
-                };
-            }
-        }
-
-        public void PopulateVoxels()
-        {
-            for (int x = 0; x <= width; x++)
-            for (int z = 0; z <= width; z++)
-            for (int y = 0; y <= height; y++)
-            {
-                // Compute a terrain height at (x,z):
-                // if it is inside a flat plateau (5< x,z <15), terrain height is 1f
-                // otherwise sample Perlin noise scaled by height
-                float terrainHeight = (x > 5 && x < 15 && z > 5 && z < 15) ? 1f : CalculateHeightBasedOnNoise(x, z, height);
-
-                // Determine the voxel¡¯s density
-                // how far above that noise©\surface Y is.
-                float density = y - terrainHeight;
-
-                // !!!For now: determine the terrain type by depth
-                TerrainType terrainType = (y < terrainHeight * 0.25f) ? TerrainType.Rock : TerrainType.Dirt;
-                
-                // !!!For now: Rock is 5, not rock (dirt) is 1.
-                int hitPointsForVoxel = (terrainType == TerrainType.Rock) ? 5 : 1;
-
+                // Store it
                 voxels[x, y, z] = new Voxel
                 {
                     density = density,
                     type = terrainType,
-                    health = hitPointsForVoxel
+                    health = (terrainType == TerrainType.Rock) ? rockHealth : dirtHealth
                 };
             }
-        }
-
-        private float CalculateHeightBasedOnNoise(int x, int z, int height)
-        {
-            return height * Mathf.PerlinNoise(x / 16f * 1.5f + .001f, z / 16f * 1.5f + .001f);
         }
 
         public void PlaceTerrain(Vector3 worldPos)
@@ -245,33 +237,45 @@ namespace Internment.Digging.Terrain
             UpdateBlockyMesh();
         }
 
-        public void RemoveTerrain(Vector3 worldPos, int radius = 1)
+        public void RemoveTerrain(Vector3 worldPos, int radiusInVoxels = 1)
         {
-            Vector3 local = transform.InverseTransformPoint(worldPos);
+            Vector3 local = transform.InverseTransformPoint(worldPos) / voxelSize;
             int cx = Mathf.FloorToInt(local.x);
             int cy = Mathf.FloorToInt(local.y);
             int cz = Mathf.FloorToInt(local.z);
 
-            for (int dx = -radius; dx <= radius; dx++)
-            for (int dy = -radius; dy <= radius; dy++)
-            for (int dz = -radius; dz <= radius; dz++)
+            // 2) Loop over a cube of side (2*radiusInVoxels+1)
+            for (int dx = -radiusInVoxels; dx <= radiusInVoxels; dx++)
+            for (int dy = -radiusInVoxels; dy <= radiusInVoxels; dy++)
+            for (int dz = -radiusInVoxels; dz <= radiusInVoxels; dz++)
             {
                 int x = cx + dx, y = cy + dy, z = cz + dz;
-                if (!IsInBounds(x, y, z))
-                {
-                    continue;
-                }
 
-                if (dx * dx + dy * dy + dz * dz <= radius * radius)
+                // 3) Bound check against your actual array dims W,H,D
+                if (x < 0 || x >= W ||
+                    y < 0 || y >= H ||
+                    z < 0 || z >= D)
+                    continue;
+
+                // 4) Keep it spherical
+                if (dx * dx + dy * dy + dz * dz > radiusInVoxels * radiusInVoxels)
+                    continue;
+
+                // 5) Decrement health, only clear density when it hits zero
+                ref Voxel v = ref voxels[x, y, z];
+                if (v.density <= 0f && v.health > 0)
                 {
-                    voxels[x, y, z].density = 1f;
+                    v.health--;
+                    if (v.health <= 0)
+                        v.density = +1f;   // carve it out
                 }
             }
 
+            // 6) Rebuild the exact same blocky mesh from the mutated voxel grid
             UpdateBlockyMesh();
         }
 
         private bool IsInBounds(int x, int y, int z) =>
-            x >= 0 && x <= width && y >= 0 && y <= height && z >= 0 && z <= width;
+            x >= 0 && x < W && y >= 0 && y < H && z >= 0 && z < D;
     }
 }

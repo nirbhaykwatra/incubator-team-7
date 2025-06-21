@@ -22,9 +22,10 @@ public class ChunkBoundaryGizmo : MonoBehaviour
 
         int w = marching.width + 1;
         int h = marching.height + 1;
+        int l = marching.length + 1;
 
         Gizmos.color = color;
-        Vector3 size = new Vector3(w, h, w);
+        Vector3 size = new Vector3(w, h, l);
         Vector3 center = transform.position + size * 0.5f;
         Gizmos.DrawWireCube(center, size);
     }
