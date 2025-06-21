@@ -9,6 +9,7 @@ namespace Internment.Digging.TestCamera
         [SerializeField] private float moveSpeed = 10f;
         [SerializeField] private float lookSensitivity = 1f;
         [SerializeField] private float digRadius = 2f;
+        [SerializeField] private float maxDigDistance = 5f;
 
         private void Update()
         {
@@ -41,7 +42,7 @@ namespace Internment.Digging.TestCamera
             }
 
             Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 1f));
-            if (!Physics.Raycast(ray, out var hit))
+            if (!Physics.Raycast(ray, out var hit, maxDigDistance))
             {
                 return;
             }
@@ -63,7 +64,8 @@ namespace Internment.Digging.TestCamera
             }
             else if (Input.GetMouseButtonDown(0))
             {
-                marching.RemoveTerrain(hit.point, (int)digRadius);
+                int radiusInVoxels = Mathf.CeilToInt(digRadius * marching.resolution);
+                marching.RemoveTerrain(hit.point, radiusInVoxels);
             }
         }
     }
