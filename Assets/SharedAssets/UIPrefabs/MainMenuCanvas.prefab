@@ -115,8 +115,8 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_VertexColorAlwaysGammaSpace: 1
+  m_AdditionalShaderChannelsFlag: 1
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -702,8 +702,30 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6120133851376486145, guid: edd580b3cc6cf5b4d8a5b5e2269bc967,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3778305727391164700}
   m_SourcePrefab: {fileID: 100100000, guid: edd580b3cc6cf5b4d8a5b5e2269bc967, type: 3}
+--- !u!1 &6861655672000068838 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6120133851376486145, guid: edd580b3cc6cf5b4d8a5b5e2269bc967,
+    type: 3}
+  m_PrefabInstance: {fileID: 852985957341215719}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3778305727391164700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6861655672000068838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5d739d071c442f4aa3d44b60accea31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &6861655672000068839 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6120133851376486144, guid: edd580b3cc6cf5b4d8a5b5e2269bc967,
@@ -1647,6 +1669,7 @@ PrefabInstance:
     - {fileID: 3260871292258724322, guid: f85136a041ed6164fa98333a6349a94b, type: 3}
     - {fileID: 3260871290884285905, guid: f85136a041ed6164fa98333a6349a94b, type: 3}
     - {fileID: 3260871292684802052, guid: f85136a041ed6164fa98333a6349a94b, type: 3}
+    - {fileID: 8768478126695777674, guid: f85136a041ed6164fa98333a6349a94b, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8768478126428734631, guid: f85136a041ed6164fa98333a6349a94b,
         type: 3}

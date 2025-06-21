@@ -34,14 +34,6 @@ public abstract class CharacterMovementBase : MonoBehaviour
     [field: SerializeField] protected float MaxSlopeAngle { get; set; } = 40f;              // maximum climbable slope, character will slip on anything higher
     [field: SerializeField] protected float CoyoteMaxJumpDistance { get; set; } = 0.5f;     // max distance allowed after leaving ground when doing a coyote jump
     [field: SerializeField] protected LayerMask GroundMask { get; set; } = 1 << 0;          // mask for layers considered the ground
-    
-    [Header("Attributes")]
-    [ProgressBar("MinimumHealth", "MaxHealth", ColorGetter = "GetHealthBarColor")]
-    [MaxValue("MaxHealth")]
-    [SerializeField] protected float Health = 100f;
-    protected float MinimumHealth = 0f;
-    [SerializeField] protected float MaxHealth = 100f;
-    [SerializeField] protected bool Invincible = false;
 
     [field: Header("Events")]
     [field: SerializeField] protected float MinGroundedVelocity { get; set; } = 5f;

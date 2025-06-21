@@ -25,9 +25,9 @@
                 },
                 {
                     "name": "Fire",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "0b89d5e3-9829-454b-9d32-e8e4cee8b9f8",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -36,7 +36,7 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "cf953efd-96a5-42e3-a84c-b4f51b7f9414",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -54,6 +54,15 @@
                     "name": "Interact",
                     "type": "Button",
                     "id": "639bad01-c633-4442-8808-de383cbaf15a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Debug",
+                    "type": "Button",
+                    "id": "8dbe1e89-13b6-4efb-9622-3edf779fcaa2",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -280,6 +289,50 @@
                     "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "44cc8ebf-e2d0-493a-b6e8-ca7f04a50cde",
+                    "path": "<Keyboard>/f1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Debug",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "One Modifier",
+                    "id": "002fdf0c-39f4-4b23-b262-6963c694f8f0",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Debug",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "68d11ffc-a44c-4f96-967a-4808a93692da",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Debug",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "a36e4566-7008-45b3-a824-58aed8bdfac0",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Debug",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },
@@ -289,7 +342,7 @@
             "actions": [
                 {
                     "name": "Navigate",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "fafde1a4-38ed-42ed-b26f-8f91d2cd3839",
                     "expectedControlType": "Vector2",
                     "processors": "",
