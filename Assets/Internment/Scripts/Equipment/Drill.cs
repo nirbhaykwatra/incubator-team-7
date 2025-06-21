@@ -11,11 +11,10 @@ public class Drill : Equipment
     
     public override void EquipmentUpdate()
     {
-        Discharge();
-        
         if (_mining)
         {
-            Debug.Log($"Mining!");
+            Discharge();
+            
             RaycastHit hit;
             
             if (Physics.Raycast(_fpsCamera.gameObject.transform.position, _fpsCamera.gameObject.transform.forward, out hit, InteractionRange))

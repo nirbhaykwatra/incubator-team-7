@@ -54,7 +54,9 @@ public abstract class Equipment : MonoBehaviour
 
     public virtual void Discharge()
     {
-        if (Powered) _battery.Discharge(BatteryConsumptionRate);
+        if (_battery == null) return;
+        if (_battery.CurrentLevel <= 0) Powered = false;
+        if (Powered) _battery.Discharge(BatteryConsumptionRate * Time.deltaTime);
     }
 
     public virtual void EquipmentUpdate()

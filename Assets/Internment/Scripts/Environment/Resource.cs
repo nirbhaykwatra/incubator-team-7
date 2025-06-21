@@ -58,7 +58,7 @@ public class Resource : MonoBehaviour
 
     private void GetResourceData()
     {
-        _resourceData = _resourceDataList[UnityEngine.Random.Range(0, _resourceDataList.Count)];
+        _resourceData = _resourceDataList[UnityEngine.Random.Range(0, _resourceDataList.Count - 1)];
     }
 
     public void MineResource()
