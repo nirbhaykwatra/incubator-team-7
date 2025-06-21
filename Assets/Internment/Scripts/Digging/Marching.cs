@@ -29,9 +29,13 @@ namespace Internment.Digging.Terrain
         public int width = 32;
         [SerializeField] 
         public int height = 8;
+        [SerializeField]
+        public TerrainType terrainType = TerrainType.Dirt;
 
         [Header("Materials")]
         public Material dirtMaterial, rockMaterial;
+        public int dirtHealth = 1;
+        public int rockHealth = 5;
 
         private MeshFilter meshFilter;
         private MeshCollider meshCollider;
@@ -185,60 +189,22 @@ namespace Internment.Digging.Terrain
             for (int y = 0; y < H; y++)
             for (int z = 0; z < D; z++)
             {
-                // 1) Decide if (x,y,z) is inside the cube you want
-                //    here we make a full solid block from [0..W)¡Á[0..H)¡Á[0..D)
+                // Decide if (x,y,z) is inside the cube you want
+                // here we make a full solid block from [0..W)¡Á[0..H)¡Á[0..D)
                 bool inside = true;
 
-                // 2) Set density: ¡Ü0 means ¡°solid,¡± so we pick ¨C1f inside
+                // Set density: ¡Ü0 means ¡°solid,¡± so we pick ¨C1f inside
                 float density = inside ? -1f : +1f;
 
-                // 3) Optionally pick a single TerrainType and health:
-                TerrainType t = TerrainType.Dirt;
-                int hp = 1;
 
-                // 4) Store it
-                voxels[x, y, z] = new Voxel
-                {
-                    density = density,
-                    type = t,
-                    health = hp
-                };
-            }
-        }
-
-        public void PopulateVoxels()
-        {
-            for (int x = 0; x <= width; x++)
-            for (int z = 0; z <= width; z++)
-            for (int y = 0; y <= height; y++)
-            {
-                // Compute a terrain height at (x,z):
-                // if it is inside a flat plateau (5< x,z <15), terrain height is 1f
-                // otherwise sample Perlin noise scaled by height
-                float terrainHeight = (x > 5 && x < 15 && z > 5 && z < 15) ? 1f : CalculateHeightBasedOnNoise(x, z, height);
-
-                // Determine the voxel¡¯s density
-                // how far above that noise©\surface Y is.
-                float density = y - terrainHeight;
-
-                // !!!For now: determine the terrain type by depth
-                TerrainType terrainType = (y < terrainHeight * 0.25f) ? TerrainType.Rock : TerrainType.Dirt;
-                
-                // !!!For now: Rock is 5, not rock (dirt) is 1.
-                int hitPointsForVoxel = (terrainType == TerrainType.Rock) ? 5 : 1;
-
+                // Store it
                 voxels[x, y, z] = new Voxel
                 {
                     density = density,
                     type = terrainType,
-                    health = hitPointsForVoxel
+                    health = (terrainType == TerrainType.Rock) ? rockHealth : dirtHealth
                 };
             }
-        }
-
-        private float CalculateHeightBasedOnNoise(int x, int z, int height)
-        {
-            return height * Mathf.PerlinNoise(x / 16f * 1.5f + .001f, z / 16f * 1.5f + .001f);
         }
 
         public void PlaceTerrain(Vector3 worldPos)
@@ -270,14 +236,21 @@ namespace Internment.Digging.Terrain
             for (int dz = -radius; dz <= radius; dz++)
             {
                 int x = cx + dx, y = cy + dy, z = cz + dz;
-                if (!IsInBounds(x, y, z))
-                {
-                    continue;
-                }
+                if (!IsInBounds(x, y, z)) continue;
+                if (dx * dx + dy * dy + dz * dz > radius * radius) continue;
 
-                if (dx * dx + dy * dy + dz * dz <= radius * radius)
+                // pull out the struct, modify health, write it back
+                Voxel v = voxels[x, y, z];
+                // only dig if it¡¯s still solid
+                if (v.density <= 0f && v.health > 0)
                 {
-                    voxels[x, y, z].density = 1f;
+                    v.health--;
+                    if (v.health <= 0)
+                    {
+                        // only when health is gone do we carve it out
+                        v.density = +1f;
+                    }
+                    voxels[x, y, z] = v;          // write back
                 }
             }
 
