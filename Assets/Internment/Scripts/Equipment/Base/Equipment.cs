@@ -12,6 +12,7 @@ public abstract class Equipment : MonoBehaviour
     [Tooltip("Amount of battery consumed per second")]
     public float BatteryConsumptionRate;
     public Battery _battery;
+    public float BatteryRechargeRate;
     public EquipmentType _equipmentType;
     
     public Camera _fpsCamera;
@@ -49,7 +50,7 @@ public abstract class Equipment : MonoBehaviour
 
     public virtual void Recharge()
     {
-        _battery.Recharge();
+        _battery.Recharge(BatteryRechargeRate * Time.deltaTime);
     }
 
     public virtual void Discharge()

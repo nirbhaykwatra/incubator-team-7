@@ -2,16 +2,14 @@ using UnityEngine;
 
 public class Drill : Equipment
 {
-    private bool _mining = false;
     public override void UseEquipment(bool pressed)
     {
-        _mining = pressed;
-        Powered = pressed;
+        if (_battery.CurrentLevel > 0f ) Powered = pressed;
     }
     
     public override void EquipmentUpdate()
     {
-        if (_mining)
+        if (Powered)
         {
             Discharge();
             
@@ -24,6 +22,11 @@ public class Drill : Equipment
                     resource.MineResource();
                 }
             }
+        }
+
+        if (_battery.Recharging)
+        {
+            Recharge();
         }
     }
 }

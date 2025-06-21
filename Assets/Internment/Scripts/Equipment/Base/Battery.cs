@@ -6,7 +6,6 @@ public class Battery : MonoBehaviour
     [ProgressBar("_minimumCapacity", "Capacity", ColorGetter = "GetBatteryColor")]
     public float CurrentLevel = 100f;
     public float Capacity = 100f;
-    [field: SerializeField] public float RechargeRate { get; set; }
     [field: SerializeField] public bool Recharging { get; set; }
     
     private float _minimumCapacity = 0f;
@@ -21,8 +20,8 @@ public class Battery : MonoBehaviour
         if (CurrentLevel > minimumCapacity) CurrentLevel -= dischargeRate;
     }
 
-    public void Recharge()
+    public void Recharge(float rechargeRate)
     {
-        if (Recharging && CurrentLevel < Capacity) CurrentLevel += RechargeRate;
+        if (Recharging && CurrentLevel < Capacity) CurrentLevel += rechargeRate;
     }
 }
