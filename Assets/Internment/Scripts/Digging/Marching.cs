@@ -30,6 +30,8 @@ namespace Internment.Digging.Terrain
         [SerializeField] 
         public int height = 8;
         [SerializeField]
+        public int length = 8;
+        [SerializeField]
         public TerrainType terrainType = TerrainType.Dirt;
 
         [Header("Materials")]
@@ -57,7 +59,7 @@ namespace Internment.Digging.Terrain
             meshFilter = GetComponent<MeshFilter>();
             meshCollider = GetComponent<MeshCollider>();
 
-            voxels = new Voxel[width + 1, height + 1, width + 1];
+            voxels = new Voxel[width + 1, height + 1, length + 1];
             PopulateVoxels_AsCube();
 
             UpdateBlockyMesh();
@@ -67,10 +69,10 @@ namespace Internment.Digging.Terrain
 
         Mesh BuildBlockyMeshFromVoxels()
         {
-            int cx = width + 1, cy = height + 1, cz = width + 1;
+            int cx = width + 1, cy = height + 1, cz = length + 1;
             var verts = new List<Vector3>();
-            var tris0 = new List<int>();  // submesh 0: Dirt
-            var tris1 = new List<int>();  // submesh 1: Rock
+            var tris0 = new List<int>();
+            var tris1 = new List<int>();
             var uvs = new List<Vector2>();
 
             // directions & corner offsets (unchanged)
@@ -183,7 +185,7 @@ namespace Internment.Digging.Terrain
             // size of your ¡°world¡± in voxels:
             int W = width + 1;
             int H = height + 1;
-            int D = width + 1;
+            int D = length + 1;
 
             for (int x = 0; x < W; x++)
             for (int y = 0; y < H; y++)
@@ -239,7 +241,6 @@ namespace Internment.Digging.Terrain
                 if (!IsInBounds(x, y, z)) continue;
                 if (dx * dx + dy * dy + dz * dz > radius * radius) continue;
 
-                // pull out the struct, modify health, write it back
                 Voxel v = voxels[x, y, z];
                 // only dig if it¡¯s still solid
                 if (v.density <= 0f && v.health > 0)
@@ -250,7 +251,7 @@ namespace Internment.Digging.Terrain
                         // only when health is gone do we carve it out
                         v.density = +1f;
                     }
-                    voxels[x, y, z] = v;          // write back
+                    voxels[x, y, z] = v;
                 }
             }
 
@@ -258,6 +259,6 @@ namespace Internment.Digging.Terrain
         }
 
         private bool IsInBounds(int x, int y, int z) =>
-            x >= 0 && x <= width && y >= 0 && y <= height && z >= 0 && z <= width;
+            x >= 0 && x <= width && y >= 0 && y <= height && z >= 0 && z <= length;
     }
 }
