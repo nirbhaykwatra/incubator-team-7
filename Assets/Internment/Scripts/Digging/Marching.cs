@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Build.Player;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -39,6 +40,13 @@ namespace Internment.Digging.Terrain
         public int dirtHealth = 1;
         public int rockHealth = 5;
 
+        [Header("Voxel Resolution")]
+        [SerializeField]
+        [Min(1)] public int resolution = 1;
+
+        private float voxelSize;
+        private int W, H, D;
+
         private MeshFilter meshFilter;
         private MeshCollider meshCollider;
         public Voxel[,,] voxels;
@@ -56,11 +64,16 @@ namespace Internment.Digging.Terrain
 
         void OnEnable()
         {
+            voxelSize = 1f / resolution;
+            W = width * resolution + 1;
+            H = height * resolution + 1;
+            D = length * resolution + 1;
+
+            voxels = new Voxel[W, H, D];
+            PopulateVoxels_AsCube();
+
             meshFilter = GetComponent<MeshFilter>();
             meshCollider = GetComponent<MeshCollider>();
-
-            voxels = new Voxel[width + 1, height + 1, length + 1];
-            PopulateVoxels_AsCube();
 
             UpdateBlockyMesh();
 
@@ -69,11 +82,13 @@ namespace Internment.Digging.Terrain
 
         Mesh BuildBlockyMeshFromVoxels()
         {
-            int cx = width + 1, cy = height + 1, cz = length + 1;
+            
             var verts = new List<Vector3>();
             var tris0 = new List<int>();
             var tris1 = new List<int>();
             var uvs = new List<Vector2>();
+
+            int cx = W, cy = H, cz = D;
 
             // directions & corner offsets (unchanged)
             Vector3[] norms = { Vector3.up, Vector3.down, Vector3.left,
@@ -114,7 +129,7 @@ namespace Internment.Digging.Terrain
                                 int b = verts.Count;
                                 for (int i = 0; i < 4; i++)
                                 {
-                                    verts.Add(new Vector3(x, y, z) + corners[f, i]);
+                                    verts.Add((new Vector3(x, y, z) + corners[f, i]) * voxelSize);
                                     uvs.Add(faceUVs[i]);
                                 }
                                 var target = (typeIndex == 1) ? tris1 : tris0;
@@ -182,10 +197,6 @@ namespace Internment.Digging.Terrain
 
         public void PopulateVoxels_AsCube()
         {
-            // size of your ¡°world¡± in voxels:
-            int W = width + 1;
-            int H = height + 1;
-            int D = length + 1;
 
             for (int x = 0; x < W; x++)
             for (int y = 0; y < H; y++)
@@ -226,39 +237,45 @@ namespace Internment.Digging.Terrain
             UpdateBlockyMesh();
         }
 
-        public void RemoveTerrain(Vector3 worldPos, int radius = 1)
+        public void RemoveTerrain(Vector3 worldPos, int radiusInVoxels = 1)
         {
-            Vector3 local = transform.InverseTransformPoint(worldPos);
+            Vector3 local = transform.InverseTransformPoint(worldPos) / voxelSize;
             int cx = Mathf.FloorToInt(local.x);
             int cy = Mathf.FloorToInt(local.y);
             int cz = Mathf.FloorToInt(local.z);
 
-            for (int dx = -radius; dx <= radius; dx++)
-            for (int dy = -radius; dy <= radius; dy++)
-            for (int dz = -radius; dz <= radius; dz++)
+            // 2) Loop over a cube of side (2*radiusInVoxels+1)
+            for (int dx = -radiusInVoxels; dx <= radiusInVoxels; dx++)
+            for (int dy = -radiusInVoxels; dy <= radiusInVoxels; dy++)
+            for (int dz = -radiusInVoxels; dz <= radiusInVoxels; dz++)
             {
                 int x = cx + dx, y = cy + dy, z = cz + dz;
-                if (!IsInBounds(x, y, z)) continue;
-                if (dx * dx + dy * dy + dz * dz > radius * radius) continue;
 
-                Voxel v = voxels[x, y, z];
-                // only dig if it¡¯s still solid
+                // 3) Bound check against your actual array dims W,H,D
+                if (x < 0 || x >= W ||
+                    y < 0 || y >= H ||
+                    z < 0 || z >= D)
+                    continue;
+
+                // 4) Keep it spherical
+                if (dx * dx + dy * dy + dz * dz > radiusInVoxels * radiusInVoxels)
+                    continue;
+
+                // 5) Decrement health, only clear density when it hits zero
+                ref Voxel v = ref voxels[x, y, z];
                 if (v.density <= 0f && v.health > 0)
                 {
                     v.health--;
                     if (v.health <= 0)
-                    {
-                        // only when health is gone do we carve it out
-                        v.density = +1f;
-                    }
-                    voxels[x, y, z] = v;
+                        v.density = +1f;   // carve it out
                 }
             }
 
+            // 6) Rebuild the exact same blocky mesh from the mutated voxel grid
             UpdateBlockyMesh();
         }
 
         private bool IsInBounds(int x, int y, int z) =>
-            x >= 0 && x <= width && y >= 0 && y <= height && z >= 0 && z <= length;
+            x >= 0 && x < W && y >= 0 && y < H && z >= 0 && z < D;
     }
 }
