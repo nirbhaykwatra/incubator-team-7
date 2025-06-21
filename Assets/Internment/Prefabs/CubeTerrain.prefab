@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 00184f78eaeff624f80dbed094280030, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -124,11 +124,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSmoothTerrain: 0
-  isFlatShaded: 1
+  isFlatShaded: 0
   terrainSurface: 0.5
   width: 10
   height: 15
-  dirtMaterial: {fileID: 2100000, guid: e2221c4a571252a43bc3f402e8bce03e, type: 2}
+  dirtMaterial: {fileID: 2100000, guid: 00184f78eaeff624f80dbed094280030, type: 2}
   rockMaterial: {fileID: 2100000, guid: ca3f9e852339a6443b0ef4c060ccaa1a, type: 2}
 --- !u!114 &907354679321372537
 MonoBehaviour:

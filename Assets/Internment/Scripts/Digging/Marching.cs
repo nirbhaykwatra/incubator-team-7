@@ -67,6 +67,7 @@ namespace Internment.Digging.Terrain
             var verts = new List<Vector3>();
             var tris0 = new List<int>();  // submesh 0: Dirt
             var tris1 = new List<int>();  // submesh 1: Rock
+            var uvs = new List<Vector2>();
 
             // directions & corner offsets (unchanged)
             Vector3[] norms = { Vector3.up, Vector3.down, Vector3.left,
@@ -79,6 +80,12 @@ namespace Internment.Digging.Terrain
       { new Vector3(0,0,1), new Vector3(0,1,1), new Vector3(1,1,1), new Vector3(1,0,1) }, // forward
       { new Vector3(0,0,0), new Vector3(1,0,0), new Vector3(1,1,0), new Vector3(0,1,0) }, // back
     };
+            Vector2[] faceUVs = {
+                new Vector2(0,0),
+                new Vector2(1,0),
+                new Vector2(1,1),
+                new Vector2(0,1),
+            };
 
             bool IsSolid(int x, int y, int z) =>
               x >= 0 && y >= 0 && z >= 0 && x < cx && y < cy && z < cz && voxels[x, y, z].density <= 0f;
@@ -100,7 +107,10 @@ namespace Internment.Digging.Terrain
                             {
                                 int b = verts.Count;
                                 for (int i = 0; i < 4; i++)
+                                {
                                     verts.Add(new Vector3(x, y, z) + corners[f, i]);
+                                    uvs.Add(faceUVs[i]);
+                                }
                                 var target = (typeIndex == 1) ? tris1 : tris0;
                                 // add two triangles (wound outward)
                                 target.AddRange(new[] { b, b + 1, b + 2, b, b + 2, b + 3 });
@@ -115,6 +125,7 @@ namespace Internment.Digging.Terrain
 
             // 3) Duplicate vertices so inner faces have their own normals
             verts.AddRange(verts.Take(outerVertCount));
+            uvs.AddRange(uvs.Take(outerVertCount));
 
             // 4) Build the *inner* triangles by reversing each outer triangle
             var inner0 = new List<int>();
@@ -144,13 +155,15 @@ namespace Internment.Digging.Terrain
             {
                 indexFormat = IndexFormat.UInt32,
                 subMeshCount = 2,
-                vertices = verts.ToArray()
+                vertices = verts.ToArray(),
+                uv = uvs.ToArray()
             };
             mesh.SetTriangles(tris0, 0);
             mesh.SetTriangles(tris1, 1);
 
             // 7) Recalculate normals so outer normals point out and inner point in
             mesh.RecalculateNormals();
+            mesh.RecalculateTangents();
             return mesh;
         }
 
