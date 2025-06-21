@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using GameEvents;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 using Sirenix.OdinInspector;
 using Unity.Cinemachine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 // 3D implentation 
@@ -34,6 +36,18 @@ public class CharacterMovement3D : CharacterMovementBase
     [SerializeField] protected float OxygenRegenerationRate = 1f;
     [SerializeField] protected bool ConsumeOxygen = false;
     [SerializeField] protected bool RegenerateOxygen = true;
+
+    public bool RegenHealth
+    {
+        get => RegenerateHealth;
+        set => RegenerateHealth = value;
+    }
+
+    public bool RegenOxygen
+    {
+        get => RegenerateOxygen;
+        set => RegenerateOxygen = value;
+    }
     
     [Header("Damage")]
     [Tooltip("The minimum velocity required to cause fall damage.")]
@@ -46,6 +60,14 @@ public class CharacterMovement3D : CharacterMovementBase
     [SerializeField] protected float FallDamageMultiplier = 1f;
     [Tooltip("Whether fall damage is calculated based on velocity or a fixed amount.")]
     [SerializeField] protected bool ProportionalFallDamage = true;
+    
+    [Header("UI Events")]
+    [SerializeField] protected FloatEventAsset OnHealthSetup;
+    [SerializeField] protected FloatEventAsset OnHealthUpdate;
+    [SerializeField] protected FloatEventAsset OnOxygenSetup;
+    [SerializeField] protected FloatEventAsset OnOxygenUpdate;
+    [SerializeField] protected FloatEventAsset OnBatterySetup;
+    [SerializeField] protected FloatEventAsset OnBatteryUpdate;
     
     // step height fields
     [field: Header("Step Height")]
@@ -136,6 +158,9 @@ public class CharacterMovement3D : CharacterMovementBase
         _variationNoiseOffset = Random.value * 10f;
         
         RegenerateHealthByDefault = RegenerateHealth;
+        
+        OnHealthSetup.Invoke(MaxHealth);
+        OnOxygenSetup.Invoke(MaxOxygen);
     }
 
     public override void SetMoveInput(Vector3 input)
@@ -200,6 +225,7 @@ public class CharacterMovement3D : CharacterMovementBase
     {
         Health = Mathf.Clamp(Health - damage, MinimumHealth, MaxHealth);
         OnDamage.Invoke(damage);
+        OnHealthUpdate.Invoke(Health);
         if (Health <= 0f) OnDeath.Invoke(gameObject);
         Debug.Log($"Dealt {damage} damage to player!");
     }
@@ -298,7 +324,7 @@ public class CharacterMovement3D : CharacterMovementBase
         Rigidbody.AddForce(acceleration * Rigidbody.mass);
 
         StepCheck();
-        //Debug.Log($"Velocity: {Velocity.y} | Acceleration: {acceleration.y}");
+        if (!IsGrounded) Debug.Log($"Velocity: {Math.Abs(Velocity.y)} | Acceleration: {acceleration.y}");
     }
 
     protected virtual void Update()
@@ -327,6 +353,7 @@ public class CharacterMovement3D : CharacterMovementBase
             {
                 Oxygen += OxygenRegenerationRate * Time.deltaTime;
                 Oxygen = Mathf.Clamp(Oxygen, 0f, MaxOxygen);
+                OnOxygenUpdate.Invoke(Oxygen);
             }
 
             if (ConsumeOxygen)
@@ -342,6 +369,7 @@ public class CharacterMovement3D : CharacterMovementBase
                     RegenerateOxygen = false;
                     ApplyDamage(10 * Time.deltaTime);
                 }
+                OnOxygenUpdate.Invoke(Oxygen);
             }
             
             // Health regeneration
@@ -349,6 +377,7 @@ public class CharacterMovement3D : CharacterMovementBase
             {
                 Health += HealthRegenerationRate * Time.deltaTime;
                 Health = Mathf.Clamp(Health, 0f, MaxHealth);
+                OnHealthUpdate.Invoke(Health);
             }
         }
     }
@@ -371,23 +400,6 @@ public class CharacterMovement3D : CharacterMovementBase
 #else
         if (hitInfo.rigidbody != null) SurfaceVelocity = hitInfo.rigidbody.velocity;
 #endif
-
-        if (Velocity.y < -FallDamageVelocityThreshold)
-        {
-            
-            if (ProportionalFallDamage)
-            {
-                float velocityMultiplier = Mathf.Clamp01((Math.Abs(Velocity.y)) / FallDamageVelocityCap) * FallDamageMultiplier;
-                Debug.Log($"Velocity: {Velocity.y} | Velocity Multiplier: {velocityMultiplier}");
-                TryApplyDamage(FixedFallDamage * velocityMultiplier);
-                _cameraShake.GenerateImpulse();
-            }
-            else
-            {
-                TryApplyDamage(FixedFallDamage);
-                _cameraShake.GenerateImpulse();
-            }
-        }
 
         // test angle between character up and ground, angles above _maxSlopeAngle are invalid
         bool angleValid = Vector3.Angle(transform.up, hitInfo.normal) < MaxSlopeAngle;
@@ -489,6 +501,24 @@ public class CharacterMovement3D : CharacterMovementBase
         if(Vector3.Distance(point, transform.position) < landingCollisionMaxDistance)
         {
             OnGrounded.Invoke(collision.gameObject);
+            Debug.Log($"Velocity more than threshold? {Math.Abs(collision.relativeVelocity.y) > FallDamageVelocityThreshold}");
+            Debug.Log($"Velocity: {Math.Abs(collision.relativeVelocity.y)} | FallDamageVelocityThreshold: {FallDamageVelocityThreshold}");
+            if (Math.Abs(collision.relativeVelocity.y) > FallDamageVelocityThreshold)
+            {
+                Debug.Log($"Player landed on {collision.gameObject.name}");
+                if (ProportionalFallDamage)
+                {
+                    float velocityMultiplier = Mathf.Clamp01((Math.Abs(collision.relativeVelocity.y)) / FallDamageVelocityCap) * FallDamageMultiplier;
+                    Debug.Log($"Impact Velocity: {collision.relativeVelocity.y} | Velocity Multiplier: {velocityMultiplier}");
+                    TryApplyDamage(FixedFallDamage * velocityMultiplier);
+                    _cameraShake.GenerateImpulse();
+                }
+                else
+                {
+                    TryApplyDamage(FixedFallDamage);
+                    _cameraShake.GenerateImpulse();
+                }
+            }
         }
     }
 

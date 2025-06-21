@@ -580,10 +580,16 @@ MonoBehaviour:
   ConsumeOxygen: 0
   RegenerateOxygen: 1
   FallDamageVelocityThreshold: 15
-  FallDamageVelocityCap: 25
+  FallDamageVelocityCap: 30
   FixedFallDamage: 10
   FallDamageMultiplier: 5
   ProportionalFallDamage: 1
+  OnHealthSetup: {fileID: 0}
+  OnHealthUpdate: {fileID: 0}
+  OnOxygenSetup: {fileID: 0}
+  OnOxygenUpdate: {fileID: 0}
+  OnBatterySetup: {fileID: 0}
+  OnBatteryUpdate: {fileID: 0}
   <StepHeight>k__BackingField: 0.3
   <StepHeightAllowance>k__BackingField: 0.1
   <StepHeightForwardOffset>k__BackingField: 0.05
