@@ -64,7 +64,8 @@ namespace Internment.Digging.TestCamera
             }
             else if (Input.GetMouseButtonDown(0))
             {
-                marching.RemoveTerrain(hit.point, (int)digRadius);
+                int radiusInVoxels = Mathf.CeilToInt(digRadius * marching.resolution);
+                marching.RemoveTerrain(hit.point, radiusInVoxels);
             }
         }
     }
