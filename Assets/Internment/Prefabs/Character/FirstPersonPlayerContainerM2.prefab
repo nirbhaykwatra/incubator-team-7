@@ -552,12 +552,12 @@ MonoBehaviour:
   FixedFallDamage: 10
   FallDamageMultiplier: 5
   ProportionalFallDamage: 1
-  OnHealthSetup: {fileID: 0}
-  OnHealthUpdate: {fileID: 0}
-  OnOxygenSetup: {fileID: 0}
-  OnOxygenUpdate: {fileID: 0}
-  OnBatterySetup: {fileID: 0}
-  OnBatteryUpdate: {fileID: 0}
+  OnHealthSetup: {fileID: 11400000, guid: 389aaa60d7767e240b7a1ca9526de0c9, type: 2}
+  OnHealthUpdate: {fileID: 11400000, guid: 60fec8bc562841d4a91ae016d9a2f37c, type: 2}
+  OnOxygenSetup: {fileID: 11400000, guid: 804e48665b8f90843a76a9c89246a435, type: 2}
+  OnOxygenUpdate: {fileID: 11400000, guid: 5f595cf96df2baf418608c03d2f7084a, type: 2}
+  OnBatterySetup: {fileID: 11400000, guid: 6fd664499f31c2f46b631955f505fbb2, type: 2}
+  OnBatteryUpdate: {fileID: 11400000, guid: 3aa45a6e2bfeb004caaeff4d117b32e1, type: 2}
   <StepHeight>k__BackingField: 0.3
   <StepHeightAllowance>k__BackingField: 0.1
   <StepHeightForwardOffset>k__BackingField: 0.05
@@ -620,9 +620,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 967c0613168a1294aa9dffe021891c8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectedEquipment: {fileID: 0}
+  SelectedEquipment: {fileID: 6337101436085468012}
   ActiveEquipment:
-  - {fileID: 0}
+  - {fileID: 6337101436085468012}
   PassiveEquipment: []
   _battery: {fileID: 7461211414477720402}
   _testEquipment: {fileID: 0}
@@ -1017,3 +1017,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2276545168959636630}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6337101436085468012 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5216859326068916218, guid: 2843fe9b41fc6e64ca804aaec3c3587a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2276545168959636630}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f80096e7ac88b254cad54005b2ae9350, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
