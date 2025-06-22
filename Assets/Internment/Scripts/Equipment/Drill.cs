@@ -9,14 +9,14 @@ public class Drill : Equipment
     {
         base.Awake();
         
-        OnBatterySetup.Invoke(_battery.Capacity);
+        OnBatterySetup?.Invoke(_battery.Capacity);
     }
     public override void UseEquipment(bool pressed)
     {
         if (_battery.CurrentLevel > 0f)
         {
             Powered = pressed;
-            OnBatteryUpdate.Invoke(_battery.CurrentLevel);
+            OnBatteryUpdate?.Invoke(_battery.CurrentLevel);
         }
     }
 
@@ -27,7 +27,7 @@ public class Drill : Equipment
     
     public override void EquipmentUpdate()
     {
-        OnBatteryUpdate.Invoke(_battery.CurrentLevel);
+        OnBatteryUpdate?.Invoke(_battery.CurrentLevel);
         if (Powered)
         {
             Discharge();
