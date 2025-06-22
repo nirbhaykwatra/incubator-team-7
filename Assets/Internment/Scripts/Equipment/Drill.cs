@@ -1,8 +1,10 @@
 using GameEvents;
+using Internment.Digging.Terrain;
 using UnityEngine;
 
 public class Drill : Equipment
 {
+    [SerializeField] private float digRadius = 2f;
     [SerializeField] protected FloatEventAsset OnBatterySetup;
     [SerializeField] protected FloatEventAsset OnBatteryUpdate;
     public override void Awake()
@@ -39,6 +41,12 @@ public class Drill : Equipment
                 if (hit.collider.gameObject.TryGetComponent(out Resource resource))
                 {
                     resource.MineResource();
+                }
+
+                if (hit.collider.gameObject.TryGetComponent(out Marching marching))
+                {
+                    int radiusInVoxels = Mathf.CeilToInt(digRadius * marching.resolution);
+                    marching.RemoveTerrain(hit.point, radiusInVoxels);
                 }
             }
         }
