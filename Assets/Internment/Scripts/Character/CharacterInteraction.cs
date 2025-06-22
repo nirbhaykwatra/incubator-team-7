@@ -26,7 +26,7 @@ public class CharacterInteraction : MonoBehaviour
         {
             if (hit.collider.gameObject.TryGetComponent(out IInteractable interactable))
             {
-                OnInteractableHover.Invoke(gameObject);
+                OnInteractableHover?.Invoke(gameObject);
             }
         }
     }
@@ -39,7 +39,7 @@ public class CharacterInteraction : MonoBehaviour
         {
             if (hit.collider.gameObject.TryGetComponent(out IInteractable interactable))
             {
-                OnInteractableClick.Invoke(gameObject);
+                OnInteractableClick?.Invoke(gameObject);
                 interactable.Interact();
             }
         }
