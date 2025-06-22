@@ -159,8 +159,8 @@ public class CharacterMovement3D : CharacterMovementBase
         
         RegenerateHealthByDefault = RegenerateHealth;
         
-        OnHealthSetup.Invoke(MaxHealth);
-        OnOxygenSetup.Invoke(MaxOxygen);
+        OnHealthSetup?.Invoke(MaxHealth);
+        OnOxygenSetup?.Invoke(MaxOxygen);
     }
 
     public override void SetMoveInput(Vector3 input)
@@ -225,7 +225,7 @@ public class CharacterMovement3D : CharacterMovementBase
     {
         Health = Mathf.Clamp(Health - damage, MinimumHealth, MaxHealth);
         OnDamage.Invoke(damage);
-        OnHealthUpdate.Invoke(Health);
+        OnHealthUpdate?.Invoke(Health);
         if (Health <= 0f) OnDeath.Invoke(gameObject);
         Debug.Log($"Dealt {damage} damage to player!");
     }
@@ -353,7 +353,7 @@ public class CharacterMovement3D : CharacterMovementBase
             {
                 Oxygen += OxygenRegenerationRate * Time.deltaTime;
                 Oxygen = Mathf.Clamp(Oxygen, 0f, MaxOxygen);
-                OnOxygenUpdate.Invoke(Oxygen);
+                OnOxygenUpdate?.Invoke(Oxygen);
             }
 
             if (ConsumeOxygen)
@@ -369,7 +369,7 @@ public class CharacterMovement3D : CharacterMovementBase
                     RegenerateOxygen = false;
                     ApplyDamage(10 * Time.deltaTime);
                 }
-                OnOxygenUpdate.Invoke(Oxygen);
+                OnOxygenUpdate?.Invoke(Oxygen);
             }
             
             // Health regeneration
@@ -377,7 +377,7 @@ public class CharacterMovement3D : CharacterMovementBase
             {
                 Health += HealthRegenerationRate * Time.deltaTime;
                 Health = Mathf.Clamp(Health, 0f, MaxHealth);
-                OnHealthUpdate.Invoke(Health);
+                OnHealthUpdate?.Invoke(Health);
             }
         }
     }
