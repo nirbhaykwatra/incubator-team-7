@@ -996,6 +996,11 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 5216859326068916218, guid: 2843fe9b41fc6e64ca804aaec3c3587a,
         type: 3}
+      propertyPath: _playerBattery
+      value: 
+      objectReference: {fileID: 7461211414477720402}
+    - target: {fileID: 5216859326068916218, guid: 2843fe9b41fc6e64ca804aaec3c3587a,
+        type: 3}
       propertyPath: OnBatteryUpdate
       value: 
       objectReference: {fileID: 11400000, guid: 3aa45a6e2bfeb004caaeff4d117b32e1,

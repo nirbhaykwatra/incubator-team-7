@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Drill : Equipment
 {
-    [SerializeField] private float digRadius = 2f;
     [SerializeField] protected FloatEventAsset OnBatterySetup;
     [SerializeField] protected FloatEventAsset OnBatteryUpdate;
+    [SerializeField] protected Battery _playerBattery;
     public override void Awake()
     {
         base.Awake();
-        
+        UseBattery(_playerBattery);
         OnBatterySetup?.Invoke(_battery.Capacity);
     }
     public override void UseEquipment(bool pressed)
@@ -45,7 +45,7 @@ public class Drill : Equipment
 
                 if (hit.collider.gameObject.TryGetComponent(out Marching marching))
                 {
-                    int radiusInVoxels = Mathf.CeilToInt(digRadius * marching.resolution);
+                    int radiusInVoxels = Mathf.CeilToInt(InteractionRange * marching.resolution);
                     marching.RemoveTerrain(hit.point, radiusInVoxels);
                 }
             }
