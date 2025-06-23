@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Drill : Equipment
 {
+    [SerializeField] protected float digRadius = 2f;
     [SerializeField] protected FloatEventAsset OnBatterySetup;
     [SerializeField] protected FloatEventAsset OnBatteryUpdate;
     [SerializeField] protected Battery _playerBattery;
@@ -45,7 +46,7 @@ public class Drill : Equipment
 
                 if (hit.collider.gameObject.TryGetComponent(out Marching marching))
                 {
-                    int radiusInVoxels = Mathf.CeilToInt(InteractionRange * marching.resolution);
+                    int radiusInVoxels = Mathf.CeilToInt(digRadius * marching.resolution);
                     marching.RemoveTerrain(hit.point, radiusInVoxels);
                 }
             }
