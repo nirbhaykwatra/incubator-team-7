@@ -640,7 +640,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentLevel: 100
   Capacity: 100
+  PassiveDrainRate: 1
   <Recharging>k__BackingField: 0
+  <PassiveDrain>k__BackingField: 0
 --- !u!114 &4025752467604214865
 MonoBehaviour:
   m_ObjectHideFlags: 0
