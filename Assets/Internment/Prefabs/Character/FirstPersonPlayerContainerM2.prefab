@@ -517,7 +517,7 @@ Transform:
   m_GameObject: {fileID: 6368689977524761624}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.44, y: 0, z: -17.14}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -949,7 +949,7 @@ Transform:
   m_GameObject: {fileID: 7708765342518604820}
   serializedVersion: 2
   m_LocalRotation: {x: 0.00000021035842, y: 0.0000008311931, z: -1.7484847e-13, w: 1}
-  m_LocalPosition: {x: 5.44, y: 1.5995549, z: -17.140938}
+  m_LocalPosition: {x: 0, y: 1.599555, z: -0.0009384155}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1152,6 +1152,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5216859326068916218, guid: 2843fe9b41fc6e64ca804aaec3c3587a,
         type: 3}
+      propertyPath: digRadius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5216859326068916218, guid: 2843fe9b41fc6e64ca804aaec3c3587a,
+        type: 3}
       propertyPath: OnBatterySetup
       value: 
       objectReference: {fileID: 11400000, guid: 6fd664499f31c2f46b631955f505fbb2,
@@ -1170,7 +1175,7 @@ PrefabInstance:
     - target: {fileID: 5216859326068916218, guid: 2843fe9b41fc6e64ca804aaec3c3587a,
         type: 3}
       propertyPath: InteractionRange
-      value: 3
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 5216859326068916218, guid: 2843fe9b41fc6e64ca804aaec3c3587a,
         type: 3}
@@ -1271,6 +1276,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8415180774214417186, guid: 2843fe9b41fc6e64ca804aaec3c3587a,
+        type: 3}
+      propertyPath: PassiveDrainRate
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8415180774214417186, guid: 2843fe9b41fc6e64ca804aaec3c3587a,
+        type: 3}
+      propertyPath: <PassiveDrain>k__BackingField
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
