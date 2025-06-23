@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField] protected CharacterMovementBase Movement { get; set; }
     [field: SerializeField] protected CharacterInteraction Interaction { get; set; }
     [field: SerializeField] protected CharacterEquipment Equipment { get; set; }
+    [field: SerializeField] protected CharacterRadar Radar { get; set; }
     
     protected Vector2 MoveInput { get; set; }
 
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour
         if(Movement == null) Movement = GetComponent<CharacterMovementBase>();
         if(Interaction == null) Interaction = GetComponent<CharacterInteraction>();
         if(Equipment == null) Equipment = GetComponent<CharacterEquipment>();
+        if(Radar == null) Radar = GetComponent<CharacterRadar>();  
     }
 
     protected virtual void Awake()
@@ -49,6 +51,11 @@ public class PlayerController : MonoBehaviour
     public virtual void OnInteract(InputValue value)
     {
         Interaction?.OnInteract(value);
+    }
+
+    public virtual void OnRadar(InputValue value)
+    {
+        Radar?.HandleRadar();
     }
 
     protected virtual void Update()
