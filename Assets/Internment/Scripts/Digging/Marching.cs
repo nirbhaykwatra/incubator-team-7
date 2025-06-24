@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Build.Player;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -203,10 +202,8 @@ namespace Internment.Digging.Terrain
             for (int z = 0; z < D; z++)
             {
                 // Decide if (x,y,z) is inside the cube you want
-                // here we make a full solid block from [0..W)¡Á[0..H)¡Á[0..D)
                 bool inside = true;
-
-                // Set density: ¡Ü0 means ¡°solid,¡± so we pick ¨C1f inside
+                
                 float density = inside ? -1f : +1f;
 
 
