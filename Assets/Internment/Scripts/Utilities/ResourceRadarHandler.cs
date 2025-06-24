@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +11,8 @@ public class ResourceRadarHandler : MonoBehaviour
     [SerializeField] private Image _downBlip;
     [SerializeField] private float _fadeSpeed = 0.003f;
     
+    private CinemachineCamera _player;
+    
     private float lerpAmount;
 
     private void Awake()
@@ -16,6 +20,13 @@ public class ResourceRadarHandler : MonoBehaviour
         _normalBlip.color = new Color(255, 255, 255, 0.0f);
         _upBlip.color = new Color(255, 255, 255, 0.0f);
         _downBlip.color = new Color(255, 255, 255, 0.0f);
+        _player = FindFirstObjectByType<CinemachineCamera>();
+    }
+
+    private void Update()
+    {
+        _upBlip.rectTransform.rotation = Quaternion.Euler(90f, 0f, -_player.transform.eulerAngles.y);
+        _downBlip.rectTransform.rotation = Quaternion.Euler(90f, 0f, -_player.transform.eulerAngles.y);
     }
 
     public void PingResource()

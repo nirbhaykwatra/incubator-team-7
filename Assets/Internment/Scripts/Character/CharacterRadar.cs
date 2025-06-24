@@ -14,6 +14,7 @@ public class CharacterRadar : MonoBehaviour
     [SerializeField] private float _shortRadarRange = 5f;
     [SerializeField] private float _longRadarCooldown = 1f;
     [SerializeField] private float _shortRadarCooldown = 1f;
+    [SerializeField] private float _directionDisplayDistance = 1f;
     [SerializeField] private SphereCollider _longRadarCollider;
     [SerializeField] private SphereCollider _shortRadarCollider;
     [field: SerializeField] public EquipmentState EquipmentState { get; set; } = EquipmentState.Operational;
@@ -27,13 +28,12 @@ public class CharacterRadar : MonoBehaviour
     {
         _longRadarCollider.radius = _longRadarRange;
         _shortRadarCollider.radius = _shortRadarRange;
+
+        _longRadarCooldownTimer = _longRadarCooldown;
     }
 
     public void HandleRadar()
     {
-        
-        
-
         switch (EquipmentState)
         {
             case EquipmentState.Operational:
@@ -43,7 +43,6 @@ public class CharacterRadar : MonoBehaviour
                 {
                     if (_longRangeColliders[i].TryGetComponent(out Resource resource))
                     {
-                        Debug.Log($"Long Range Collider {i}: {resource.gameObject.name}");
                         resource.gameObject.GetComponent<ResourceRadarHandler>().PingResource();
                     }
                 }
@@ -55,8 +54,25 @@ public class CharacterRadar : MonoBehaviour
                 {
                     if (_shortRangeColliders[i].TryGetComponent(out Resource resource))
                     {
-                        Debug.Log($"Short Range Collider {i}: {resource.gameObject.name}");
-                        resource.gameObject.GetComponent<ResourceRadarHandler>().PingResource();
+                        if (Vector3.Distance(transform.position, resource.transform.position) <
+                            _directionDisplayDistance)
+                        {
+                            if (IsResourceAbove(resource.transform.position))
+                            {
+                                Debug.Log("Resource is above");
+                                resource.gameObject.GetComponent<ResourceRadarHandler>().PingResourceUp();
+                            }
+                            else
+                            {
+                                Debug.Log("Resource is below");
+                                resource.gameObject.GetComponent<ResourceRadarHandler>().PingResourceDown();
+                            }
+                        }
+                        else
+                        {
+                            Debug.Log($"Short Range Collider {i}: {resource.gameObject.name}");
+                            resource.gameObject.GetComponent<ResourceRadarHandler>().PingResource();
+                        }
                     }
                 }
                 break;
@@ -84,8 +100,31 @@ public class CharacterRadar : MonoBehaviour
                     {
                         if (_shortRangeColliders[i].TryGetComponent(out Resource resource))
                         {
-                            Debug.Log($"Short Range Collider {i}: {resource.gameObject.name}");
-                            resource.gameObject.GetComponent<ResourceRadarHandler>().PingResource();
+                            Debug.Log($"{resource.name} distance from player: {Vector3.Distance(transform.position, resource.transform.position)}");
+                            if (Vector3.Distance(transform.position, resource.transform.position) <
+                                _directionDisplayDistance)
+                            {
+                                Debug.Log("Resource is close");
+                                Vector3 direction = resource.transform.position - transform.position;
+                                if (direction.magnitude > 2f)
+                                {
+                                    if (IsResourceAbove(resource.transform.position))
+                                    {
+                                        Debug.Log("Resource is above");
+                                        resource.gameObject.GetComponent<ResourceRadarHandler>().PingResourceUp();
+                                    }
+                                    else
+                                    {
+                                        Debug.Log("Resource is below");
+                                        resource.gameObject.GetComponent<ResourceRadarHandler>().PingResourceDown();
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Debug.Log($"Pinging Resource: {resource.name}");
+                                resource.gameObject.GetComponent<ResourceRadarHandler>().PingResource();
+                            }
                         }
                     }
                     _shortRadarCooldownTimer = 0f;
@@ -96,5 +135,15 @@ public class CharacterRadar : MonoBehaviour
             default:
                 throw new ArgumentOutOfRangeException();
         }
+    }
+
+    private bool IsResourceAbove(Vector3 resourcePosition)
+    {
+        Vector3 direction = resourcePosition - transform.position;
+        Vector3 playerUp = transform.up;
+        
+        float dotProduct = Vector3.Dot(direction, playerUp);
+        
+        return dotProduct > 0;
     }
 }
