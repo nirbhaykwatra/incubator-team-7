@@ -12,13 +12,15 @@ public class CharacterRadar : MonoBehaviour
 {
     [SerializeField] private float _longRadarRange = 10f;
     [SerializeField] private float _shortRadarRange = 5f;
-    [SerializeField] private float _longRadarCooldown = 1f;
+    [SerializeField] private float _longRadarCooldown = 5f;
     [SerializeField] private float _shortRadarCooldown = 1f;
-    [SerializeField] private float _directionDisplayDistance = 1f;
+    [SerializeField] private float _directionDisplayDistance = 2.5f;
+    [SerializeField] private float _resourceMinimumVerticalDistanceForArrowDisplay = 2f;
     [SerializeField] private SphereCollider _longRadarCollider;
     [SerializeField] private SphereCollider _shortRadarCollider;
     [field: SerializeField] public EquipmentState EquipmentState { get; set; } = EquipmentState.Operational;
     
+    private Battery _playerBattery;
     private Collider[] _longRangeColliders = new Collider[100];
     private Collider[] _shortRangeColliders = new Collider[100];
     private float _longRadarCooldownTimer;
@@ -30,6 +32,8 @@ public class CharacterRadar : MonoBehaviour
         _shortRadarCollider.radius = _shortRadarRange;
 
         _longRadarCooldownTimer = _longRadarCooldown;
+        _shortRadarCooldownTimer = _shortRadarCooldown;
+        _playerBattery = GetComponent<Battery>();
     }
 
     public void HandleRadar()
@@ -49,6 +53,7 @@ public class CharacterRadar : MonoBehaviour
                 _longRadarCooldownTimer = 0f;
                 break;
             case EquipmentState.Emergency:
+                if (_shortRadarCooldownTimer < _shortRadarCooldown) return;
                 int shortRangeResources = Physics.OverlapSphereNonAlloc(transform.position, _shortRadarRange, _shortRangeColliders, 1 << 7);
                 for (int i = 0; i < shortRangeResources; i++)
                 {
@@ -57,24 +62,26 @@ public class CharacterRadar : MonoBehaviour
                         if (Vector3.Distance(transform.position, resource.transform.position) <
                             _directionDisplayDistance)
                         {
-                            if (IsResourceAbove(resource.transform.position))
+                            Vector3 direction = resource.transform.position - transform.position;
+                            if (direction.magnitude > _resourceMinimumVerticalDistanceForArrowDisplay)
                             {
-                                Debug.Log("Resource is above");
-                                resource.gameObject.GetComponent<ResourceRadarHandler>().PingResourceUp();
-                            }
-                            else
-                            {
-                                Debug.Log("Resource is below");
-                                resource.gameObject.GetComponent<ResourceRadarHandler>().PingResourceDown();
+                                if (IsResourceAbove(resource.transform.position))
+                                {
+                                    resource.gameObject.GetComponent<ResourceRadarHandler>().PingResourceUp();
+                                }
+                                else
+                                {
+                                    resource.gameObject.GetComponent<ResourceRadarHandler>().PingResourceDown();
+                                }
                             }
                         }
                         else
                         {
-                            Debug.Log($"Short Range Collider {i}: {resource.gameObject.name}");
                             resource.gameObject.GetComponent<ResourceRadarHandler>().PingResource();
                         }
                     }
                 }
+                _shortRadarCooldownTimer = 0f;
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -89,7 +96,6 @@ public class CharacterRadar : MonoBehaviour
                 if (_longRadarCooldownTimer < _longRadarCooldown)
                 {
                     _longRadarCooldownTimer += Time.deltaTime;
-                    Debug.Log($"Long Radar Cooldown: {_longRadarCooldownTimer}");
                 }
                 
                 _shortRadarCooldownTimer += Time.deltaTime;
@@ -100,29 +106,24 @@ public class CharacterRadar : MonoBehaviour
                     {
                         if (_shortRangeColliders[i].TryGetComponent(out Resource resource))
                         {
-                            Debug.Log($"{resource.name} distance from player: {Vector3.Distance(transform.position, resource.transform.position)}");
                             if (Vector3.Distance(transform.position, resource.transform.position) <
                                 _directionDisplayDistance)
                             {
-                                Debug.Log("Resource is close");
                                 Vector3 direction = resource.transform.position - transform.position;
-                                if (direction.magnitude > 2f)
+                                if (direction.magnitude > _resourceMinimumVerticalDistanceForArrowDisplay)
                                 {
                                     if (IsResourceAbove(resource.transform.position))
                                     {
-                                        Debug.Log("Resource is above");
                                         resource.gameObject.GetComponent<ResourceRadarHandler>().PingResourceUp();
                                     }
                                     else
                                     {
-                                        Debug.Log("Resource is below");
                                         resource.gameObject.GetComponent<ResourceRadarHandler>().PingResourceDown();
                                     }
                                 }
                             }
                             else
                             {
-                                Debug.Log($"Pinging Resource: {resource.name}");
                                 resource.gameObject.GetComponent<ResourceRadarHandler>().PingResource();
                             }
                         }
@@ -131,9 +132,25 @@ public class CharacterRadar : MonoBehaviour
                 }
                 break;
             case EquipmentState.Emergency:
+                if (_shortRadarCooldownTimer < _shortRadarCooldown)
+                {
+                    _shortRadarCooldownTimer += Time.deltaTime;
+                }
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
+        }
+    }
+
+    public void CheckEquipmentState()
+    {
+        if (_playerBattery.CurrentLevel < 20f)
+        {
+            EquipmentState = EquipmentState.Emergency;
+        }
+        else
+        {
+            EquipmentState = EquipmentState.Operational;
         }
     }
 
