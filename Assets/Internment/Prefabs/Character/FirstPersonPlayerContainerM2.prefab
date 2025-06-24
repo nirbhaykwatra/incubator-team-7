@@ -1468,8 +1468,12 @@ MonoBehaviour:
   _longRadarRange: 10
   _shortRadarRange: 5
   _longRadarCooldown: 1
+  _shortRadarCooldown: 1
+  _directionDisplayDistance: 2.5
+  _resourceMinimumVerticalDistanceForArrowDisplay: 2
   _longRadarCollider: {fileID: 1286682794053844302}
   _shortRadarCollider: {fileID: 6493294657013196844}
+  <EquipmentState>k__BackingField: 0
 --- !u!114 &7461211414477720402
 MonoBehaviour:
   m_ObjectHideFlags: 0
