@@ -13,11 +13,15 @@ public class CharacterRadar : MonoBehaviour
     [SerializeField] private float _longRadarRange = 10f;
     [SerializeField] private float _shortRadarRange = 5f;
     [SerializeField] private float _longRadarCooldown = 1f;
+    [SerializeField] private float _shortRadarCooldown = 1f;
     [SerializeField] private SphereCollider _longRadarCollider;
     [SerializeField] private SphereCollider _shortRadarCollider;
+    [field: SerializeField] public EquipmentState EquipmentState { get; set; } = EquipmentState.Operational;
     
     private Collider[] _longRangeColliders = new Collider[100];
     private Collider[] _shortRangeColliders = new Collider[100];
+    private float _longRadarCooldownTimer;
+    private float _shortRadarCooldownTimer;
 
     private void Awake()
     {
@@ -27,29 +31,70 @@ public class CharacterRadar : MonoBehaviour
 
     public void HandleRadar()
     {
-        int longRangeResources = Physics.OverlapSphereNonAlloc(transform.position, _longRadarRange, _longRangeColliders, 1 << 7);
-        int shortRangeResources = Physics.OverlapSphereNonAlloc(transform.position, _shortRadarRange, _shortRangeColliders, 1 << 7);
         
-        Debug.Log($"Long range resources: {longRangeResources}");
-        Debug.Log($"Short range resources: {shortRangeResources}");
         
-        for (int i = 0; i < longRangeResources; i++)
+
+        switch (EquipmentState)
         {
-            
-            if (_longRangeColliders[i].TryGetComponent(out Resource resource))
-            {
-                Debug.Log($"Long Range Collider {i}: {resource.gameObject.name}");
-                resource.gameObject.GetComponent<ResourceRadarHandler>().PingResource();
-            }
+            case EquipmentState.Operational:
+                if (_longRadarCooldownTimer < _longRadarCooldown) return;
+                int longRangeResources = Physics.OverlapSphereNonAlloc(transform.position, _longRadarRange, _longRangeColliders, 1 << 7);
+                for (int i = 0; i < longRangeResources; i++)
+                {
+                    if (_longRangeColliders[i].TryGetComponent(out Resource resource))
+                    {
+                        Debug.Log($"Long Range Collider {i}: {resource.gameObject.name}");
+                        resource.gameObject.GetComponent<ResourceRadarHandler>().PingResource();
+                    }
+                }
+                _longRadarCooldownTimer = 0f;
+                break;
+            case EquipmentState.Emergency:
+                int shortRangeResources = Physics.OverlapSphereNonAlloc(transform.position, _shortRadarRange, _shortRangeColliders, 1 << 7);
+                for (int i = 0; i < shortRangeResources; i++)
+                {
+                    if (_shortRangeColliders[i].TryGetComponent(out Resource resource))
+                    {
+                        Debug.Log($"Short Range Collider {i}: {resource.gameObject.name}");
+                        resource.gameObject.GetComponent<ResourceRadarHandler>().PingResource();
+                    }
+                }
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
-        
-        for (int i = 0; i < shortRangeResources; i++)
+    }
+
+    private void Update()
+    {
+        switch (EquipmentState)
         {
-            if (_shortRangeColliders[i].TryGetComponent(out Resource resource))
-            {
-                Debug.Log($"Short Range Collider {i}: {resource.gameObject.name}");
-                resource.gameObject.GetComponent<ResourceRadarHandler>().PingResource();
-            }
+            case EquipmentState.Operational:
+                if (_longRadarCooldownTimer < _longRadarCooldown)
+                {
+                    _longRadarCooldownTimer += Time.deltaTime;
+                    Debug.Log($"Long Radar Cooldown: {_longRadarCooldownTimer}");
+                }
+                
+                _shortRadarCooldownTimer += Time.deltaTime;
+                if (_shortRadarCooldownTimer >= _shortRadarCooldown)
+                {
+                    int shortRangeResources = Physics.OverlapSphereNonAlloc(transform.position, _shortRadarRange, _shortRangeColliders, 1 << 7);
+                    for (int i = 0; i < shortRangeResources; i++)
+                    {
+                        if (_shortRangeColliders[i].TryGetComponent(out Resource resource))
+                        {
+                            Debug.Log($"Short Range Collider {i}: {resource.gameObject.name}");
+                            resource.gameObject.GetComponent<ResourceRadarHandler>().PingResource();
+                        }
+                    }
+                    _shortRadarCooldownTimer = 0f;
+                }
+                break;
+            case EquipmentState.Emergency:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
     }
 }
