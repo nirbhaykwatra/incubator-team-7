@@ -43,9 +43,9 @@ namespace Internment.Digging.Terrain
         [SerializeField]
         [Min(1)] public int resolution = 1;
 
-        [Header("Cave Volume (optional)")]
-        [Tooltip("If set, any voxel whose center lies inside this collider will be hollowed out.")]
-        public Collider carveCollider;
+        [Header("Cave Volumes (optional)")]
+        [Tooltip("If set, any voxel whose center lies inside these colliders will be hollowed out.")]
+        public List<Collider> carveColliders = new List<Collider>();
 
         private float voxelSize;
         private int W, H, D;
@@ -212,12 +212,16 @@ namespace Internment.Digging.Terrain
                 // Decide if (x,y,z) is inside the cube you want
                 bool isSolid = true;
 
-                        if (carveCollider != null)
+
+                foreach (var col in carveColliders)
                 {
-                    Vector3 closest = carveCollider.ClosestPoint(worldPos);
-                    if (Vector3.Distance(closest, worldPos) < 1e-4f)
+                    if (col == null) continue;
+                    Vector3 closest = col.ClosestPoint(worldPos);
+                    // if closest point is our point, it lies inside the collider
+                    if ((closest - worldPos).sqrMagnitude < 1e-6f)
                     {
-                        isSolid = false; // we¡¯re inside the carve volume
+                        isSolid = false;
+                        break;
                     }
                 }
 
