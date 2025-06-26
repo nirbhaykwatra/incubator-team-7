@@ -75,6 +75,15 @@ namespace Internment.Digging.Terrain
             voxels = new Voxel[W, H, D];
             PopulateVoxels_AsCube();
 
+            // disable colliders so player won't collide
+            foreach (var col in carveColliders)
+            {
+                if (col != null)
+                {
+                    col.enabled = false;
+                }
+            }
+
             meshFilter = GetComponent<MeshFilter>();
             meshCollider = GetComponent<MeshCollider>();
 
