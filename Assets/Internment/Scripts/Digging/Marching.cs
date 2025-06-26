@@ -43,6 +43,10 @@ namespace Internment.Digging.Terrain
         [SerializeField]
         [Min(1)] public int resolution = 1;
 
+        [Header("Cave Volumes (optional)")]
+        [Tooltip("If set, any voxel whose center lies inside these colliders will be hollowed out.")]
+        public List<Collider> carveColliders = new List<Collider>();
+
         private float voxelSize;
         private int W, H, D;
 
@@ -201,18 +205,34 @@ namespace Internment.Digging.Terrain
             for (int y = 0; y < H; y++)
             for (int z = 0; z < D; z++)
             {
-                // Decide if (x,y,z) is inside the cube you want
-                bool inside = true;
+
+                Vector3 localCenter = new Vector3(x + 0.5f, y + 0.5f, z + 0.5f) * voxelSize;
+                Vector3 worldPos = transform.TransformPoint(localCenter);
                 
-                float density = inside ? -1f : +1f;
+                // Decide if (x,y,z) is inside the cube you want
+                bool isSolid = true;
 
 
-                // Store it
+                foreach (var col in carveColliders)
+                {
+                    if (col == null) continue;
+                    Vector3 closest = col.ClosestPoint(worldPos);
+                    // if closest point is our point, it lies inside the collider
+                    if ((closest - worldPos).sqrMagnitude < 1e-6f)
+                    {
+                        isSolid = false;
+                        break;
+                    }
+                }
+
+                float density = isSolid ? -1f : +1f;
+                int hp = isSolid ? ((terrainType == TerrainType.Rock) ? rockHealth : dirtHealth) : 0;
+
                 voxels[x, y, z] = new Voxel
                 {
                     density = density,
                     type = terrainType,
-                    health = (terrainType == TerrainType.Rock) ? rockHealth : dirtHealth
+                    health = hp
                 };
             }
         }
