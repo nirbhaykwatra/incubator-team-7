@@ -36,7 +36,7 @@ public class MoldAgent : MonoBehaviour
 
     public Status Capture()
     {
-        if (_player == null) return Status.Failure;
+        if (_player == null || _navMeshAgent == null || _characterMovement == null) return Status.Failure;
         if (_characterMovement.StoppingDistance > 0 && Vector3.Distance(_navMeshAgent.destination, transform.position) <
             _characterMovement.StoppingDistance)
         {
@@ -51,7 +51,7 @@ public class MoldAgent : MonoBehaviour
 
     public Status Pursue()
     {
-        if (_player == null) return Status.Failure;
+        if (_player == null || _navMeshAgent == null || _characterMovement == null) return Status.Failure;
         if (_characterMovement.StoppingDistance > 0 && Vector3.Distance(_navMeshAgent.destination, transform.position) <
             _characterMovement.StoppingDistance)
         {
