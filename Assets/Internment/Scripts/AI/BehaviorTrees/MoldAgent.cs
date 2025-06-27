@@ -11,6 +11,7 @@ public class MoldAgent : MonoBehaviour
     private PlayerController _player;
     
     private Status treeStatus = Status.Running;
+    private bool _hasPursuedPlayer = false;
     
     private void Awake()
     {
@@ -20,9 +21,11 @@ public class MoldAgent : MonoBehaviour
         
         tree = new BehaviorTree();
         Sequence pursuit = new Sequence("Pursuit");
+        Leaf idle = new Leaf("Idle", Idle);
         Leaf pursue = new Leaf("Pursue", Pursue);
         Leaf capture = new Leaf("Capture", Capture);
         
+        //pursuit.AddChild(idle);
         pursuit.AddChild(pursue);
         pursuit.AddChild(capture);
         tree.AddChild(pursuit);
@@ -32,19 +35,30 @@ public class MoldAgent : MonoBehaviour
     
     private void Update()
     {
-        Debug.Log($"Node int: {tree.CurrentChild}");
-        Debug.Log($"Tree status: {treeStatus}");
         if (treeStatus == Status.Running)
         {
             treeStatus = tree.Process();
         }
     }
 
+    public Status Idle()
+    {
+        if (_player == null || _navMeshAgent == null || _characterMovement == null) return Status.Failure;
+        
+        float distance = Vector3.Distance(transform.position, _player.gameObject.transform.position);
+        if (distance < 2f)
+        {
+            return Status.Success;
+        }
+        
+        return Status.Running;
+    }
+
     public Status Capture()
     {
         if (_player == null || _navMeshAgent == null || _characterMovement == null) return Status.Failure;
         _characterMovement.MoveTo(Vector3.zero);
-        float distance = Vector3.Distance(_navMeshAgent.destination, Vector3.zero);
+        float distance = Vector3.Distance(transform.position, Vector3.zero);
         if (distance < 0.2f)
         {
             return Status.Success;
@@ -55,7 +69,8 @@ public class MoldAgent : MonoBehaviour
     public Status Pursue()
     {
         if (_player == null || _navMeshAgent == null || _characterMovement == null) return Status.Failure;
-        float distance = Vector3.Distance(_navMeshAgent.destination, _player.transform.position);
+        float distance = Vector3.Distance(transform.position, _player.gameObject.transform.position);
+        Debug.Log(distance);
         _characterMovement.MoveTo(_player.transform.position);
 
         if (distance < 2f)
