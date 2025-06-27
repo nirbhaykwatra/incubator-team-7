@@ -9,8 +9,10 @@ public class Sequence : Node
 
     public override Status Process()
     {
+        Debug.Log($"Sequence: {Name}");
         Status childStatus = Children[CurrentChild].Process();
         if (childStatus == Status.Failure) return childStatus;
+        if (childStatus == Status.Running) return childStatus;
 
         CurrentChild++;
         if (CurrentChild >= Children.Count)

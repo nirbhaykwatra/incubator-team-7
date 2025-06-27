@@ -18,10 +18,6 @@ public class MoldAgent : MonoBehaviour
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _player = FindFirstObjectByType<PlayerController>();
         
-        Debug.Log($"Player: {_player}");
-        Debug.Log($"NavMeshAgent: {_navMeshAgent}");
-        Debug.Log($"CharacterMovement: {_characterMovement}");
-        
         tree = new BehaviorTree();
         Sequence pursuit = new Sequence("Pursuit");
         Leaf pursue = new Leaf("Pursue", Pursue);
@@ -47,30 +43,26 @@ public class MoldAgent : MonoBehaviour
     public Status Capture()
     {
         if (_player == null || _navMeshAgent == null || _characterMovement == null) return Status.Failure;
-        if (_characterMovement.StoppingDistance > 0 && Vector3.Distance(_navMeshAgent.destination, transform.position) <
-            _characterMovement.StoppingDistance)
+        _characterMovement.MoveTo(Vector3.zero);
+        float distance = Vector3.Distance(_navMeshAgent.destination, Vector3.zero);
+        if (distance < 0.2f)
         {
             return Status.Success;
         }
-        else
-        {
-            _characterMovement.MoveTo(Vector3.zero);
-            return Status.Running;
-        }
+        return Status.Running;
     }
 
     public Status Pursue()
     {
         if (_player == null || _navMeshAgent == null || _characterMovement == null) return Status.Failure;
-        if (_characterMovement.StoppingDistance > 0 && Vector3.Distance(_navMeshAgent.destination, transform.position) <
-            _characterMovement.StoppingDistance)
+        float distance = Vector3.Distance(_navMeshAgent.destination, _player.transform.position);
+        _characterMovement.MoveTo(_player.transform.position);
+
+        if (distance < 2f)
         {
             return Status.Success;
         }
-        else
-        {
-            _characterMovement.MoveTo(_player.transform.position);
-            return Status.Running;
-        }
+        
+        return Status.Running;
     }
 }
