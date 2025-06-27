@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,6 +18,10 @@ public class MoldAgent : MonoBehaviour
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _player = FindFirstObjectByType<PlayerController>();
         
+        Debug.Log($"Player: {_player}");
+        Debug.Log($"NavMeshAgent: {_navMeshAgent}");
+        Debug.Log($"CharacterMovement: {_characterMovement}");
+        
         tree = new BehaviorTree();
         Sequence pursuit = new Sequence("Pursuit");
         Leaf pursue = new Leaf("Pursue", Pursue);
@@ -31,7 +36,12 @@ public class MoldAgent : MonoBehaviour
     
     private void Update()
     {
-        if (treeStatus == Status.Running) treeStatus = tree.Process();
+        Debug.Log($"Node int: {tree.CurrentChild}");
+        Debug.Log($"Tree status: {treeStatus}");
+        if (treeStatus == Status.Running)
+        {
+            treeStatus = tree.Process();
+        }
     }
 
     public Status Capture()

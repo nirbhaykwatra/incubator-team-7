@@ -131,14 +131,14 @@ GameObject:
   - component: {fileID: 6129325902403894419}
   - component: {fileID: 1544715228839183555}
   - component: {fileID: 6256831024857399815}
-  - component: {fileID: 3076988998623104568}
-  - component: {fileID: 7189406842038470123}
+  - component: {fileID: 7788535468045026968}
+  - component: {fileID: 5175530962261390753}
   - component: {fileID: 3619361748858208484}
   - component: {fileID: 6261967587391939965}
   - component: {fileID: 1094328797077054623}
   m_Layer: 8
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -235,7 +235,7 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
---- !u!114 &3076988998623104568
+--- !u!114 &7788535468045026968
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -244,7 +244,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4106843614213615275}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c86861b32db2274ca2a510c6099c31e, type: 3}
+  m_Script: {fileID: 11500000, guid: e8b33706f6dc7924589dde7a8a3bf328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Speed>k__BackingField: 5
@@ -271,34 +271,35 @@ MonoBehaviour:
   <MinGroundedVelocity>k__BackingField: 5
   OnGrounded:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6261967587391939965}
-        m_TargetAssemblyTypeName: FMODVFS.FMODFootsteps, FMODVFS
-        m_MethodName: PlayFootstep
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnFootstep:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6261967587391939965}
-        m_TargetAssemblyTypeName: FMODVFS.FMODFootsteps, FMODVFS
-        m_MethodName: PlayFootstep
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+  OnDeath: {fileID: 0}
+  OnDamage: {fileID: 0}
+  Health: 100
+  MaxHealth: 100
+  Invincible: 0
+  Dead: 0
+  RegenerateHealth: 0
+  HealthRegenerationRate: 1
+  Oxygen: 100
+  MaxOxygen: 100
+  OxygenConsumptionRate: 1
+  OxygenRegenerationRate: 1
+  ConsumeOxygen: 0
+  RegenerateOxygen: 1
+  FallDamageVelocityThreshold: 10
+  FallDamageVelocityCap: 1
+  FixedFallDamage: 10
+  FallDamageMultiplier: 1
+  ProportionalFallDamage: 1
+  OnHealthSetup: {fileID: 0}
+  OnHealthUpdate: {fileID: 0}
+  OnOxygenSetup: {fileID: 0}
+  OnOxygenUpdate: {fileID: 0}
+  OnBatterySetup: {fileID: 0}
+  OnBatteryUpdate: {fileID: 0}
   <StepHeight>k__BackingField: 0.3
   <StepHeightAllowance>k__BackingField: 0.1
   <StepHeightForwardOffset>k__BackingField: 0.05
@@ -316,7 +317,7 @@ MonoBehaviour:
   <Rigidbody>k__BackingField: {fileID: 1544715228839183555}
   <NavMeshAgent>k__BackingField: {fileID: 3619361748858208484}
   <CapsuleCollider>k__BackingField: {fileID: 6256831024857399815}
---- !u!114 &7189406842038470123
+--- !u!114 &5175530962261390753
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -325,12 +326,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4106843614213615275}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42cd500ed42aee644a14ce8ad7ea0e9e, type: 3}
+  m_Script: {fileID: 11500000, guid: 0164b4bb1cbacb441b7f426ce0c4dc1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <DampTime>k__BackingField: 0.1
   <Animator>k__BackingField: {fileID: 6129325902403894419}
-  <CharacterMovement>k__BackingField: {fileID: 3076988998623104568}
+  <CharacterMovement>k__BackingField: {fileID: 7788535468045026968}
 --- !u!195 &3619361748858208484
 NavMeshAgent:
   m_ObjectHideFlags: 0
