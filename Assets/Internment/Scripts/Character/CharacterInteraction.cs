@@ -26,7 +26,7 @@ public class CharacterInteraction : MonoBehaviour
         {
             if (hit.collider.gameObject.TryGetComponent(out IInteractable interactable))
             {
-                OnInteractableHover.Invoke(gameObject);
+                OnInteractableHover?.Invoke(gameObject);
             }
         }
     }
@@ -39,7 +39,7 @@ public class CharacterInteraction : MonoBehaviour
         {
             if (hit.collider.gameObject.TryGetComponent(out IInteractable interactable))
             {
-                OnInteractableClick.Invoke(gameObject);
+                OnInteractableClick?.Invoke(gameObject);
                 interactable.Interact();
             }
         }
@@ -48,7 +48,7 @@ public class CharacterInteraction : MonoBehaviour
     public void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(_fpsCamera.gameObject.transform.position, _fpsCamera.gameObject.transform.forward * InteractionRange);
+        if (_fpsCamera != null) Gizmos.DrawRay(_fpsCamera.gameObject.transform.position, _fpsCamera.gameObject.transform.forward * InteractionRange);
         Gizmos.DrawSphere(_liftingPosition, 0.1f);
     }
 }

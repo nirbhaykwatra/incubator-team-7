@@ -1,22 +1,25 @@
 using GameEvents;
+using Internment.Digging.Terrain;
 using UnityEngine;
 
 public class Drill : Equipment
 {
+    [SerializeField] protected float digRadius = 2f;
     [SerializeField] protected FloatEventAsset OnBatterySetup;
     [SerializeField] protected FloatEventAsset OnBatteryUpdate;
+    [SerializeField] protected Battery _playerBattery;
     public override void Awake()
     {
         base.Awake();
-        
-        OnBatterySetup.Invoke(_battery.Capacity);
+        UseBattery(_playerBattery);
+        OnBatterySetup?.Invoke(_battery.Capacity);
     }
     public override void UseEquipment(bool pressed)
     {
         if (_battery.CurrentLevel > 0f)
         {
             Powered = pressed;
-            OnBatteryUpdate.Invoke(_battery.CurrentLevel);
+            OnBatteryUpdate?.Invoke(_battery.CurrentLevel);
         }
     }
 
@@ -27,7 +30,7 @@ public class Drill : Equipment
     
     public override void EquipmentUpdate()
     {
-        OnBatteryUpdate.Invoke(_battery.CurrentLevel);
+        OnBatteryUpdate?.Invoke(_battery.CurrentLevel);
         if (Powered)
         {
             Discharge();
@@ -39,6 +42,12 @@ public class Drill : Equipment
                 if (hit.collider.gameObject.TryGetComponent(out Resource resource))
                 {
                     resource.MineResource();
+                }
+
+                if (hit.collider.gameObject.TryGetComponent(out Marching marching))
+                {
+                    int radiusInVoxels = Mathf.CeilToInt(digRadius * marching.resolution);
+                    marching.RemoveTerrain(hit.point, radiusInVoxels);
                 }
             }
         }
