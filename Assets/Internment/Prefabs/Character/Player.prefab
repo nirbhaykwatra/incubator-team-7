@@ -341,6 +341,7 @@ MonoBehaviour:
   <Movement>k__BackingField: {fileID: 6040007176398055680}
   <Interaction>k__BackingField: {fileID: 7566263775038201372}
   <Equipment>k__BackingField: {fileID: 2205852777781523019}
+  <Radar>k__BackingField: {fileID: 0}
 --- !u!114 &6040007176398055680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -488,7 +489,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentLevel: 100
   Capacity: 100
+  PassiveDrainRate: 1
   <Recharging>k__BackingField: 0
+  <PassiveDrain>k__BackingField: 0
 --- !u!114 &2983108204682086163
 MonoBehaviour:
   m_ObjectHideFlags: 0

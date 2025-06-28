@@ -5,19 +5,27 @@ public class DoorMove : MonoBehaviour
     public float moveSpeed = 2f;
     public float distance = 1f;
     public Transform target;
-    private bool isInteracted = false;
 
+    private bool isTriggered = false;
 
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if(target && isInteracted == true)
+
+        if (isTriggered && target)
         {
             transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
+
         }
     }
-    
-       
-        
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (!isTriggered)
+        {
+
+            isTriggered = true;
+        }
+
+
     }
+}
