@@ -20,9 +20,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Internment/Scenes/Gyms/Digging Demo.unity
     guid: 916edb02b67b5b2448f2820dfa54de52
-  - enabled: 1
+  - enabled: 0
     path: Assets/Internment/Scenes/Demo/InternmentDemo.unity
     guid: f90e3466a8cf56945b9c0219f16118a5
+  - enabled: 1
+    path: Assets/Internment/Scenes/Demo/InternmentDemo 1.unity
+    guid: 486b5d06abb149a44870297119a33614
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: c2f4dca1ded701444b13ecddee924b7d,
       type: 3}
