@@ -324,7 +324,7 @@ public class CharacterMovement3D : CharacterMovementBase
         Rigidbody.AddForce(acceleration * Rigidbody.mass);
 
         StepCheck();
-        if (!IsGrounded) Debug.Log($"Velocity: {Math.Abs(Velocity.y)} | Acceleration: {acceleration.y}");
+        //if (!IsGrounded) Debug.Log($"Velocity: {Math.Abs(Velocity.y)} | Acceleration: {acceleration.y}");
     }
 
     protected virtual void Update()
@@ -501,15 +501,11 @@ public class CharacterMovement3D : CharacterMovementBase
         if(Vector3.Distance(point, transform.position) < landingCollisionMaxDistance)
         {
             OnGrounded.Invoke(collision.gameObject);
-            Debug.Log($"Velocity more than threshold? {Math.Abs(collision.relativeVelocity.y) > FallDamageVelocityThreshold}");
-            Debug.Log($"Velocity: {Math.Abs(collision.relativeVelocity.y)} | FallDamageVelocityThreshold: {FallDamageVelocityThreshold}");
             if (Math.Abs(collision.relativeVelocity.y) > FallDamageVelocityThreshold)
             {
-                Debug.Log($"Player landed on {collision.gameObject.name}");
                 if (ProportionalFallDamage)
                 {
                     float velocityMultiplier = Mathf.Clamp01((Math.Abs(collision.relativeVelocity.y)) / FallDamageVelocityCap) * FallDamageMultiplier;
-                    Debug.Log($"Impact Velocity: {collision.relativeVelocity.y} | Velocity Multiplier: {velocityMultiplier}");
                     TryApplyDamage(FixedFallDamage * velocityMultiplier);
                     _cameraShake.GenerateImpulse();
                 }
