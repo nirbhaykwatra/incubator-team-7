@@ -1167,7 +1167,7 @@ MonoBehaviour:
     m_Value: 0
   exposure:
     m_OverrideState: 1
-    m_Value: 14
+    m_Value: 10.01
   multiplier:
     m_OverrideState: 1
     m_Value: 1
@@ -2646,7 +2646,7 @@ MonoBehaviour:
   interCascadeBorders: 1
   maxShadowDistance:
     m_OverrideState: 1
-    m_Value: 500
+    m_Value: 500.3
   directionalTransmissionMultiplier:
     m_OverrideState: 1
     m_Value: 1
