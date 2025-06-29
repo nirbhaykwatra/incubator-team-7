@@ -67,7 +67,7 @@ public class CharacterEquipment : MonoBehaviour
                 break;
             case EquipmentType.Passive:
                 PassiveEquipment.Remove(equipment);
-                _totalBatteryConsumption += equipment.BatteryConsumptionRate;
+                _totalBatteryConsumption -= equipment.BatteryConsumptionRate;
                 break;
         }
     }
