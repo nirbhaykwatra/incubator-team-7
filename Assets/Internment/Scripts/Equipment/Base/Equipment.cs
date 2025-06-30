@@ -12,15 +12,16 @@ public abstract class Equipment : MonoBehaviour
     [Tooltip("Amount of battery consumed per second")]
     public float BatteryConsumptionRate;
     public Battery _battery;
+    public Battery _playerBattery;
     public float BatteryRechargeRate;
     public EquipmentType _equipmentType;
-    
-    public Camera _fpsCamera;
-    public float InteractionRange = 5f;
+    public bool UsePlayerBattery;
 
     public virtual void Awake()
     {
-        _fpsCamera = Camera.main;
+        _battery = GetComponent<Battery>();
+        _playerBattery = FindFirstObjectByType<PlayerController>().GetComponent<Battery>();
+        if (UsePlayerBattery) UseBattery(_playerBattery);
     }
     
     public virtual void PowerOn()
@@ -50,6 +51,7 @@ public abstract class Equipment : MonoBehaviour
 
     public virtual void Recharge()
     {
+        if (_battery == null) return;
         _battery.Recharge(BatteryRechargeRate * Time.deltaTime);
     }
 

@@ -43,6 +43,11 @@ public class PlayerController : MonoBehaviour
         Movement?.TryJump();
     }
 
+    public virtual void OnHoldJump(InputValue value)
+    {
+        Equipment?.UsePassiveEquipment(value.isPressed);
+    }
+
     public virtual void OnFire(InputValue value)
     {
         Equipment?.UseEquipment(value.isPressed);

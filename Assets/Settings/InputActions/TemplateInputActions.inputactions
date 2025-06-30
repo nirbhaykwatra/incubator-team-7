@@ -45,7 +45,7 @@
                     "name": "Pause",
                     "type": "Button",
                     "id": "6a0b6a00-6f72-4bb2-9f07-c3912a6e51bd",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Press(behavior=1)",
                     "initialStateCheck": false
@@ -72,6 +72,15 @@
                     "name": "Radar",
                     "type": "Button",
                     "id": "1b827393-173d-4c60-a8b5-9b86daf41b54",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "HoldJump",
+                    "type": "PassThrough",
+                    "id": "b513ca37-e83e-4287-89ea-3a86ced8137b",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -362,6 +371,28 @@
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "Radar",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "00451cc5-3a85-44bb-8123-d42de48f71f4",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "HoldJump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c8bbe974-7bda-4de4-881c-5af27cf3e58c",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "HoldJump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -568,6 +568,7 @@ GameObject:
   - component: {fileID: 207718342313115630}
   - component: {fileID: 1286682794053844302}
   - component: {fileID: 6493294657013196844}
+  - component: {fileID: 5840598778095636355}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -868,9 +869,9 @@ MonoBehaviour:
   SelectedEquipment: {fileID: 6337101436085468012}
   ActiveEquipment:
   - {fileID: 6337101436085468012}
-  PassiveEquipment: []
+  PassiveEquipment:
+  - {fileID: 6930701173163855148}
   _battery: {fileID: 7461211414477720402}
-  _testEquipment: {fileID: 0}
 --- !u!114 &6769808013091266326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -885,9 +886,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _longRadarRange: 10
   _shortRadarRange: 5
-  _longRadarCooldown: 1
-  _shortRadarCooldown: 1
-  _directionDisplayDistance: 2.5
+  _longRadarCooldown: 5
+  _shortRadarCooldown: 2
+  _directionDisplayDistance: 4
   _resourceMinimumVerticalDistanceForArrowDisplay: 2
   _longRadarCollider: {fileID: 1286682794053844302}
   _shortRadarCollider: {fileID: 6493294657013196844}
@@ -904,8 +905,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 201ab18c58c42044a9a2d3c0ee52284a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentLevel: 100
-  Capacity: 100
+  CurrentLevel: 1000
+  Capacity: 1000
   PassiveDrainRate: 1
   <Recharging>k__BackingField: 0
   <PassiveDrain>k__BackingField: 0
@@ -1050,6 +1051,36 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5840598778095636355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6368689977524761624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6181a603877c4a4fab35afc029f6253, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameEventAsset: {fileID: 11400000, guid: 3aa45a6e2bfeb004caaeff4d117b32e1, type: 2}
+  _useFilter: 0
+  _filterValues: []
+  OnGameEventInvoked:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6769808013091266326}
+        m_TargetAssemblyTypeName: CharacterRadar, Assembly-CSharp
+        m_MethodName: CheckEquipmentState
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6625708651738441550
 GameObject:
   m_ObjectHideFlags: 0
@@ -1331,6 +1362,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4766355470400874362}
+  - {fileID: 8549868678044983801}
   - {fileID: 6164362397515811525}
   m_Father: {fileID: 3590296269512800306}
   m_LocalEulerAnglesHint: {x: 33.223, y: -22.216, z: 7.428}
@@ -1611,3 +1643,109 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f80096e7ac88b254cad54005b2ae9350, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &3104575034394362389
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2229698701375503675}
+    m_Modifications:
+    - target: {fileID: 2059439391542970749, guid: 73094260697371043bb66c634303ba89,
+        type: 3}
+      propertyPath: m_Name
+      value: Jetpack
+      objectReference: {fileID: 0}
+    - target: {fileID: 2059439391542970749, guid: 73094260697371043bb66c634303ba89,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5421033729886768953, guid: 73094260697371043bb66c634303ba89,
+        type: 3}
+      propertyPath: _propulsionForce
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5421033729886768953, guid: 73094260697371043bb66c634303ba89,
+        type: 3}
+      propertyPath: BatteryConsumptionRate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751624581154563052, guid: 73094260697371043bb66c634303ba89,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751624581154563052, guid: 73094260697371043bb66c634303ba89,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751624581154563052, guid: 73094260697371043bb66c634303ba89,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751624581154563052, guid: 73094260697371043bb66c634303ba89,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751624581154563052, guid: 73094260697371043bb66c634303ba89,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751624581154563052, guid: 73094260697371043bb66c634303ba89,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751624581154563052, guid: 73094260697371043bb66c634303ba89,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751624581154563052, guid: 73094260697371043bb66c634303ba89,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751624581154563052, guid: 73094260697371043bb66c634303ba89,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751624581154563052, guid: 73094260697371043bb66c634303ba89,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8415180774214417186, guid: 73094260697371043bb66c634303ba89,
+        type: 3}
+      propertyPath: <PassiveDrain>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 73094260697371043bb66c634303ba89, type: 3}
+--- !u!114 &6930701173163855148 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5421033729886768953, guid: 73094260697371043bb66c634303ba89,
+    type: 3}
+  m_PrefabInstance: {fileID: 3104575034394362389}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 006cfb71084338343a97256a8a2b9010, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &8549868678044983801 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6751624581154563052, guid: 73094260697371043bb66c634303ba89,
+    type: 3}
+  m_PrefabInstance: {fileID: 3104575034394362389}
+  m_PrefabAsset: {fileID: 0}
