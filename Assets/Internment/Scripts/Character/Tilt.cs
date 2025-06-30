@@ -3,18 +3,21 @@ using UnityEngine;
 
 public class Tilt : MonoBehaviour
 {
-    public float tiltAngle = 30f;
-    public float smoothtilt = 2f;
-    private float tiltX = 0f;
+    public float tiltAmount = 5f;
+    public float smoothTime = 0.1f;
+    private float currentTilt = 0f;
+    private Vector3 currentVelocity;
 
-    
 
     void Update()
     {
-        tiltX = Input.GetAxis("Horizontal");
-        
-        Quaternion target = Quaternion.Euler(0,0, tiltX * tiltAngle);
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * smoothtilt);
+
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float targetTilt = horizontalInput * tiltAmount;
+
+        // Smoothly interpolate towards the target tilt
+        currentTilt = Mathf.SmoothDamp(currentTilt, targetTilt, ref currentVelocity.z, smoothTime);
+        transform.localRotation = Quaternion.Euler(0, 0, currentTilt);
     }
 }
