@@ -17,14 +17,12 @@ public class CharacterEquipment : MonoBehaviour
         foreach (Equipment equipment in ActiveEquipment)
         {
             equipment.PowerOff();
-            equipment._fpsCamera = Camera.main;
         }
         
         foreach (Equipment equipment in PassiveEquipment)
         {
             equipment.PowerOff();
             equipment.UseBattery(_battery);
-            equipment._fpsCamera = Camera.main;
         }
     }
     
@@ -32,6 +30,11 @@ public class CharacterEquipment : MonoBehaviour
     {
         if (_battery && _totalBatteryConsumption > 0f) _battery.Discharge(_totalBatteryConsumption * Time.deltaTime, _totalBatteryConsumption);
         SelectedEquipment.EquipmentUpdate();
+        
+        foreach (Equipment equipment in PassiveEquipment)
+        {
+            equipment.EquipmentUpdate();
+        }
     }
     
     public void UseEquipment(bool pressed)
@@ -41,8 +44,14 @@ public class CharacterEquipment : MonoBehaviour
             SelectedEquipment.UseEquipment(pressed);
         }
     }
-    
-    
+
+    public void UsePassiveEquipment(bool pressed)
+    {
+        foreach (Equipment equipment in PassiveEquipment)
+        {
+            equipment.UseEquipment(pressed);
+        }
+    }
         
     public void AddEquipment(Equipment equipment)
     {

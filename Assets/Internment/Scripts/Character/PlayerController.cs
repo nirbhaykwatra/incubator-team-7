@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
     public virtual void OnHoldJump(InputValue value)
     {
-        Debug.Log($"Jetpack: {value.isPressed}");
+        Equipment?.UsePassiveEquipment(value.isPressed);
     }
 
     public virtual void OnFire(InputValue value)

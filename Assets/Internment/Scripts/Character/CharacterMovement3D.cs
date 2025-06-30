@@ -95,7 +95,9 @@ public class CharacterMovement3D : CharacterMovementBase
     protected Collider[] _neighborHits;
     protected CinemachineImpulseSource _cameraShake;
     protected bool RegenerateHealthByDefault;
-
+    protected bool ApplyJetpack;
+    protected float JetpackPower;
+    
     // useful properties
 #if UNITY_6000_0_OR_NEWER
     public override Vector3 Velocity { get => Rigidbody.linearVelocity; protected set => Rigidbody.linearVelocity = value; }
@@ -240,6 +242,16 @@ public class CharacterMovement3D : CharacterMovementBase
         OxygenConsumptionRate = rate;
     }
 
+    public void ActivateJetpack(bool powered, float power)
+    {
+        JetpackPower = power;
+        ApplyJetpack = powered;
+    }
+    public void DeactivateJetpack()
+    {
+        ApplyJetpack = false;
+    }
+
     // path to destination using navmesh
     public virtual void MoveTo(Vector3 destination)
     {
@@ -324,6 +336,12 @@ public class CharacterMovement3D : CharacterMovementBase
         Rigidbody.AddForce(acceleration * Rigidbody.mass);
 
         StepCheck();
+
+        if (ApplyJetpack)
+        {
+            Debug.Log($"Applying jetpack: {JetpackPower}");
+            Rigidbody.AddForce(Vector3.up * JetpackPower, ForceMode.Force);
+        }
         //if (!IsGrounded) Debug.Log($"Velocity: {Math.Abs(Velocity.y)} | Acceleration: {acceleration.y}");
     }
 
