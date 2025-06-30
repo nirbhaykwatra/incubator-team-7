@@ -12,40 +12,29 @@ public class CharacterEquipment : MonoBehaviour
     [SerializeField] private Battery _battery;
     private float _totalBatteryConsumption = 0f;
     
-    [SerializeField] private Equipment _testEquipment;
-
-    [Button]
-    public void PowerOnTestEquipment()
-    {
-        PowerOnEquipment(_testEquipment);
-    }
-    
-    [Button]
-    public void PowerOffTestEquipment()
-    {
-        PowerOffEquipment(_testEquipment);
-    }
-    
     private void Awake()
     {
         foreach (Equipment equipment in ActiveEquipment)
         {
             equipment.PowerOff();
-            equipment._fpsCamera = Camera.main;
         }
         
         foreach (Equipment equipment in PassiveEquipment)
         {
             equipment.PowerOff();
             equipment.UseBattery(_battery);
-            equipment._fpsCamera = Camera.main;
         }
     }
     
     private void Update()
     {
-        if (_battery) _battery.Discharge(_totalBatteryConsumption * Time.deltaTime, _totalBatteryConsumption);
+        if (_battery && _totalBatteryConsumption > 0f) _battery.Discharge(_totalBatteryConsumption * Time.deltaTime, _totalBatteryConsumption);
         SelectedEquipment.EquipmentUpdate();
+        
+        foreach (Equipment equipment in PassiveEquipment)
+        {
+            equipment.EquipmentUpdate();
+        }
     }
     
     public void UseEquipment(bool pressed)
@@ -55,32 +44,40 @@ public class CharacterEquipment : MonoBehaviour
             SelectedEquipment.UseEquipment(pressed);
         }
     }
+
+    public void UsePassiveEquipment(bool pressed)
+    {
+        foreach (Equipment equipment in PassiveEquipment)
+        {
+            equipment.UseEquipment(pressed);
+        }
+    }
         
     public void AddEquipment(Equipment equipment)
     {
-        ActiveEquipment.Add(equipment);
+        switch (equipment._equipmentType)
+        {
+            case EquipmentType.Active:
+                ActiveEquipment.Add(equipment);
+                break;
+            case EquipmentType.Passive:
+                PassiveEquipment.Add(equipment);
+                _totalBatteryConsumption += equipment.BatteryConsumptionRate;
+                break;
+        }
     }
 
     public void RemoveEquipment(Equipment equipment)
     {
-        ActiveEquipment.Remove(equipment);
-    }
-    public void PowerOnEquipment(Equipment equipment)
-    {
-        if (ActiveEquipment.Contains(equipment))
+        switch (equipment._equipmentType)
         {
-            equipment.PowerOn();
-            _totalBatteryConsumption += equipment.BatteryConsumptionRate;
-            Debug.Log($"Powering on {equipment.name}, total consumption: {_totalBatteryConsumption}");
-        }
-    }
-
-    public void PowerOffEquipment(Equipment equipment)
-    {
-        if (ActiveEquipment.Contains(equipment))
-        {
-            equipment.PowerOff();
-            if (_totalBatteryConsumption > 0) _totalBatteryConsumption -= equipment.BatteryConsumptionRate;
+            case EquipmentType.Active:
+                ActiveEquipment.Remove(equipment);
+                break;
+            case EquipmentType.Passive:
+                PassiveEquipment.Remove(equipment);
+                _totalBatteryConsumption -= equipment.BatteryConsumptionRate;
+                break;
         }
     }
     

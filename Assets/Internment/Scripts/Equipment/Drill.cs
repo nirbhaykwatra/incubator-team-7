@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class Drill : Equipment
 {
+    [SerializeField] protected Camera _fpsCamera;
+    [SerializeField] protected float InteractionRange = 5f;
     [SerializeField] protected float digRadius = 2f;
     [SerializeField] protected FloatEventAsset OnBatterySetup;
     [SerializeField] protected FloatEventAsset OnBatteryUpdate;
-    [SerializeField] protected Battery _playerBattery;
     public override void Awake()
     {
         base.Awake();
-        UseBattery(_playerBattery);
+        _fpsCamera = Camera.main;
         OnBatterySetup?.Invoke(_battery.Capacity);
     }
     public override void UseEquipment(bool pressed)
