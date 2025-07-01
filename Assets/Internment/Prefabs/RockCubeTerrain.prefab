@@ -132,7 +132,7 @@ MonoBehaviour:
   terrainType: 1
   dirtMaterial: {fileID: 2100000, guid: 00184f78eaeff624f80dbed094280030, type: 2}
   rockMaterial: {fileID: 2100000, guid: 800cb17935a828542bc530c39efc23f1, type: 2}
-  dirtHealth: 8
+  dirtHealth: 2
   rockHealth: 10
   resolution: 1
   carveColliders:
