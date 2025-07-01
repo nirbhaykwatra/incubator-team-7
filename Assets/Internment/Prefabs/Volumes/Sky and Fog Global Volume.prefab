@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2629476461626436067}
   - component: {fileID: 8859832563697999119}
+  - component: {fileID: 735728934823336851}
   m_Layer: 0
   m_Name: Sky and Fog Global Volume
   m_TagString: Untagged
@@ -49,3 +50,25 @@ MonoBehaviour:
   blendDistance: 1.51
   weight: 1
   sharedProfile: {fileID: 11400000, guid: d8f90df2fbd03164cb9084daa8bab19f, type: 2}
+--- !u!95 &735728934823336851
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596232090228176617}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 16b121b6f92554f45a7812669c0273f0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
