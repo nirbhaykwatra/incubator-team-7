@@ -1016,7 +1016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e1606cb658b4f42ba8521b00a04099, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _battery: {fileID: 0}
+  _battery: {fileID: 8415180774214417186}
   _fillImage: {fileID: 7169565267903739643}
 --- !u!1 &7435404016817042544
 GameObject:
