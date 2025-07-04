@@ -1387,17 +1387,17 @@ PrefabInstance:
     - target: {fileID: 2762246850340903111, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.049998097
+      value: 0.050000153
       objectReference: {fileID: 0}
     - target: {fileID: 2762246850340903111, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.06030471
+      value: 0.060306076
       objectReference: {fileID: 0}
     - target: {fileID: 2762246850340903111, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.036914613
+      value: 0.036920298
       objectReference: {fileID: 0}
     - target: {fileID: 3311972011114515872, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
@@ -1417,7 +1417,12 @@ PrefabInstance:
     - target: {fileID: 3676117372241106663, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
       propertyPath: PassiveDrainRate
-      value: 2
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3676117372241106663, guid: 4c741879e828f244da0f9d335610d12c,
+        type: 3}
+      propertyPath: <PassiveDrain>k__BackingField
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3768460401264543638, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
