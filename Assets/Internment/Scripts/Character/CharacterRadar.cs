@@ -26,6 +26,9 @@ public class CharacterRadar : MonoBehaviour
     private float _longRadarCooldownTimer;
     private float _shortRadarCooldownTimer;
 
+    public float LongRadarCooldownTimer => _longRadarCooldownTimer;
+    public float LongRadarCooldownDuration => _longRadarCooldown;
+
     private void Awake()
     {
         _longRadarCollider.radius = _longRadarRange;
