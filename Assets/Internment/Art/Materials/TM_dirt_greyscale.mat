@@ -227,7 +227,7 @@ Material:
     - _AlphaSrcBlend: 1
     - _Anisotropy: 0
     - _Base_Displacement_Amount: 1
-    - _Base_Normal_Strength: 2
+    - _Base_Normal_Strength: 1
     - _BlendMode: 0
     - _BlendTiling: 1
     - _BlendTiling_1: 1
