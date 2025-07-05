@@ -1270,6 +1270,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 79.818
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6da4177fd6d3e704798300ef76510a81,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: d9d1057f87e1b514bafb280636b70e8b, type: 2}
     - target: {fileID: 919132149155446097, guid: 6da4177fd6d3e704798300ef76510a81,
         type: 3}
       propertyPath: m_Name
@@ -1313,6 +1318,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.281
+      objectReference: {fileID: 0}
+    - target: {fileID: 1061613929810274575, guid: 4c741879e828f244da0f9d335610d12c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1128867468579213887, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
@@ -1413,7 +1423,7 @@ PrefabInstance:
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 73c176f402d2c2f4d929aa5da7585d17, type: 2}
+      objectReference: {fileID: 2100000, guid: 601de812b113dfb4f818bddb6bc11ee1, type: 2}
     - target: {fileID: 3676117372241106663, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
       propertyPath: PassiveDrainRate
@@ -1599,6 +1609,11 @@ PrefabInstance:
       propertyPath: m_VolumetricDimmer
       value: 0.6
       objectReference: {fileID: 0}
+    - target: {fileID: 5862662419431962668, guid: 4c741879e828f244da0f9d335610d12c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6050035057781097888, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1673,6 +1688,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0.1261
+      objectReference: {fileID: 0}
+    - target: {fileID: 7989263574072565463, guid: 4c741879e828f244da0f9d335610d12c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8162155228810599350, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
