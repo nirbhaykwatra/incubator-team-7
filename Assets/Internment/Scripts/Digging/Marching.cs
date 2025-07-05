@@ -39,6 +39,10 @@ namespace Internment.Digging.Terrain
         public int dirtHealth = 1;
         public int rockHealth = 5;
 
+        [Header("VFX")]
+        public GameObject dirtDigVFX;
+        public GameObject rockDigVFX;
+
         [Header("Voxel Resolution")]
         [SerializeField]
         [Min(1)] public int resolution = 1;
@@ -293,7 +297,10 @@ namespace Internment.Digging.Terrain
                 {
                     v.health--;
                     if (v.health <= 0)
+                    {
                         v.density = +1f;   // carve it out
+                        SpawnDigVFX(x, y, z, v.type);
+                    }
                 }
             }
 
@@ -303,5 +310,17 @@ namespace Internment.Digging.Terrain
 
         private bool IsInBounds(int x, int y, int z) =>
             x >= 0 && x < W && y >= 0 && y < H && z >= 0 && z < D;
+
+        private void SpawnDigVFX(int x, int y, int z, TerrainType type)
+        {
+            GameObject prefab = (type == TerrainType.Rock) ? rockDigVFX : dirtDigVFX;
+            if (prefab == null) return;
+
+            // Compute the voxel¡¯s world©\space center
+            Vector3 localCenter = new Vector3(x + 0.5f, y + 0.5f, z + 0.5f) * voxelSize;
+            Vector3 worldPos = transform.TransformPoint(localCenter);
+
+            Instantiate(prefab, worldPos, Quaternion.identity);
+        }
     }
 }
