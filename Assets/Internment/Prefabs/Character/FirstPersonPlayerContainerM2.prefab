@@ -496,7 +496,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6368689977524761624}
   serializedVersion: 4
-  m_Mass: 8
+  m_Mass: 1
   m_Drag: 1
   m_AngularDrag: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -622,15 +622,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Speed>k__BackingField: 3
-  <Acceleration>k__BackingField: 15
-  <TurnSpeed>k__BackingField: 5
+  <Acceleration>k__BackingField: 30
+  <TurnSpeed>k__BackingField: 2
   <StoppingDistance>k__BackingField: 0.25
   <LookInMoveDirection>k__BackingField: 1
   <ControlRotation>k__BackingField: 0
   <Fix3DSpriteRotation>k__BackingField: 0
   <ParentToSurface>k__BackingField: 0
-  <Gravity>k__BackingField: -29.19
-  <JumpHeight>k__BackingField: 1.95
+  <Gravity>k__BackingField: -21
+  <JumpHeight>k__BackingField: 1.5
   <AirControl>k__BackingField: 0.2
   <AirTurning>k__BackingField: 0
   <Height>k__BackingField: 1.67
@@ -1397,17 +1397,17 @@ PrefabInstance:
     - target: {fileID: 2762246850340903111, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.050000153
+      value: 0.050008155
       objectReference: {fileID: 0}
     - target: {fileID: 2762246850340903111, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.060306076
+      value: 0.062361293
       objectReference: {fileID: 0}
     - target: {fileID: 2762246850340903111, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.036920298
+      value: 0.033319943
       objectReference: {fileID: 0}
     - target: {fileID: 3311972011114515872, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
@@ -1442,12 +1442,12 @@ PrefabInstance:
     - target: {fileID: 4388256395069905718, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
       propertyPath: PanAxis.Value
-      value: -18.256845
+      value: 49.619637
       objectReference: {fileID: 0}
     - target: {fileID: 4388256395069905718, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
       propertyPath: TiltAxis.Value
-      value: 13.524877
+      value: 16.880192
       objectReference: {fileID: 0}
     - target: {fileID: 4652560021746292045, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
@@ -1632,22 +1632,22 @@ PrefabInstance:
     - target: {fileID: 6050035057781097888, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.98046625
+      value: 0.897875
       objectReference: {fileID: 0}
     - target: {fileID: 6050035057781097888, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.11626167
+      value: 0.13322875
       objectReference: {fileID: 0}
     - target: {fileID: 6050035057781097888, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.15754414
+      value: 0.41506323
       objectReference: {fileID: 0}
     - target: {fileID: 6050035057781097888, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.01868126
+      value: -0.061588034
       objectReference: {fileID: 0}
     - target: {fileID: 6050035057781097888, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
