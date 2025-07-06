@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: MoldClump
   Mesh: {fileID: -6495471402877265406, guid: 7f9c3af0eb8b1cf4494c706aa7244ab5, type: 3}
-  ColliderType: 1
+  ColliderType: 2
   DiggingTime: 5
   Hardness: 1
   Rarity: 1

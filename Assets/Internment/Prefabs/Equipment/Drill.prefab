@@ -1013,10 +1013,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7120067599935679617}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5e1606cb658b4f42ba8521b00a04099, type: 3}
+  m_Script: {fileID: 11500000, guid: d4fa5223d3f897844875072d85d01721, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _battery: {fileID: 8415180774214417186}
+  _battery: {fileID: 0}
   _fillImage: {fileID: 7169565267903739643}
 --- !u!1 &7435404016817042544
 GameObject:
@@ -1333,7 +1333,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9145509005998260617}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4c5aa2fdb0e01b4aa53ac6a0121a6bb, type: 3}
+  m_Script: {fileID: 11500000, guid: 408d8c095ed569f43bbea5cff7b7b726, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _radar: {fileID: 0}
