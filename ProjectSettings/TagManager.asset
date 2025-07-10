@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Terrain
   - Obstacle
+  - CinematicTrigger
   layers:
   - Default
   - TransparentFX
@@ -17,8 +18,8 @@ TagManager:
   - Resource
   - Character
   - FPSForeground
-  - 
-  - 
+  - Global PP
+  - No PP
   - 
   - 
   - 

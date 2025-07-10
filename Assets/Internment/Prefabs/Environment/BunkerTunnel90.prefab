@@ -40,6 +40,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2491721634355497228}
     m_Modifications:
+    - target: {fileID: -8793858245282048150, guid: 1bb34220d7383d8468d9b3dd085fe7a5,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3794f22b76ec51f40856cc0063549274, type: 2}
     - target: {fileID: -8679921383154817045, guid: 1bb34220d7383d8468d9b3dd085fe7a5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -90,11 +95,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7599209430181964092, guid: 1bb34220d7383d8468d9b3dd085fe7a5,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5b0f87e8d94938046acf4eff09d6360c, type: 2}
+    - target: {fileID: -2749520845677069406, guid: 1bb34220d7383d8468d9b3dd085fe7a5,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 515309f13652ce54883088b0f8980657, type: 2}
     - target: {fileID: 919132149155446097, guid: 1bb34220d7383d8468d9b3dd085fe7a5,
         type: 3}
       propertyPath: m_Name
       value: SM_bunker_90
       objectReference: {fileID: 0}
+    - target: {fileID: 2501721173696972542, guid: 1bb34220d7383d8468d9b3dd085fe7a5,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c0de2858a9674f14a90d5fbf609d85bb, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
