@@ -8,11 +8,11 @@ public class Jetpack : Equipment
     [SerializeField] protected FloatEventAsset OnBatteryUpdate;
     
     private CharacterMovement3D _playerMovement;
-    public override void Awake()
+    public override void Start()
     {
-        base.Awake();
+        base.Start();
         UseBattery(_playerBattery);
-        _playerMovement = FindFirstObjectByType<PlayerController>().GetComponent<CharacterMovement3D>();
+        _playerMovement = FindAnyObjectByType<PlayerController>().GetComponent<CharacterMovement3D>();
         OnBatterySetup?.Invoke(_battery.Capacity);
     }
     public override void UseEquipment(bool pressed)

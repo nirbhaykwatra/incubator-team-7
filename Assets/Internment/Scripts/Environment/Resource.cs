@@ -27,17 +27,19 @@ public class Resource : MonoBehaviour
         _rarity = _resourceData.Rarity;
         _resourceHealth = _resourceData.Health;
     }
-
-    private void Start()
+    
+    private void Awake()
     {
+        GetResourceData();
         _meshFilter = GetComponent<MeshFilter>();
 
-        if (_resourceDataList.Count > 0)
+        if (_resourceDataList.Count > 0 && _resourceData != null)
         {
             _hardness = _resourceData.Hardness;
             _rarity = _resourceData.Rarity;
             _resourceHealth = _resourceData.Health;
-            _meshFilter.mesh = _resourceData.Mesh;
+            _meshFilter.sharedMesh = _resourceData.Mesh;
+            Debug.Log($"Set resource mesh to {_resourceData.Mesh.name}");
             switch (_resourceData.ColliderType)
             {
                 case ColliderType.Box:
@@ -54,6 +56,11 @@ public class Resource : MonoBehaviour
                     break;
             }
         }
+    }
+
+    private void Start()
+    {
+        
     }
 
     private void GetResourceData()

@@ -340,7 +340,7 @@ public class CharacterMovement3D : CharacterMovementBase
         if (ApplyJetpack)
         {
             Debug.Log($"Applying jetpack: {JetpackPower}");
-            Rigidbody.AddForce(Vector3.up * JetpackPower, ForceMode.Force);
+            Rigidbody.AddForce(Vector3.up * (JetpackPower * Time.fixedDeltaTime), ForceMode.Force);
         }
         //if (!IsGrounded) Debug.Log($"Velocity: {Math.Abs(Velocity.y)} | Acceleration: {acceleration.y}");
     }
