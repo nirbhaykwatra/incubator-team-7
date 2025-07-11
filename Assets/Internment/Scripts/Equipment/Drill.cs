@@ -9,9 +9,9 @@ public class Drill : Equipment
     [SerializeField] protected float digRadius = 2f;
     [SerializeField] protected FloatEventAsset OnBatterySetup;
     [SerializeField] protected FloatEventAsset OnBatteryUpdate;
-    public override void Awake()
+    public override void Start()
     {
-        base.Awake();
+        base.Start();
         _fpsCamera = Camera.main;
         OnBatterySetup?.Invoke(_battery.Capacity);
     }
