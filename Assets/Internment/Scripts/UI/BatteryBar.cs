@@ -12,7 +12,7 @@ public class BatteryBar : MonoBehaviour
     {
         _fillImage = GetComponent<Image>();
 
-        var player = GameObject.FindGameObjectWithTag("Player");
+        var player = FindFirstObjectByType<PlayerController>();
         if (player != null)
             _battery = player.GetComponent<Battery>();
 
@@ -25,7 +25,7 @@ public class BatteryBar : MonoBehaviour
         if (_battery == null)
             return;
 
-        Debug.Log($"Battery filled: {_battery.CurrentLevel} / {_battery.Capacity}");
+        //Debug.Log($"Battery filled: {_battery.CurrentLevel} / {_battery.Capacity}");
         float t = Mathf.Clamp01(_battery.CurrentLevel / _battery.Capacity);
         _fillImage.color = Color.Lerp(Color.gray, Color.green, Mathf.Pow(_battery.CurrentLevel / _battery.Capacity, 2));
         _fillImage.fillAmount = t;

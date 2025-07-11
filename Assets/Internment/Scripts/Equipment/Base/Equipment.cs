@@ -17,11 +17,14 @@ public abstract class Equipment : MonoBehaviour
     public EquipmentType _equipmentType;
     public bool UsePlayerBattery;
 
-    public virtual void Awake()
+    public virtual void Start()
     {
         _battery = GetComponent<Battery>();
-        _playerBattery = FindFirstObjectByType<PlayerController>().GetComponent<Battery>();
-        if (UsePlayerBattery) UseBattery(_playerBattery);
+        
+        // Why is this null in build?
+        //_playerBattery = FindAnyObjectByType<PlayerController>().gameObject.GetComponent<Battery>();
+        if (UsePlayerBattery && _playerBattery) UseBattery(FindAnyObjectByType<PlayerController>().gameObject.GetComponent<Battery>());
+        Debug.Log($"Player Battery: {FindAnyObjectByType<PlayerController>().gameObject.GetComponent<Battery>().Capacity}");
     }
     
     public virtual void PowerOn()
