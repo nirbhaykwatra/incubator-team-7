@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="AudioFile" id="{4c7383ce-b74a-4015-9d43-f83651fdb5ac}">
 		<property name="assetPath">
-			<value>Voice/Hello/39 - Hello-Greetings 1.wav</value>
+			<value>SFX/Dialogue/Voice/Hello/39 - Hello-Greetings 1.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>
