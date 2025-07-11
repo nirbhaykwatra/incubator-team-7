@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.03.00">
-	<object class="AudioFile" id="{d9dbe98b-1bce-4df3-9aef-f5a046a04655}">
+	<object class="AudioFile" id="{bd5da839-e784-4dd8-8fda-3503af1ba7cf}">
 		<property name="assetPath">
-			<value>SFX/Dialogue/Voice/Hello/39 - Hello-Greetings 3.wav</value>
+			<value>SFX/Dialogue/Voice/Cough2.mp3</value>
 		</property>
 		<property name="frequencyInKHz">
-			<value>44.0999985</value>
+			<value>48</value>
 		</property>
 		<property name="channelCount">
 			<value>2</value>
 		</property>
 		<property name="length">
-			<value>0.76396825396825396</value>
+			<value>6.3360000000000003</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{0007398a-8526-4222-84a0-9fc057cc09e5}</destination>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.03.00">
-	<object class="EncodableAsset" id="{71f12084-7a03-4925-ab92-e91ca1ad1076}">
+	<object class="EncodableAsset" id="{2794c6d3-27a9-4a42-a469-a82c0f77070b}">
 		<property name="assetPath">
-			<value>SFX/Dialogue/Voice/Hello/</value>
+			<value>SFX/Dialogue/Buddy/</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{0007398a-8526-4222-84a0-9fc057cc09e5}</destination>
