@@ -7,8 +7,10 @@ public class Drill : Equipment
     [SerializeField] protected Camera _fpsCamera;
     [SerializeField] protected float InteractionRange = 5f;
     [SerializeField] protected float digRadius = 2f;
+    [SerializeField] protected float drillSpeed;
     [SerializeField] protected FloatEventAsset OnBatterySetup;
     [SerializeField] protected FloatEventAsset OnBatteryUpdate;
+    [SerializeField] protected GameObject drillBit;
     public override void Start()
     {
         base.Start();
@@ -35,6 +37,8 @@ public class Drill : Equipment
         if (Powered)
         {
             Discharge();
+
+            drillBit.transform.Rotate(new Vector3(0,0,1) * drillSpeed * Time.deltaTime);
             
             RaycastHit hit;
             
