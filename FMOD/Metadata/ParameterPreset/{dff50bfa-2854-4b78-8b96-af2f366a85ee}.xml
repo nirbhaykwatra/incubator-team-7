@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{dff50bfa-2854-4b78-8b96-af2f366a85ee}">
+		<property name="name">
+			<value>drillSPEEDS</value>
+		</property>
+		<relationship name="folder">
+			<destination>{1fe3472f-553b-4a54-976e-510d10293c10}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{24da1d00-33dc-4ebe-8a1f-bfa309eafb0c}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{24da1d00-33dc-4ebe-8a1f-bfa309eafb0c}">
+		<property name="maximum">
+			<value>4</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>
