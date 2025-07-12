@@ -52,7 +52,7 @@ MonoBehaviour:
   BatteryRechargeRate: 0
   _equipmentType: 1
   UsePlayerBattery: 1
-  _propulsionForce: 2
+  _propulsionForce: 2300
   OnBatterySetup: {fileID: 11400000, guid: 6fd664499f31c2f46b631955f505fbb2, type: 2}
   OnBatteryUpdate: {fileID: 11400000, guid: 3aa45a6e2bfeb004caaeff4d117b32e1, type: 2}
 --- !u!114 &8415180774214417186
