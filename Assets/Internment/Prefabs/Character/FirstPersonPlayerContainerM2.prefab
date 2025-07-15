@@ -439,6 +439,7 @@ GameObject:
   - component: {fileID: 1286682794053844302}
   - component: {fileID: 6493294657013196844}
   - component: {fileID: 5840598778095636355}
+  - component: {fileID: 7504924572229833783}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -958,6 +959,31 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7504924572229833783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6368689977524761624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3aba118596ef484693b7b51152e2ae7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxItems: 20
+  OnItemAdded:
+    m_PersistentCalls:
+      m_Calls: []
+  OnItemAddedWithData:
+    m_PersistentCalls:
+      m_Calls: []
+  OnInventoryCountChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnInventoryFull:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6625708651738441550
 GameObject:
   m_ObjectHideFlags: 0
@@ -1519,17 +1545,17 @@ PrefabInstance:
     - target: {fileID: 2762246850340903111, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.049999934
+      value: 0.049999997
       objectReference: {fileID: 0}
     - target: {fileID: 2762246850340903111, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.062364187
+      value: 0.062364224
       objectReference: {fileID: 0}
     - target: {fileID: 2762246850340903111, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.03332703
+      value: 0.03332715
       objectReference: {fileID: 0}
     - target: {fileID: 3035661867432347602, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
@@ -1599,7 +1625,7 @@ PrefabInstance:
     - target: {fileID: 4388256395069905718, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
       propertyPath: PanAxis.Value
-      value: 49.619637
+      value: 49.61963
       objectReference: {fileID: 0}
     - target: {fileID: 4388256395069905718, guid: 4c741879e828f244da0f9d335610d12c,
         type: 3}
