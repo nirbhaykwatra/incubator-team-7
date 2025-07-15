@@ -722,7 +722,7 @@ MonoBehaviour:
   InteractionRange: 5
   interactionMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4087
   interactionPrompt: {fileID: 0}
   interactionText: {fileID: 0}
   interactionKey: E
