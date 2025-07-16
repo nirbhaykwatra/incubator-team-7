@@ -9,6 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7732140133410543933}
+  - component: {fileID: 5647565368903220399}
+  - component: {fileID: 6708025505189034287}
+  - component: {fileID: 4437075938779281614}
   m_Layer: 0
   m_Name: NuclearBattery
   m_TagString: Untagged
@@ -32,6 +35,68 @@ Transform:
   - {fileID: 8008854477022137900}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5647565368903220399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3507850965691402552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2407e1bf37d8d4844a26555fb1b25387, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: Nuclear Battery
+  itemIcon: {fileID: 0}
+  destroyOnPickup: 1
+  pickupEffect: {fileID: 0}
+  pickupSound: {fileID: 0}
+  OnPickedUp:
+    m_PersistentCalls:
+      m_Calls: []
+  OnItemCollected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnItemPickedUp:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!65 &6708025505189034287
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3507850965691402552}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.28972954, y: 0.85930514, z: 0.30158812}
+  m_Center: {x: -0.00900808, y: 0.3904984, z: 0.004592359}
+--- !u!114 &4437075938779281614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3507850965691402552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da7966dd52a5d7c40a4a9302e2bf1b3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  batteryAmount: 25
+  isPercentage: 0
+  OnBatteryPickup: {fileID: 0}
 --- !u!1001 &7543410403876727239
 PrefabInstance:
   m_ObjectHideFlags: 0
