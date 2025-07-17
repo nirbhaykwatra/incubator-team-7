@@ -7,6 +7,7 @@ public class PickableObject : MonoBehaviour, IInteractable
 {
     [Header("Pickup Settings")]
     [SerializeField] private string itemName = "Item";
+    [SerializeField] private Sprite itemIcon;
     [SerializeField] private bool destroyOnPickup = true;
 
     [Header("Visual Feedback")]
@@ -21,12 +22,14 @@ public class PickableObject : MonoBehaviour, IInteractable
     [Header("Events")]
     public UnityEvent<GameObject> OnPickedUp;
     public UnityEvent<string> OnItemCollected;
+    public UnityEvent<PickableObject> OnItemPickedUp;
 
     private Collider _collider;
     private Rigidbody _rigidbody;
     private MeshRenderer _meshRenderer;
 
     public string ItemName => itemName;
+    public Sprite ItemIcon => itemIcon;
     public bool IsPickedUp => _isPickedUp;
 
     private void Awake()
@@ -60,8 +63,6 @@ public class PickableObject : MonoBehaviour, IInteractable
 
         PickUp(player);
     }
-
-
     
     private void FixedUpdate()
     {
@@ -88,6 +89,13 @@ public class PickableObject : MonoBehaviour, IInteractable
 
         OnPickedUp?.Invoke(player);
         OnItemCollected?.Invoke(itemName);
+        OnItemPickedUp?.Invoke(this);
+
+        var inventory = player.GetComponent<PlayerInventory>();
+        if (inventory != null)
+        {
+            inventory.AddItem(this);
+        }
 
         // Handle the object after pickup
         if (destroyOnPickup)
