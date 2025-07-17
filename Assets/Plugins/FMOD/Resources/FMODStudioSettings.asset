@@ -634,11 +634,7 @@ MonoBehaviour:
   MasterBanks:
   - Master
   Banks:
-  - Ambient.SFX
-  - Character.SFX
   - Dialogue
-  - Drill.SFX
-  - Radar.SFX
   BanksToLoad: []
   LiveUpdatePort: 9264
   EnableMemoryTracking: 0
