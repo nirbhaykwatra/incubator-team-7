@@ -11,19 +11,7 @@ public class FMODEvents : MonoBehaviour
 
     [field: Header("Ambience")]
     [field: SerializeField] public EventReference elevatorDown { get; private set; }
-
-    [field: Header("Dialogue")]
-    [field: SerializeField] public EventReference collectParts { get; private set; }
-    [field: SerializeField] public EventReference drillBattery { get; private set; }
-    [field: SerializeField] public EventReference elevatorDialogue { get; private set; }
-    [field: SerializeField] public EventReference firstPart { get; private set; }
-    [field: SerializeField] public EventReference hasToWork { get; private set; }
-    [field: SerializeField] public EventReference introDialogue { get; private set; }
-    [field: SerializeField] public EventReference mumblingDialogue { get; private set; }
-    [field: SerializeField] public EventReference needsToWork { get; private set; }
-    [field: SerializeField] public EventReference coughingDialogue { get; private set; }
-    [field: SerializeField] public EventReference mumblesV2Dialogue { get; private set; }
-    public static FMODEvents instance {  get; private set; }
+  public static FMODEvents instance {  get; private set; }
 
     private void Awake()
     {
