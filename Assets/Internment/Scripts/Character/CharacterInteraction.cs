@@ -9,7 +9,7 @@ public class CharacterInteraction : MonoBehaviour
 {
     [Header("Interaction Settings")]
     [SerializeField] private Camera _fpsCamera;
-    [SerializeField] private float InteractionRange = 8f;
+    [SerializeField] private float InteractionRange = 5f;
     [SerializeField] private LayerMask interactionMask = -1; // What layers can be interacted with
 
     [Header("UI Feedback")]
@@ -35,9 +35,7 @@ public class CharacterInteraction : MonoBehaviour
 
         // Hide interaction prompt initially
         if (interactionPrompt != null)
-        {
             interactionPrompt.SetActive(false);
-        }
     }
 
     private void Update()
@@ -93,6 +91,7 @@ public class CharacterInteraction : MonoBehaviour
     {
         if (currentInteractable != null)
         {
+
             currentInteractable = null;
             currentInteractableObject = null;
             currentPickable = null;
@@ -102,10 +101,7 @@ public class CharacterInteraction : MonoBehaviour
 
     public void OnInteract(InputValue value)
     {
-        if (!value.isPressed)
-        {
-            return;
-        }
+        if (!value.isPressed) return;
 
         if (currentInteractable != null)
         {
