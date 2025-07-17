@@ -34,4 +34,9 @@ public class FMODEvents : MonoBehaviour
 
         instance = this;
     }
+
+    public void TriggerSound()
+    {
+        AudioManager.instance.PlaySound(introDialogue);
+    }
 }

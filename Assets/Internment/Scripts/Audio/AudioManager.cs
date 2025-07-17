@@ -3,6 +3,7 @@ using FMODUnity;
 using FMOD.Studio;
 using System.Collections.Generic;
 using System.Linq;
+using FMOD;
 
 public class AudioManager : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class AudioManager : MonoBehaviour
     {
         if (instance != null)
         {
-            Debug.LogError("More than one Audio Manager in scene");
+            UnityEngine.Debug.LogError("More than one Audio Manager in scene");
         }
         instance = this;
 
@@ -32,6 +33,13 @@ public class AudioManager : MonoBehaviour
         return eventInstance;
     }
 
+    public void PlaySound(EventReference eventReference)
+    {
+        EventInstance instance = RuntimeManager.CreateInstance(eventReference);
+        instance.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
+        instance.start();
+        instance.release();
+    }
     private void CleanUp()
     {
         foreach(EventInstance eventInstance in eventInstances)
