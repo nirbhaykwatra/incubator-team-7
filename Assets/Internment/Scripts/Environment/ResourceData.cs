@@ -18,4 +18,5 @@ public class ResourceData : ScriptableObject
     public float Hardness;
     public float Rarity;
     public float Health;
+    public GameObject VFX;
 }

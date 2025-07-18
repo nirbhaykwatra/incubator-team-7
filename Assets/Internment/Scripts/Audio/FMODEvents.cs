@@ -39,4 +39,14 @@ public class FMODEvents : MonoBehaviour
     {
         AudioManager.instance.PlaySound(introDialogue);
     }
+
+    public void TriggerElevator()
+    {
+        AudioManager.instance.PlaySound(elevatorDialogue);
+    }
+
+    public void PartsAudio()
+    {
+        AudioManager.instance.PlaySound(collectParts);
+    }
 }

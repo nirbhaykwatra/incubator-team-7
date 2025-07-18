@@ -13,6 +13,8 @@ public class Resource : MonoBehaviour
     private float _hardness;
     [ShowInInspector] [ReadOnly]
     private float _rarity;
+    [ShowInInspector] [ReadOnly]
+    private ParticleSystem _vfx;
     private MeshFilter _meshFilter;
     
     private Color GetResourceHealthColor(float value)
@@ -38,6 +40,8 @@ public class Resource : MonoBehaviour
             _hardness = _resourceData.Hardness;
             _rarity = _resourceData.Rarity;
             _resourceHealth = _resourceData.Health;
+            GameObject vfxObject = Instantiate(_resourceData.VFX, transform.position + (Vector3.down * 2), Quaternion.identity);
+            _vfx = vfxObject.GetComponentInChildren<ParticleSystem>();;
             _meshFilter.sharedMesh = _resourceData.Mesh;
             Debug.Log($"Set resource mesh to {_resourceData.Mesh.name}");
             switch (_resourceData.ColliderType)
@@ -71,8 +75,11 @@ public class Resource : MonoBehaviour
     public bool MineResource()
     {
         _resourceHealth -= _hardness * Time.deltaTime;
+        _vfx.Play();
+        
         if (_resourceHealth <= 0f)
         {
+            _vfx.Stop();
             Destroy(gameObject);
             return true;
         }
