@@ -19,3 +19,4 @@ MonoBehaviour:
   Hardness: 1
   Rarity: 1
   Health: 3
+  VFX: {fileID: 964184883015881861, guid: 0125ac20970570c4e85e12569a28a24a, type: 3}
