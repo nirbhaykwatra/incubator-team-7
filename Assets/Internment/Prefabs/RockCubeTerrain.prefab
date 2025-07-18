@@ -134,8 +134,10 @@ MonoBehaviour:
   rockMaterial: {fileID: 2100000, guid: 800cb17935a828542bc530c39efc23f1, type: 2}
   dirtHealth: 30
   rockHealth: 9999999
-  dirtDigVFX: {fileID: 0}
-  rockDigVFX: {fileID: 0}
+  dirtDigVFX: {fileID: 6702050709023789826, guid: 690714ab88c6fa844a3d69fc9926374f,
+    type: 3}
+  rockDigVFX: {fileID: 964184883015881861, guid: 470c856c39853d242af3453858a72775,
+    type: 3}
   resolution: 2
   carveColliders:
   - {fileID: 0}
