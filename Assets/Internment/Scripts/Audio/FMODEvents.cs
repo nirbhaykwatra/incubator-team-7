@@ -54,4 +54,9 @@ public class FMODEvents : MonoBehaviour
     {
         AudioManager.instance.PlaySound(firstPart);
     }
+
+    public void HasToWork()
+    {
+        AudioManager.instance.PlaySound(hasToWork);
+    }
 }
