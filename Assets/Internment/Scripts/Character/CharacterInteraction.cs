@@ -102,6 +102,19 @@ public class CharacterInteraction : MonoBehaviour
 
     public void OnInteract(InputValue value)
     {
+        if (currentPickable != null)
+        {
+            ObjectiveManager objManager = ObjectiveManager.Instance;
+            if (objManager != null && objManager.CurrentObjective != null)
+            {
+                if (!objManager.IsObjectiveItem(currentPickable.gameObject))
+                {
+                    Debug.Log("This is not the current objective item!");
+                    return;
+                }
+            }
+        }
+
         if (!value.isPressed)
         {
             return;

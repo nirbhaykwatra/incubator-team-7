@@ -11,6 +11,8 @@ public class Drill : Equipment
     [SerializeField] protected FloatEventAsset OnBatterySetup;
     [SerializeField] protected FloatEventAsset OnBatteryUpdate;
     [SerializeField] protected GameObject drillBit;
+    [SerializeField] protected float batteryRewardAmount = 100f;
+    [SerializeField] protected bool rewardAsPercentage = false;
     public override void Start()
     {
         base.Start();
@@ -46,7 +48,13 @@ public class Drill : Equipment
             {
                 if (hit.collider.gameObject.TryGetComponent(out Resource resource))
                 {
-                    resource.MineResource();
+                    bool resourceDestroyed = resource.MineResource();
+
+                    // If resource was destroyed, add battery power
+                    if (resourceDestroyed)
+                    {
+                        AddBatteryReward();
+                    }
                 }
 
                 if (hit.collider.gameObject.TryGetComponent(out Marching marching))
@@ -61,5 +69,32 @@ public class Drill : Equipment
         {
             Recharge();
         }
+    }
+
+    private void AddBatteryReward()
+    {
+        if (_battery == null) return;
+
+        float amountToAdd = batteryRewardAmount;
+
+        if (rewardAsPercentage)
+        {
+            amountToAdd = _battery.Capacity * (batteryRewardAmount / 100f);
+        }
+
+        // Add battery charge
+        float previousLevel = _battery.CurrentLevel;
+        _battery.CurrentLevel = Mathf.Clamp(
+            _battery.CurrentLevel + amountToAdd,
+            0f,
+            _battery.Capacity
+        );
+
+        float actualAmountAdded = _battery.CurrentLevel - previousLevel;
+
+        Debug.Log($"Mining reward: Added {actualAmountAdded:F1} battery charge. Current level: {_battery.CurrentLevel:F1}/{_battery.Capacity:F1}");
+
+        // Update UI
+        OnBatteryUpdate?.Invoke(_battery.CurrentLevel);
     }
 }
