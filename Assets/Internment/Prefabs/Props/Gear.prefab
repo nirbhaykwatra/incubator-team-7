@@ -103,8 +103,63 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 76a4e7c4563d7ec468b7931115140d97,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7925303199899058644}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 76a4e7c4563d7ec468b7931115140d97,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3529311612818403450}
   m_SourcePrefab: {fileID: 100100000, guid: 76a4e7c4563d7ec468b7931115140d97, type: 3}
+--- !u!1 &3599024068377574515 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 76a4e7c4563d7ec468b7931115140d97,
+    type: 3}
+  m_PrefabInstance: {fileID: 4409908608300794146}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7925303199899058644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3599024068377574515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2407e1bf37d8d4844a26555fb1b25387, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: Item
+  itemIcon: {fileID: 0}
+  destroyOnPickup: 1
+  pickupEffect: {fileID: 0}
+  pickupSound: {fileID: 0}
+  OnPickedUp:
+    m_PersistentCalls:
+      m_Calls: []
+  OnItemCollected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnItemPickedUp:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &3529311612818403450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3599024068377574515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da7966dd52a5d7c40a4a9302e2bf1b3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  batteryAmount: 25
+  isPercentage: 1
+  OnBatteryPickup: {fileID: 0}
 --- !u!4 &4231587042477844169 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 76a4e7c4563d7ec468b7931115140d97,
