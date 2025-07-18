@@ -68,10 +68,14 @@ public class Resource : MonoBehaviour
         _resourceData = _resourceDataList[UnityEngine.Random.Range(0, _resourceDataList.Count - 1)];
     }
 
-    public void MineResource()
+    public bool MineResource()
     {
-        if (_resourceHealth <= 0f) Destroy(gameObject);
         _resourceHealth -= _hardness * Time.deltaTime;
-        Debug.Log($"{_resourceData.Name} health: {_resourceHealth}");
+        if (_resourceHealth <= 0f)
+        {
+            Destroy(gameObject);
+            return true;
+        }
+        return false;
     }
 }

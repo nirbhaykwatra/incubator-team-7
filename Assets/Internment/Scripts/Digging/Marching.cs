@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.VFX;
 
 namespace Internment.Digging.Terrain
 {
@@ -315,12 +316,15 @@ namespace Internment.Digging.Terrain
         {
             GameObject prefab = (type == TerrainType.Rock) ? rockDigVFX : dirtDigVFX;
             if (prefab == null) return;
+            VisualEffect vfx = prefab.GetComponent<VisualEffect>();
 
-            // Compute the voxel¡¯s world©\space center
+            // Compute the voxelï¿½ï¿½s worldï¿½\space center
             Vector3 localCenter = new Vector3(x + 0.5f, y + 0.5f, z + 0.5f) * voxelSize;
             Vector3 worldPos = transform.TransformPoint(localCenter);
 
             Instantiate(prefab, worldPos, Quaternion.identity);
+            vfx.Play();
+            Debug.Log($"{type} VFX!");
         }
     }
 }

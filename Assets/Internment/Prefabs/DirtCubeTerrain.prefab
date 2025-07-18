@@ -128,11 +128,18 @@ MonoBehaviour:
   terrainSurface: 0.5
   width: 10
   height: 15
+  length: 8
   terrainType: 0
   dirtMaterial: {fileID: 2100000, guid: 00184f78eaeff624f80dbed094280030, type: 2}
   rockMaterial: {fileID: 2100000, guid: 800cb17935a828542bc530c39efc23f1, type: 2}
   dirtHealth: 1
   rockHealth: 5
+  dirtDigVFX: {fileID: 6702050709023789826, guid: 690714ab88c6fa844a3d69fc9926374f,
+    type: 3}
+  rockDigVFX: {fileID: 964184883015881861, guid: 470c856c39853d242af3453858a72775,
+    type: 3}
+  resolution: 1
+  carveColliders: []
 --- !u!114 &31188827832644974
 MonoBehaviour:
   m_ObjectHideFlags: 0
