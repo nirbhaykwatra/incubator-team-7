@@ -49,4 +49,9 @@ public class FMODEvents : MonoBehaviour
     {
         AudioManager.instance.PlaySound(collectParts);
     }
+
+    public void FirstPart()
+    {
+        AudioManager.instance.PlaySound(firstPart);
+    }
 }
