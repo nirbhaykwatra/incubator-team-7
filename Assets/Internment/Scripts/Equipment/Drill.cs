@@ -13,9 +13,14 @@ public class Drill : Equipment
     [SerializeField] protected GameObject drillBit;
     [SerializeField] protected float batteryRewardAmount = 100f;
     [SerializeField] protected bool rewardAsPercentage = false;
+    [SerializeField] protected GameObject drillParticles;
+    
+    private ParticleSystem drillParticlesSystem;
     public override void Start()
     {
         base.Start();
+        drillParticles.SetActive(false);
+        drillParticlesSystem = drillParticles.GetComponentInChildren<ParticleSystem>();
         _fpsCamera = Camera.main;
         OnBatterySetup?.Invoke(_battery.Capacity);
     }
@@ -41,6 +46,8 @@ public class Drill : Equipment
             Discharge();
 
             drillBit.transform.Rotate(new Vector3(0,0,1) * drillSpeed * Time.deltaTime);
+            drillParticles.SetActive(true);
+            drillParticlesSystem.Play();
             
             RaycastHit hit;
             
@@ -63,6 +70,11 @@ public class Drill : Equipment
                     marching.RemoveTerrain(hit.point, radiusInVoxels);
                 }
             }
+        }
+        else
+        {
+            drillParticlesSystem.Stop();
+            drillParticles.SetActive(false);
         }
 
         if (_battery.Recharging && !Powered)
