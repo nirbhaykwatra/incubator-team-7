@@ -80,6 +80,7 @@ public class Resource : MonoBehaviour
         if (_resourceHealth <= 0f)
         {
             _vfx.Stop();
+            AudioManager.instance.PlaySound(FMODEvents.instance.destroyMold);
             Destroy(gameObject);
             return true;
         }

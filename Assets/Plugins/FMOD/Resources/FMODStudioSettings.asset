@@ -635,6 +635,7 @@ MonoBehaviour:
   - Master
   Banks:
   - Dialogue
+  - Unearthed
   BanksToLoad: []
   LiveUpdatePort: 9264
   EnableMemoryTracking: 0
