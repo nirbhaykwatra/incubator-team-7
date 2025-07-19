@@ -23,6 +23,10 @@ public class FMODEvents : MonoBehaviour
     [field: SerializeField] public EventReference needsToWork { get; private set; }
     [field: SerializeField] public EventReference coughingDialogue { get; private set; }
     [field: SerializeField] public EventReference mumblesV2Dialogue { get; private set; }
+    [field: SerializeField] public EventReference soundTrack { get; private set; }
+    [field: SerializeField] public EventReference dormantMold { get; private set; }
+    [field: SerializeField] public EventReference activeMold { get; private set; }
+    [field: SerializeField] public EventReference destroyMold { get; private set; }
     public static FMODEvents instance {  get; private set; }
 
     private void Awake()
@@ -58,5 +62,15 @@ public class FMODEvents : MonoBehaviour
     public void HasToWork()
     {
         AudioManager.instance.PlaySound(hasToWork);
+    }
+
+    public void DormantMold()
+    {
+        AudioManager.instance.PlaySound(dormantMold);
+    }
+    
+    public void ActiveMold()
+    {
+        AudioManager.instance.PlaySound(activeMold);
     }
 }
