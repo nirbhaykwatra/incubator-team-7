@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7605986198828032140}
+  - component: {fileID: 3739770431258471991}
   m_Layer: 0
   m_Name: Gear
   m_TagString: Untagged
@@ -32,6 +33,44 @@ Transform:
   - {fileID: 4231587042477844169}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3739770431258471991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9157051097028968142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2407e1bf37d8d4844a26555fb1b25387, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: Item
+  itemIcon: {fileID: 0}
+  destroyOnPickup: 1
+  pickupEffect: {fileID: 0}
+  pickupSound: {fileID: 0}
+  OnPickedUp:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: FMODEvents, Assembly-CSharp
+        m_MethodName: FirstPart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnItemCollected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnItemPickedUp:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &4409908608300794146
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -112,6 +151,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 3529311612818403450}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 76a4e7c4563d7ec468b7931115140d97,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7928744540982792328}
   m_SourcePrefab: {fileID: 100100000, guid: 76a4e7c4563d7ec468b7931115140d97, type: 3}
 --- !u!1 &3599024068377574515 stripped
 GameObject:
@@ -159,7 +202,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   batteryAmount: 25
   isPercentage: 1
-  OnBatteryPickup: {fileID: 0}
+  OnBatteryPickup: {fileID: 11400000, guid: 3aa45a6e2bfeb004caaeff4d117b32e1, type: 2}
+--- !u!65 &7928744540982792328
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3599024068377574515}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.39785144, y: 0.21079347, z: 0.39785144}
+  m_Center: {x: 0, y: 0.07885124, z: 0}
 --- !u!4 &4231587042477844169 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 76a4e7c4563d7ec468b7931115140d97,
